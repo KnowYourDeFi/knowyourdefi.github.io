@@ -1,8 +1,8 @@
 {
   "name": "knowyourdefi",
   "version": "0.1.0",
-  "repository": "https://github.com/DAppChaser/KnowYourDeFi.git",
-  "homepage": "https://dappchaser.github.io/KnowYourDeFi/",
+  "repository": "https://github.com/KnowYourDeFi/KnowYourDeFi.git",
+  "homepage": "https://knowyourdefi.github.io",
   "license": "Apache-2.0",
   "dependencies": {
     "@apollo/client": "^3.3.20",
