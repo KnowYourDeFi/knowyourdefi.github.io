@@ -8,10 +8,13 @@ const client = new ApolloClient({
   cache: new InMemoryCache()
 });
 
-function query(query) {
-  return client.query({
-    query: gql(query)
-  })
+async function query(ql) {
+  let data = await client.query({
+    query: gql(ql)
+  });
+  data = data && data.data
+  console.log('query:', ql, 'result:', data)
+  return data
 }
 
 export default query
