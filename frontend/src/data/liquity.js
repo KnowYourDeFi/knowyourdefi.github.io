@@ -1,14 +1,14 @@
 
 import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
 
-const endpoint = 'https://api.thegraph.com/subgraphs/name/liquity/liquity'
+const kLiquityEndpoint = 'https://api.thegraph.com/subgraphs/name/liquity/liquity'
 
-const client = new ApolloClient({
-  uri: endpoint,
-  cache: new InMemoryCache()
-});
+async function query(ql, url = kLiquityEndpoint) {
+  const client = new ApolloClient({
+    uri: url,
+    cache: new InMemoryCache()
+  });
 
-async function query(ql) {
   let data = await client.query({
     query: gql(ql)
   });
