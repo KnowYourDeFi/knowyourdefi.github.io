@@ -39,7 +39,7 @@ class TroveSize extends React.Component {
         break
     }
     //Split sizes, get chunk size and calculate sum of each chunk
-    const chunkNames = ['>100k', '10k-100k', '1k-10k', '100-1k', '10-100', '0-10']
+    const chunkNames = ['>100k 🐳', '10k-100k', '1k-10k', '100-1k', '10-100', '0-10']
     let splited = []
     for (let i = 0; i < splitingIndexes.length - 1; i++) {
       const chunk = sizes.slice(splitingIndexes[i], splitingIndexes[i + 1])
@@ -86,7 +86,6 @@ class TroveSize extends React.Component {
           name: 'Trove size',
           type: 'pie',
           radius: '50%',
-          center: ['25%', '50%'],
           emphasis: {
             itemStyle: {
               shadowBlur: 10,
@@ -95,18 +94,7 @@ class TroveSize extends React.Component {
             }
           },
           data: this.state.troveData
-        },
-          {
-            name: 'Trove size',
-            type: 'pie',
-            radius: [10, 150],
-            center: ['75%', '50%'],
-            roseType: 'area',
-            itemStyle: {
-                borderRadius: 0
-            },
-            data: this.state.troveData
-          }
+        }
       ]
     }
     return <ReactECharts option={options} style={{height: 600}}/>;
