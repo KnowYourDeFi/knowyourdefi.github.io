@@ -22,9 +22,11 @@ class PageNav extends React.Component {
           // eslint-disable-next-line
           return <li class="page-item" key={k}><a class="page-link" href="#" onClick={function (e) { e.preventDefault(); that.props.onPageClick(item.index) }}>{item.index + 1}</a></li>
         case 'current':
+          // eslint-disable-next-line
           return <li class="page-item active" key={k}><a class="page-link" href="#" onClick={function (e) { e.preventDefault() }}>{item.index + 1}</a></li>
         case 'more':
         default:
+          // eslint-disable-next-line
           return <li class="page-item disabled" key={k}><a class="page-link" href="#" onClick={function (e) { e.preventDefault() }}>...</a></li>
       }
     })

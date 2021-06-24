@@ -1,0 +1,21 @@
+.color-progress-bar {
+  display: block;
+  padding: 20px;
+  box-sizing: border-box;
+
+  .indicator {
+    border: 1px solid #333333;
+    text-align: center;
+  }
+  .bar {
+    min-height: 1em;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: stretch;
+  }
+  .range {
+    flex-grow: 1;
+    display: block;
+  }
+}
