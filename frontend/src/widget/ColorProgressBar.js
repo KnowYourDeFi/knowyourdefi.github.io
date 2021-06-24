@@ -4,15 +4,13 @@ import './ColorProgressBar.scss'
 
 class ColorProgressBar extends React.Component {
 
-  indicatorWidth = 50
-  indicatorHeight = 50
+  indicatorTextHeight = 40
+  indicatorTextWidth = 80
+  indicatorWidth = 2
 
   render() {
     return (
       <div class="color-progress-bar">
-        <div class="indicator" style={{marginLeft: `calc(${this.props.progress}% - ${this.indicatorWidth/2}px)`, width:this.indicatorWidth, height:this.indicatorHeight, lineHeight:this.indicatorHeight + 'px'}}>
-          {this.props.progress}
-        </div>
         <div class="bar">
           <div class="range" style={{background: 'rgb(250, 127, 102)'}}>
           </div>
@@ -22,6 +20,11 @@ class ColorProgressBar extends React.Component {
           </div>
           <div class="range" style={{background: 'rgb(134, 223, 79)'}}>
           </div>
+        </div>
+        <div class="indicator-text" style={{marginLeft: `calc(${this.props.progress}% - ${this.indicatorTextWidth/2}px)`}}>
+          {this.props.progress}%
+        </div>
+        <div class="indicator" style={{marginLeft: `calc(${this.props.progress}% - ${this.indicatorWidth/2}px)`}}>
         </div>
       </div>
     )
