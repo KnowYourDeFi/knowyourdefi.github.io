@@ -108,7 +108,7 @@ class TroveSize extends React.Component {
             data: this.state.troveData
           }
       ]
-  }
+    }
     return <ReactECharts option={options} style={{height: 600}}/>;
   }
 
@@ -123,7 +123,6 @@ class TroveSize extends React.Component {
   render() {
     return (
       <div style={{height: 600}}>
-
         {this.trove()}
       </div>
     )
