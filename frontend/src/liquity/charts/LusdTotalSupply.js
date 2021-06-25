@@ -1,5 +1,5 @@
 import React from 'react'
-import query from '../data/liquity'
+import query from '../LiquityData'
 
 class LusdTotalSupply extends React.Component {
   state = {
