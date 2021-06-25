@@ -1,8 +1,12 @@
 body {
-  background-color: #FAFAFA !important;
+  background-color: #fafafa !important;
 }
 
 .app-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
   padding: 10px;
   background-color: white;
 }
@@ -14,6 +18,13 @@ $logo-size: 40px;
   width: $logo-size;
   height: $logo-size;
   margin: 0 auto;
+  cursor: pointer;
+}
+.app-profile {
+  display: block;
+  height: $logo-size;
+  line-height: $logo-size;
+  cursor: pointer;
 }
 
 .app-body {
@@ -32,7 +43,7 @@ $logo-size: 40px;
 
 .defi-card {
   border-radius: 20px;
-  background-color: #EEE;
+  background-color: #eee;
 
   .title {
     font-size: 1em;

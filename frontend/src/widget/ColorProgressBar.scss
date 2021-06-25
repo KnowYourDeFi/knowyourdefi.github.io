@@ -1,8 +1,9 @@
+@use 'sass:math';
 
 $indicator-text-height: 40px;
 $indicator-text-width: 80px;
 
-$indicator-text-overlap: $indicator-text-height/2;
+$indicator-text-overlap: math.div($indicator-text-height, 2);
 
 $bar-height: 50px;
 $bar-top: $indicator-text-height - $indicator-text-overlap;
@@ -40,7 +41,7 @@ $total-height: $indicator-text-height + $bar-height - $indicator-text-overlap;;
     color: white;
     font-size: 1em;
     font-weight: bold;
-    border-radius: $indicator-text-height/2;
+    border-radius: math.div($indicator-text-height, 2);
     text-align: center;
   }
   .indicator {

@@ -1,5 +1,5 @@
 import React from 'react'
-import query from '../data/liquity'
+import query from '../LiquityData'
 import ReactECharts from 'echarts-for-react'
 
 class TroveSize extends React.Component {

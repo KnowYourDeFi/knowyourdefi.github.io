@@ -1,0 +1,101 @@
+$box-height: 45px;
+$option-height: 40px;
+$delete-size: 25px;
+
+.m-dropdown {
+  position: relative;
+
+  .m-box {
+    display: flex;
+    flex-direction: row;
+
+    background-color: rgb(255, 255, 255);
+    border-color: rgb(214, 219, 228);
+    border-radius: 4px;
+    border-style: solid;
+    border-width: 2px;
+    box-shadow: none;
+
+    &:hover {
+      cursor: pointer;
+      border-radius: 4px;
+      border-color: rgb(150, 183, 255);
+      .m-arrow-down {
+        border-color: rgb(77, 125, 230);
+      }
+    }
+  }
+  .m-box-value {
+    height: $box-height;
+    line-height: $box-height;
+    width: 100%;
+    flex-grow: 1;
+    padding: 0 20px;
+    display: block;
+    border: none;
+    outline: none;
+    cursor: pointer;
+  }
+  .m-box-expand {
+    height: $box-height;
+    line-height: $box-height - 5px;
+    padding: 0 16px;
+  }
+  .m-arrow-down {
+    border: solid rgb(200, 201, 201);
+    border-width: 0 2px 2px 0;
+    display: inline-block;
+    padding: 4px;
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+  }
+
+  .m-options {
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 0.25rem;
+    background-color: white;
+    display: none;
+    position: absolute;
+    top: $box-height + 1px;
+    width: 100%;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    &.show {
+      display: block;
+    }
+  }
+
+  .m-option {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: $option-height;
+    width: 100%;
+    &:hover {
+      cursor: pointer;
+      background-color: #eee;
+    }
+  }
+  .m-option-text {
+    height: $option-height;
+    line-height: $option-height;
+    flex-grow: 1;
+    padding: 0 20px;
+  }
+  .m-option-delete {
+    color: rgb(177, 177, 177);
+    height: $delete-size;
+    line-height: $delete-size;
+    width: $delete-size;
+    margin-right: 5px;
+    text-align: center;
+    background-color: transparent;
+    outline: none;
+    border: none;
+    &:hover {
+      background-color: rgb(220, 220, 220);
+    }
+  }
+}

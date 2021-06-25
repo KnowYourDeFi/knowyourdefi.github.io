@@ -1,5 +1,5 @@
 import React from 'react'
-import ColorProgressBar from '../widget/ColorProgressBar'
+import ColorProgressBar from '../../widget/ColorProgressBar'
 
 class CollateralRatio extends React.Component {
 

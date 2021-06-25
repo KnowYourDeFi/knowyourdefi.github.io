@@ -1,7 +1,7 @@
 import React from 'react'
-import query from '../data/liquity'
+import query from '../LiquityData'
 
-class LQTYPriceV2 extends React.Component {
+class LUSDPriceV2 extends React.Component {
     state = {
         loading: true,
         price: 0
@@ -10,15 +10,15 @@ class LQTYPriceV2 extends React.Component {
     componentDidMount() {
         const gql = `
         {
-            pair(id:"0xb13201b48b1e61593df055576964d0b3aab66ea3")
+            pair(id:"0xf20ef17b889b437c151eb5ba15a47bfc62bff469")
             {
               token1Price
             }
-            
+
             bundle(id: "1" ) {
                 ethPrice
             }
-        }          
+        }
         `
         //Get Uniswap V2 price
         const uniV2URL = 'https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v2'
@@ -38,14 +38,14 @@ class LQTYPriceV2 extends React.Component {
         return (
             <div className="total-supply">
               <p>
-                LQTY/ETH on Uniswap V2: {this.state.loading ? 'Loading...' : this.state.price}
+                LUSD/ETH on Uniswap V2: {this.state.loading ? 'Loading...' : this.state.price}
               </p>
             </div>
         )
     }
 }
 
-class LQTYPriceV3 extends React.Component {
+class LUSDPriceV3DAI extends React.Component {
     state = {
         loading: true,
         price: 0
@@ -54,25 +54,19 @@ class LQTYPriceV3 extends React.Component {
     componentDidMount() {
         const gql = `
         {
-            pool(id:"0xd1d5a4c0ea98971894772dcd6d2f1dc71083c44e")
+            pool(id:"0x16980c16811bde2b3358c1ce4341541a4c772ec9")
             {
                 token1Price
             }
-            
-           bundle(id: "1" ) {
-               ethPriceUSD
-           }
-        }          
+        }
         `
 
         //Get Uniswap V3 price
         const uniV3URL = 'https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v3'
         query(gql, uniV3URL).then(data => {
-            const ethPrice = data.bundle.ethPriceUSD
-            const tokenPriceInEth = data.pool.token1Price
             this.setState({
               loading: false,
-              price: ethPrice * tokenPriceInEth
+              price: data.pool.token1Price
             })
         }).catch(e => {
             console.error(e)
@@ -83,12 +77,52 @@ class LQTYPriceV3 extends React.Component {
         return (
             <div className="total-supply">
               <p>
-                LQTY/ETH on Uniswap V3: {this.state.loading ? 'Loading...' : this.state.price}
+                LUSD/DAI on Uniswap V3: {this.state.loading ? 'Loading...' : this.state.price}
               </p>
             </div>
         )
     }
 }
 
-export {LQTYPriceV2}
-export {LQTYPriceV3}
+class LUSDPriceV3USDT extends React.Component {
+    state = {
+        loading: true,
+        price: 0
+    }
+
+    componentDidMount() {
+        const gql = `
+        {
+            pool(id:"0x67e887913b13e280538c169f13d169a659a203de")
+            {
+                token1Price
+            }
+        }
+        `
+
+        //Get Uniswap V3 price
+        const uniV3URL = 'https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v3'
+        query(gql, uniV3URL).then(data => {
+            this.setState({
+              loading: false,
+              price: data.pool.token1Price
+            })
+        }).catch(e => {
+            console.error(e)
+        })
+    }
+
+    render() {
+        return (
+            <div className="total-supply">
+              <p>
+                LUSD/USDT on Uniswap V3: {this.state.loading ? 'Loading...' : this.state.price}
+              </p>
+            </div>
+        )
+    }
+}
+
+export {LUSDPriceV2}
+export {LUSDPriceV3DAI}
+export {LUSDPriceV3USDT}

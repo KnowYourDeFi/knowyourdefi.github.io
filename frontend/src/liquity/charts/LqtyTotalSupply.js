@@ -1,5 +1,5 @@
 import React from 'react'
-import query from '../data/liquity'
+import query from '../LiquityData'
 
 class LqtyTotalSupply extends React.Component {
   state = {
