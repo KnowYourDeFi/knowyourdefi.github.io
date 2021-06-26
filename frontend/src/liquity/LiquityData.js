@@ -22,7 +22,6 @@ export const blockClient = new ApolloClient({
 })
 
 export async function splitQuery(queryGenarator, client, vars, list, skipCount = 100) {
-  console.log('splitQuery executed')
   let fetchedData = {}
   let allFound = false
   let skip = 0
@@ -34,7 +33,7 @@ export async function splitQuery(queryGenarator, client, vars, list, skipCount =
     }
     let sliced = list.slice(skip, end)
     let result = await client.query({
-      query: queryGenarator(...vars, sliced),
+      query: gql(queryGenarator(...vars, sliced)),
       fetchPolicy: 'cache-first',
     })
     fetchedData = {
@@ -52,12 +51,11 @@ export async function splitQuery(queryGenarator, client, vars, list, skipCount =
 }
 
 export async function getBlocksFromTimestamps(timestamps, skipCount = 500) {
-  console.log('getBlocksFromTimestamps executed')
   if (timestamps?.length === 0) {
     return []
   }
 
-  let fetchedData = await splitQuery(getBlocks, blockClient, [], timestamps, skipCount)
+  let fetchedData = await splitQuery(getBlocksQuery, blockClient, [], timestamps, skipCount)
 
   let blocks = []
   if (fetchedData) {
@@ -73,8 +71,7 @@ export async function getBlocksFromTimestamps(timestamps, skipCount = 500) {
   return blocks
 }
 
-export async function last7DayBlocks() {
-  console.log('last7DayBlocks executed')
+export const last7DayBlocks = () => {
   return getBlocksFromTimestamps(hourlyTimestamps())
 }
 
@@ -88,8 +85,8 @@ export async function query(ql, client = liquityClient) {
   return data
 }
 
-function getBlocks(timestamps) {
-  console.log('getBlocks(timestamps) executed')
+
+function getBlocksQuery(timestamps) {
   let queryString = 'query blocks {'
   queryString += timestamps.map((timestamp) => {
     return `t${timestamp}:blocks(first: 1, orderBy: timestamp, orderDirection: desc, where: { timestamp_gt: ${timestamp}, timestamp_lt: ${
@@ -99,5 +96,5 @@ function getBlocks(timestamps) {
     }`
   })
   queryString += '}'
-  return gql(queryString)
+  return queryString
 }

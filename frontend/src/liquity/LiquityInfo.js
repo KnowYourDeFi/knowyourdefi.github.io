@@ -6,6 +6,7 @@ import TroveSize from './charts/TroveSize'
 import CollateralRatio from './charts/CollateralRatio';
 import { LQTYPriceV2, LQTYPriceV3 } from './charts/LqtyPrices'
 import { LUSDPriceV2, LUSDPriceV3DAI, LUSDPriceV3USDT } from './charts/LusdPrices'
+import { CurrentTroveNumber, RecentTroveNumbers } from './charts/TroveNumbers'
 
 class LiquityInfo extends React.Component {
 
@@ -41,6 +42,8 @@ class LiquityInfo extends React.Component {
           <span className="title">Trove</span>
         </div>
         <TroveSize />
+        <CurrentTroveNumber />
+        <RecentTroveNumbers />
 
         <div className="defi-title-bar">
           <span className="title">Frontend Leaderboard</span>

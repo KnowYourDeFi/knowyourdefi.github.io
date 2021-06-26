@@ -13,3 +13,12 @@ export const hourlyTimestamps = (days = 7) => {
     }
     return timestamps
 }
+
+export const nowTimestamp = () => {
+    return dayjs().utc().unix()
+}
+
+export const formatDate = (timestamp, formatStr) => {
+    const date = dayjs.unix(timestamp)
+    return date.format(formatStr)
+}
