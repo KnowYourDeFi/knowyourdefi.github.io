@@ -35,7 +35,7 @@ class LQTYPriceV2 extends React.Component {
 
     render() {
         return (
-            <div className="total-supply">
+            <div className="lqty-price-v2">
               <p>
                 LQTY/ETH on Uniswap V2: {this.state.loading ? 'Loading...' : this.state.price}
               </p>
@@ -79,7 +79,7 @@ class LQTYPriceV3 extends React.Component {
 
     render() {
         return (
-            <div className="total-supply">
+            <div className="lqty-price-v3">
               <p>
                 LQTY/ETH on Uniswap V3: {this.state.loading ? 'Loading...' : this.state.price}
               </p>

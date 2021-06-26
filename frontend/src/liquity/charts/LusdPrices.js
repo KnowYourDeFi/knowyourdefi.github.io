@@ -1,6 +1,5 @@
 import React from 'react'
-import {query, uniV2Client, uniV3Client, last7DayBlocks, getBlocksFromTimestamps} from '../LiquityData'
-import {hourlyTimestamps} from '../Timestamps'
+import {query, uniV2Client, uniV3Client} from '../LiquityData'
 
 class LUSDPriceV2 extends React.Component {
     state = {
@@ -32,17 +31,11 @@ class LUSDPriceV2 extends React.Component {
         }).catch(e => {
             console.error(e)
         })
-
-        getBlocksFromTimestamps(hourlyTimestamps()).then(data => {
-            console.error('test..........',data)
-        }).catch(e => {
-            console.error(e)
-        })
     }
 
     render() {
         return (
-            <div className="total-supply">
+            <div className="lusd-price-v2">
               <p>
                 LUSD/ETH on Uniswap V2: {this.state.loading ? 'Loading...' : this.state.price}
               </p>
@@ -80,7 +73,7 @@ class LUSDPriceV3DAI extends React.Component {
 
     render() {
         return (
-            <div className="total-supply">
+            <div className="lusd-price-v3-dai">
               <p>
                 LUSD/DAI on Uniswap V3: {this.state.loading ? 'Loading...' : this.state.price}
               </p>
@@ -118,7 +111,7 @@ class LUSDPriceV3USDT extends React.Component {
 
     render() {
         return (
-            <div className="total-supply">
+            <div className="lusd-price-v3-usdt">
               <p>
                 LUSD/USDT on Uniswap V3: {this.state.loading ? 'Loading...' : this.state.price}
               </p>
