@@ -1,5 +1,5 @@
 import React from 'react'
-import query from '../LiquityData'
+import {query} from '../LiquityData'
 
 /**
  * state: setState({currentPage, hasNextPage})

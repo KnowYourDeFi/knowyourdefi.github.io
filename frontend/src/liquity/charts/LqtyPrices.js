@@ -1,5 +1,5 @@
 import React from 'react'
-import query from '../LiquityData'
+import {query, uniV2Client, uniV3Client} from '../LiquityData'
 
 class LQTYPriceV2 extends React.Component {
     state = {
@@ -21,8 +21,7 @@ class LQTYPriceV2 extends React.Component {
         }
         `
         //Get Uniswap V2 price
-        const uniV2URL = 'https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v2'
-        query(gql, uniV2URL).then(data => {
+        query(gql, uniV2Client).then(data => {
             const ethPrice = data.bundle.ethPrice
             const tokenPriceInEth = data.pair.token1Price
             this.setState({
@@ -66,8 +65,7 @@ class LQTYPriceV3 extends React.Component {
         `
 
         //Get Uniswap V3 price
-        const uniV3URL = 'https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v3'
-        query(gql, uniV3URL).then(data => {
+        query(gql, uniV3Client).then(data => {
             const ethPrice = data.bundle.ethPriceUSD
             const tokenPriceInEth = data.pool.token1Price
             this.setState({

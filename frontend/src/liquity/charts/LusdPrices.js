@@ -1,5 +1,6 @@
 import React from 'react'
-import query from '../LiquityData'
+import {query, uniV2Client, uniV3Client, last7DayBlocks, getBlocksFromTimestamps} from '../LiquityData'
+import {hourlyTimestamps} from '../Timestamps'
 
 class LUSDPriceV2 extends React.Component {
     state = {
@@ -21,14 +22,19 @@ class LUSDPriceV2 extends React.Component {
         }
         `
         //Get Uniswap V2 price
-        const uniV2URL = 'https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v2'
-        query(gql, uniV2URL).then(data => {
+        query(gql, uniV2Client).then(data => {
             const ethPrice = data.bundle.ethPrice
             const tokenPriceInEth = data.pair.token1Price
             this.setState({
               loading: false,
               price: ethPrice * tokenPriceInEth
             })
+        }).catch(e => {
+            console.error(e)
+        })
+
+        getBlocksFromTimestamps(hourlyTimestamps()).then(data => {
+            console.error('test..........',data)
         }).catch(e => {
             console.error(e)
         })
@@ -62,8 +68,7 @@ class LUSDPriceV3DAI extends React.Component {
         `
 
         //Get Uniswap V3 price
-        const uniV3URL = 'https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v3'
-        query(gql, uniV3URL).then(data => {
+        query(gql, uniV3Client).then(data => {
             this.setState({
               loading: false,
               price: data.pool.token1Price
@@ -101,8 +106,7 @@ class LUSDPriceV3USDT extends React.Component {
         `
 
         //Get Uniswap V3 price
-        const uniV3URL = 'https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v3'
-        query(gql, uniV3URL).then(data => {
+        query(gql, uniV3Client).then(data => {
             this.setState({
               loading: false,
               price: data.pool.token1Price
