@@ -6,19 +6,19 @@ class ConnectButton extends React.Component {
 
   render() {
     return (
-      <a class="connect-button" href="#" onClick={this.props.onClick}>
-        {text}
-      </a>
+      <div className="connect-button" onClick={this.props.onClick}>
+        {this.props.text}
+      </div>
     )
   }
 }
 
-ColorProgressBar.propTypes = {
+ConnectButton.propTypes = {
   text: PropTypes.string,
   onClick: PropTypes.func,
 };
 
-ColorProgressBar.defaultProps = {
+ConnectButton.defaultProps = {
   text: 'Button',
   onClick: function () { console.log('onClick') }
 };

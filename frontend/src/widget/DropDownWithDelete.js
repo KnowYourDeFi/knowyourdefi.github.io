@@ -20,6 +20,14 @@ class DropDownWithDelete extends React.Component {
     this.onClickOutside = this.onClickOutside.bind(this)
   }
 
+  getOptions() {
+    return this.state.options
+  }
+
+  getValue() {
+    return this.state.value
+  }
+
   componentDidMount() {
     document.addEventListener('mousedown', this.onClickOutside);
   }
@@ -38,11 +46,13 @@ class DropDownWithDelete extends React.Component {
   }
 
   addOption(option) {
+    const options = [option, ...this.state.options]
     this.setState({
-      options: [option, ...this.state.options],
+      options: options,
       value: option,
     })
-    this.props.onChange(option)
+    this.props.onOptionsChange(options)
+    this.props.onValueChange(option)
   }
 
   onExpandClick() {
@@ -62,7 +72,7 @@ class DropDownWithDelete extends React.Component {
         value: option,
         showDropDown: false,
       })
-      this.props.onChange(option)
+      this.props.onValueChange(option)
     }
   }
 
@@ -80,12 +90,14 @@ class DropDownWithDelete extends React.Component {
         options: options,
         value: newValue,
       })
-      this.props.onChange(newValue)
+      this.props.onOptionsChange(options)
+      this.props.onValueChange(newValue)
     } else {
       // value not change
       this.setState({
         options: options,
       })
+      this.props.onOptionsChange(options)
     }
   }
 
@@ -118,16 +130,18 @@ class DropDownWithDelete extends React.Component {
 }
 
 DropDownWithDelete.propTypes = {
+  mClassName: PropTypes.string,
   options: PropTypes.array,
   value: PropTypes.string,
-  onChange: PropTypes.func,
-  mClassName: PropTypes.string,
+  onOptionsChange: PropTypes.func,
+  onValueChange: PropTypes.func,
 };
 
 DropDownWithDelete.defaultProps = {
   options: [],
   value: null,
-  onChange: function (value) { console.log('on value changed ' + value) }
+  onOptionsChange: function(options) { console.log('on options change', options)},
+  onValueChange: function (value) { console.log('on value change', value) },
 };
 
 export default DropDownWithDelete

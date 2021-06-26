@@ -17,33 +17,33 @@ class LiquityInfo extends React.Component {
           {/* 7d TVL change */}
         </div>
 
-        <div class="defi-title-bar">
-          <span class="title">LUSD</span>
+        <div className="defi-title-bar">
+          <span className="title">LUSD</span>
         </div>
         <LUSDPriceV2 />
         <LUSDPriceV3DAI />
         <LUSDPriceV3USDT />
         <LusdTotalSupply />
 
-        <div class="defi-title-bar">
-          <span class="title">LQTY</span>
+        <div className="defi-title-bar">
+          <span className="title">LQTY</span>
         </div>
         <LQTYPriceV2 />
         <LQTYPriceV3 />
         <LqtyTotalSupply />
 
-        <div class="defi-title-bar">
-          <span class="title">Liquidation</span>
+        <div className="defi-title-bar">
+          <span className="title">Liquidation</span>
         </div>
         <CollateralRatio />
 
-        <div class="defi-title-bar">
-          <span class="title">Trove</span>
+        <div className="defi-title-bar">
+          <span className="title">Trove</span>
         </div>
         <TroveSize />
 
-        <div class="defi-title-bar">
-          <span class="title">Frontend Leaderboard</span>
+        <div className="defi-title-bar">
+          <span className="title">Frontend Leaderboard</span>
         </div>
         <Holders />
       </div>

@@ -1,26 +1,45 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { instanceOf } from 'prop-types';
+import { withCookies, Cookies } from 'react-cookie';
 import DropDownWithDelete from '../widget/DropDownWithDelete'
 import './AddressBar.scss'
 
 class AddressBar extends React.Component {
 
-  state = {
-    showAddAddressPopup: false,
-    enableSubmit: false,
-    inputAddress: '',
-  }
-
-  dropdown = React.createRef()
+  static propTypes = {
+    cookies: instanceOf(Cookies).isRequired
+  };
 
   constructor(props) {
     super(props)
+
+    this.state = {
+      showAddAddressPopup: false,
+      enableSubmit: false,
+      inputAddress: '',
+    }
+
+    this.dropdown = React.createRef()
 
     this.onAddClick = this.onAddClick.bind(this)
     this.onCloseClick = this.onCloseClick.bind(this)
     this.onInputChange = this.onInputChange.bind(this)
     this.onAddressSubmit = this.onAddressSubmit.bind(this)
-    this.onSelectChange = this.onSelectChange.bind(this)
+    this.onCurrentAddressChange = this.onCurrentAddressChange.bind(this)
+    this.onAddressListChange = this.onAddressListChange.bind(this)
+  }
+
+  componentDidMount() {
+    // trigger the listener to handle the initial data from cookie
+    if (this.dropdown.current) {
+      this.props.onAddressListChange(this.dropdown.current.getOptions())
+      this.props.onCurrentAddressChange(this.dropdown.current.getValue())
+    }
+  }
+
+  getAddress() {
+    return this.dropdown.current?.getValue()
   }
 
   onAddClick() {
@@ -64,8 +83,18 @@ class AddressBar extends React.Component {
     })
   }
 
-  onSelectChange(value) {
-    this.props.onAddressSelected(value)
+  onCurrentAddressChange(currentAddress) {
+    if (currentAddress) {
+      this.props.cookies.set('currentAddress', currentAddress)
+    } else {
+      this.props.cookies.remove('currentAddress')
+    }
+    this.props.onCurrentAddressChange(currentAddress)
+  }
+
+  onAddressListChange(addressList) {
+    this.props.cookies.set('addressList', addressList)
+    this.props.onAddressListChange(addressList)
   }
 
   addAddressPopup() {
@@ -91,7 +120,15 @@ class AddressBar extends React.Component {
     return (
       <div className="address-bar">
         <div className="address-line">
-          <DropDownWithDelete ref={this.dropdown} mClassName="address-dropdown" placeholder={'Select Ethereum address...'} options={[]} value={null} onChange={this.onSelectChange} />
+          <DropDownWithDelete
+            ref={this.dropdown}
+            mClassName="address-dropdown"
+            placeholder={'Select Ethereum address...'}
+            options={this.props.cookies.get('addressList') || []}
+            value={this.props.cookies.get('currentAddress')}
+            onOptionsChange={this.onAddressListChange}
+            onValueChange={this.onCurrentAddressChange}
+          />
           <div className="address-add-button" onClick={this.onAddClick}>+</div>
         </div>
         {this.addAddressPopup()}
@@ -101,11 +138,13 @@ class AddressBar extends React.Component {
 }
 
 AddressBar.propTypes = {
-  onAddressSelected: PropTypes.func,
+  onAddressListChange: PropTypes.func,
+  onCurrentAddressChange: PropTypes.func,
 }
 
 AddressBar.defaultProps = {
-  onAddressSelected: function (address) { console.log(`address selected: ${address}`) },
+  onAddressListChange: function (addressList) { console.log('address list change', addressList) },
+  onCurrentAddressChange: function (address) { console.log('current address change', address) },
 }
 
-export default AddressBar
+export default withCookies(AddressBar)
