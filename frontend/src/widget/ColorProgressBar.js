@@ -10,21 +10,21 @@ class ColorProgressBar extends React.Component {
 
   render() {
     return (
-      <div class="color-progress-bar">
-        <div class="bar">
-          <div class="range" style={{background: 'rgb(250, 127, 102)'}}>
+      <div className="color-progress-bar">
+        <div className="bar">
+          <div className="range" style={{background: 'rgb(250, 127, 102)'}}>
           </div>
-          <div class="range" style={{background: 'rgb(247, 230, 80)'}}>
+          <div className="range" style={{background: 'rgb(247, 230, 80)'}}>
           </div>
-          <div class="range" style={{background: 'rgb(175, 226, 76)'}}>
+          <div className="range" style={{background: 'rgb(175, 226, 76)'}}>
           </div>
-          <div class="range" style={{background: 'rgb(134, 223, 79)'}}>
+          <div className="range" style={{background: 'rgb(134, 223, 79)'}}>
           </div>
         </div>
-        <div class="indicator-text" style={{marginLeft: `calc(${this.props.progress}% - ${this.indicatorTextWidth/2}px)`}}>
+        <div className="indicator-text" style={{marginLeft: `calc(${this.props.progress}% - ${this.indicatorTextWidth/2}px)`}}>
           {this.props.progress}%
         </div>
-        <div class="indicator" style={{marginLeft: `calc(${this.props.progress}% - ${this.indicatorWidth/2}px)`}}>
+        <div className="indicator" style={{marginLeft: `calc(${this.props.progress}% - ${this.indicatorWidth/2}px)`}}>
         </div>
       </div>
     )
