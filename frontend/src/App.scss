@@ -81,14 +81,44 @@ $defi-title-info-size: 15px;
   color: #333;
   margin-left: 15px;
 }
-.defi-title-info {
+$defi-more-size: 25px;
+.defi-title-more {
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+  color: $theme-color4;
+  background-color: white;
+  padding: 0 10px;
+  border: 1px solid #eee;
+  margin-left: 15px;
+  font-size: $defi-more-size * 0.6;
+  height: $defi-more-size;
+  cursor: pointer;
+  line-height: $defi-more-size;
+  border-radius: $defi-more-size * 0.5;
+  &:hover {
+    color: $theme-color4;
+    text-decoration: none;
+  }
+}
+.defi-title-info-container {
+  position: relative;
+  cursor: pointer;
+  height: $defi-title-size;
+  margin-left: 10px;
+  padding-left: 5px;
+  padding-right: 20px;
+  &:hover {
+    > .defi-title-info-card {
+      display: block;
+    }
+  }
+}
+.defi-title-info-icon {
   &:before {
     content: "i";
   }
-  position: relative;
-  align-self: start;
-  margin-left: 15px;
-  margin-top: 10px;
+  display: inline-block;
   text-align: center;
   line-height: $defi-title-info-size;
   width: $defi-title-info-size;
@@ -98,19 +128,20 @@ $defi-title-info-size: 15px;
   color: #888;
   font-weight: bold;
   border-radius: 50%;
-  &:hover {
-    .defi-title-info-panel {
-      display: block;
-    }
-  }
 }
-.defi-title-info-panel {
+.defi-title-info-card {
+  &:hover {
+    display: block;
+  }
   position: absolute;
-  left: 10px;
+  left: $defi-title-info-size + 20px;
   top: 0;
-  // display: none;
-  background-color: #eee;
+  display: none;
+  background-color: rgb(179 236 250 / 80%);
   border-radius: 10px;
+  padding: 15px;
+  border: 1px solid #8fb6bf;
+  box-shadow: 3px 2px 6px 1px #e2e2e2;
 }
 
 // a card group which display cards using flex
