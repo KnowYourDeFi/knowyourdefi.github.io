@@ -1,5 +1,6 @@
 import React from 'react'
-import {query} from '../LiquityData'
+import { numberWithCommas } from '../../utils/NumberUtils'
+import { query } from '../LiquityData'
 
 class LusdTotalSupply extends React.Component {
   state = {
@@ -28,7 +29,7 @@ class LusdTotalSupply extends React.Component {
     query(gql).then(data => {
       this.setState({
         loading: false,
-        LUSD: data.LUSD.totalSupply,
+        LUSD: numberWithCommas((data.LUSD.totalSupply / 1e18).toFixed(2)),
       })
     }).catch(e => {
       console.error(e)
@@ -36,13 +37,7 @@ class LusdTotalSupply extends React.Component {
   }
 
   render() {
-    return (
-      <div className="total-supply">
-        <p>
-          LUSD TotalSupply: {this.state.loading ? 'Loading...' : this.state.LUSD}
-        </p>
-      </div>
-    )
+    return this.state.loading ? 'Loading...' : this.state.LUSD
   }
 }
 

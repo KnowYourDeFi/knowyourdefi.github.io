@@ -6,7 +6,10 @@ class CollateralRatio extends React.Component {
   // TODO load data
 
   render() {
-    return <ColorProgressBar progress={35} />
+    return <ColorProgressBar
+      progress={75}
+      descriptions={['Killed', 'High Risk', 'Master', 'Healthy']}
+    />
   }
 }
 

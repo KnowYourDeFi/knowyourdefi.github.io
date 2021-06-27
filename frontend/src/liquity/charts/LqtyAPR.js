@@ -1,5 +1,4 @@
 import React from 'react'
-import ReactECharts from 'echarts-for-react'
 import {nowTimestamp} from '../Timestamps'
 import {query, uniV2Client, getBlocksFromTimestamps} from '../LiquityData'
 
