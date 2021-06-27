@@ -8,6 +8,8 @@ import { LQTYPriceV2, LQTYPriceV3 } from './charts/LqtyPrices'
 import { LUSDPriceV2, LUSDPriceV3DAI, LUSDPriceV3USDT } from './charts/LusdPrices'
 import { CurrentTroveNumber, RecentTroveNumbers } from './charts/TroveNumbers'
 import { StakingLUSD } from './charts/StakingLUSD'
+import {CurrentTVL} from'./charts/TVL'
+import {LqtyAPR} from'./charts/LqtyAPR'
 
 class LiquityInfo extends React.Component {
 
@@ -17,7 +19,7 @@ class LiquityInfo extends React.Component {
         <div className="defi-card-group-2">
           <div className="defi-card">
             <div className="defi-card-title">Total Value Locked</div>
-            Chart
+            <CurrentTVL />
           </div>
           <div className="defi-card">
             <div className="defi-card-title">Hourly TVL Change (7d)</div>
@@ -97,7 +99,9 @@ class LiquityInfo extends React.Component {
           </div>
           <div className="defi-card">
             <div className="defi-card-title">LQTY Staking APR(7d average)</div>
-            <div className="defi-card-large-text">13.41%</div>
+            <div className="defi-card-large-text">
+            <LqtyAPR />
+            </div>
           </div>
           <div className="defi-card">
             <div className="defi-card-title">LQTY Total Supply</div>
