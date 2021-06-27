@@ -10,16 +10,11 @@
   height: 49px;
   width: 49px;
   text-align: center;
-  /* border: 2px solid #eee; */
   font-size: 2em;
   color: #272727;
   margin-left: 10px;
-  /* background-color: whitesmoke; */
   background: #e4e4e4;
-  /* border-color: #d6dbe4; */
   border-radius: 4px;
-  /* border-style: solid; */
-  /* border-width: 2px; */
   box-shadow: none;
   &:hover {
     cursor: pointer;
@@ -29,6 +24,7 @@
 
 .add-address {
   position: fixed;
+  z-index: 1000;
   top: 0;
   left: 0;
   right: 0;
@@ -41,8 +37,10 @@
 }
 .add-address-panel {
   position: absolute;
+  z-index: 1001;
+  width: 55%;
   max-width: 800px;
-  min-width: 50vw;
+  min-width: 500px;
   min-height: 300px;
   padding: 20px 30px;
   border-radius: 10px;
@@ -76,7 +74,8 @@
   }
   button {
     cursor: pointer;
-    &:disabled, &[disabled] {
+    &:disabled,
+    &[disabled] {
       cursor: not-allowed;
     }
   }

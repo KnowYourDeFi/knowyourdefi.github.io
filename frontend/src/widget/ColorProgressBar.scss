@@ -54,5 +54,9 @@ $total-height: $indicator-text-height + $bar-height - $indicator-text-overlap;;
   .range {
     flex-grow: 1;
     display: block;
+    text-align: center;
+    height: $bar-height;
+    line-height: $bar-height;
+    color: #333;
   }
 }
