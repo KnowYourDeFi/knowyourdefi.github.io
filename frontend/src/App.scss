@@ -1,4 +1,6 @@
+@use 'sass:math';
 @import "./resources/common.scss";
+@import "~bootstrap/scss/bootstrap";
 
 body {
   background-color: #fafafa !important;
@@ -15,7 +17,8 @@ $icon-size: 26px;
   padding: 8px;
   background-color: white;
 
-  .logo, .icon {
+  .logo,
+  .icon {
     display: inline-block;
     cursor: pointer;
     margin: 0 5px;
@@ -54,20 +57,60 @@ $icon-size: 26px;
   margin: 0 auto;
 }
 
-.defi-title-bar {
+.defi-info > *{
   margin: 20px 0;
+}
+
+.defi-title-bar {
   .title {
     font-size: 1.5em;
     color: #333;
   }
 }
 
-.defi-card {
-  border-radius: 20px;
-  background-color: #eee;
+// a card group which display cards using flex
+// card cols and gutter can be passed in as parameters
+@mixin card-group($cols-desktop, $cols-mobile, $gutter-x, $gutter-y) {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-left: -$gutter-x * 0.5;
+  margin-right: -$gutter-x * 0.5;
+  > * {
+    width: 0;
+    flex-grow: 1;
+    margin: ($gutter-y * 0.5) ($gutter-x * 0.5);
+    flex-basis: calc(#{math.div(100, $cols-desktop)}% - #{$gutter-x});
 
-  .title {
-    font-size: 1em;
-    color: #666;
+    @media screen and (max-width: 720px) {
+      flex-basis: calc(#{math.div(100, $cols-mobile)}% - #{$gutter-x});
+    }
   }
+}
+
+.defi-card-group-2 {
+  @include card-group(2, 1, 15px, 0);
+}
+
+.defi-card-group-6 {
+  @include card-group(3, 2, 15px, 20px);
+}
+
+.defi-card {
+  border-radius: 10px;
+  background-color: #eee;
+  padding: 10px;
+  > *:not-first-child {
+    margin-top: 10px;
+  }
+}
+
+.defi-card-title {
+  font-size: 0.8em;
+  color: #666;
+}
+
+.defi-card-large-text {
+  font-size: 1.4em;
+  text-align: center;
 }
