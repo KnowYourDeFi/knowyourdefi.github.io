@@ -37,7 +37,7 @@ class LQTYPriceV2 extends React.Component {
         return (
             <div className="lqty-price-v2">
               <p>
-                LQTY/ETH on Uniswap V2: {this.state.loading ? 'Loading...' : this.state.price}
+                  {this.state.loading ? 'Loading...' : 'USD $' + parseFloat(this.state.price).toFixed(2)}
               </p>
             </div>
         )
@@ -81,7 +81,7 @@ class LQTYPriceV3 extends React.Component {
         return (
             <div className="lqty-price-v3">
               <p>
-                LQTY/ETH on Uniswap V3: {this.state.loading ? 'Loading...' : this.state.price}
+                  {this.state.loading ? 'Loading...' : 'USD $' + parseFloat(this.state.price).toFixed(2)}
               </p>
             </div>
         )

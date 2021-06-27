@@ -38,15 +38,15 @@ class LiquityInfo extends React.Component {
         <div className="defi-card-group-6">
           <div className="defi-card">
             <div className="defi-card-title">LUSD/DAI on Uniswap V3</div>
-            <div className="defi-card-large-text">US $1.01</div>
+            <div className="defi-card-large-text"><LUSDPriceV3DAI /></div>
           </div>
           <div className="defi-card">
             <div className="defi-card-title">LUSD/USDT on Uniswap V3</div>
-            <div className="defi-card-large-text">US $1.01</div>
+            <div className="defi-card-large-text"><LUSDPriceV3USDT /></div>
           </div>
           <div className="defi-card">
             <div className="defi-card-title">LUSD/ETH on Uniswap V3</div>
-            <div className="defi-card-large-text">US $1.01</div>
+            <div className="defi-card-large-text"><LUSDPriceV2 /></div>
           </div>
           <div className="defi-card">
             <div className="defi-card-title">LUSD Holders</div>
@@ -76,10 +76,6 @@ class LiquityInfo extends React.Component {
           </div>
         </div>
 
-        <LUSDPriceV2 />
-        <LUSDPriceV3DAI />
-        <LUSDPriceV3USDT />
-
 
         <div className="defi-title">
           <LQTYLogo className="defi-title-logo" />
@@ -95,11 +91,11 @@ class LiquityInfo extends React.Component {
         <div className="defi-card-group-6">
           <div className="defi-card">
             <div className="defi-card-title">LQTY/ETH on Uniswap V3</div>
-            <div className="defi-card-large-text">US $1.01</div>
+            <div className="defi-card-large-text"><LQTYPriceV3 /></div>
           </div>
           <div className="defi-card">
             <div className="defi-card-title">LQTY/ETH on Uniswap V2</div>
-            <div className="defi-card-large-text">US $1.01</div>
+            <div className="defi-card-large-text"><LQTYPriceV2 /></div>
           </div>
           <div className="defi-card">
             <div className="defi-card-title">LQTY Circulating Supply</div>
@@ -121,8 +117,6 @@ class LiquityInfo extends React.Component {
           </div>
         </div>
 
-        <LQTYPriceV2 />
-        <LQTYPriceV3 />
 
         <div className="defi-title">
           <LiquidationLogo className="defi-title-logo" />

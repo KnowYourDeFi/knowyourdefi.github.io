@@ -37,7 +37,7 @@ class LUSDPriceV2 extends React.Component {
         return (
             <div className="lusd-price-v2">
               <p>
-                LUSD/ETH on Uniswap V2: {this.state.loading ? 'Loading...' : this.state.price}
+                  {this.state.loading ? 'Loading...' : 'US $' + parseFloat(this.state.price).toFixed(2)}
               </p>
             </div>
         )
@@ -75,7 +75,7 @@ class LUSDPriceV3DAI extends React.Component {
         return (
             <div className="lusd-price-v3-dai">
               <p>
-                LUSD/DAI on Uniswap V3: {this.state.loading ? 'Loading...' : this.state.price}
+                  {this.state.loading ? 'Loading...' : 'US $' + parseFloat(this.state.price).toFixed(2)}
               </p>
             </div>
         )
@@ -113,7 +113,7 @@ class LUSDPriceV3USDT extends React.Component {
         return (
             <div className="lusd-price-v3-usdt">
               <p>
-                LUSD/USDT on Uniswap V3: {this.state.loading ? 'Loading...' : this.state.price}
+                  {this.state.loading ? 'Loading...' : 'US $' + parseFloat(this.state.price).toFixed(2)}
               </p>
             </div>
         )
