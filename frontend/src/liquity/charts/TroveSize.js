@@ -70,9 +70,6 @@ class TroveSize extends React.Component {
 
   chart() {
     const options = {
-      title: {
-          text: 'Trove size'
-      },
       tooltip: {
           trigger: 'item',
           formatter: '{a} <br/>{b} : {c} ({d}%)'
@@ -97,7 +94,7 @@ class TroveSize extends React.Component {
         }
       ]
     }
-    return <ReactECharts option={options} style={{height: 600}}/>;
+    return <ReactECharts option={options} />;
   }
 
   trove() {
@@ -110,7 +107,7 @@ class TroveSize extends React.Component {
 
   render() {
     return (
-      <div style={{height: 600}}>
+      <div>
         {this.trove()}
       </div>
     )

@@ -57,15 +57,60 @@ $icon-size: 26px;
   margin: 0 auto;
 }
 
-.defi-info > *{
-  margin: 20px 0;
+.defi-info {
+  > * {
+    margin-bottom: 20px;
+  }
 }
 
-.defi-title-bar {
-  .title {
-    font-size: 1.5em;
-    color: #333;
+$defi-title-size: 30px;
+$defi-title-info-size: 15px;
+.defi-title {
+  margin-top: 30px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.defi-title-logo {
+  height: $defi-title-size;
+  width: $defi-title-size;
+}
+.defi-title-text {
+  font-size: $defi-title-size;
+  color: #333;
+  margin-left: 15px;
+}
+.defi-title-info {
+  &:before {
+    content: "i";
   }
+  position: relative;
+  align-self: start;
+  margin-left: 15px;
+  margin-top: 10px;
+  text-align: center;
+  line-height: $defi-title-info-size;
+  width: $defi-title-info-size;
+  height: $defi-title-info-size;
+  font-size: $defi-title-info-size * 0.7;
+  border: 1px solid #888;
+  color: #888;
+  font-weight: bold;
+  border-radius: 50%;
+  &:hover {
+    .defi-title-info-panel {
+      display: block;
+    }
+  }
+}
+.defi-title-info-panel {
+  position: absolute;
+  left: 10px;
+  top: 0;
+  // display: none;
+  background-color: #eee;
+  border-radius: 10px;
 }
 
 // a card group which display cards using flex
