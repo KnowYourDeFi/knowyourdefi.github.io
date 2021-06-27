@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactECharts from 'echarts-for-react'
-import {formatDate} from '../Timestamps'
+import {formatDate} from '../utility/Timestamps'
 import {liquityClient, last7DayBlocks, splitQuery} from '../LiquityData'
 import dayjs from 'dayjs'
 
