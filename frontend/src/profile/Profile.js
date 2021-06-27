@@ -1,9 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import AddressBar from './AddressBar'
 import './Profile.scss'
+import AddressBar from './AddressBar'
+import { EmptyPage, ErrorPage } from './Placeholder'
 
 class Profile extends React.Component {
+
+  state = {
+    address: null,
+  }
 
   constructor(props) {
     super(props)
@@ -17,13 +22,23 @@ class Profile extends React.Component {
   }
 
   onCurrentAddressChange(address) {
+    this.setState({ address })
     this.props.onCurrentAddressChange(address)
+  }
+
+  renderContent() {
+    if (!this.state.address) {
+      return <EmptyPage />
+    } else {
+      return this.state.address
+    }
   }
 
   render() {
     return (
       <div className="profile">
         <AddressBar ref={this.addressbar} onCurrentAddressChange={this.onCurrentAddressChange} />
+        {this.renderContent()}
       </div>
     )
   }
@@ -34,7 +49,7 @@ Profile.propTypes = {
 }
 
 Profile.defaultProps = {
-  onCurrentAddressChange: function (address) { console.log('current address change', address ) },
+  onCurrentAddressChange: function (address) { console.log('current address change', address) },
 }
 
 export default Profile

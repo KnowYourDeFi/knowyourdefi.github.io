@@ -89,11 +89,11 @@ $icon-size: 26px;
 }
 
 .defi-card-group-2 {
-  @include card-group(2, 1, 15px, 0);
+  @include card-group(2, 1, 20px, 20px);
 }
 
 .defi-card-group-6 {
-  @include card-group(3, 2, 15px, 20px);
+  @include card-group(3, 2, 20px, 20px);
 }
 
 .defi-card {
