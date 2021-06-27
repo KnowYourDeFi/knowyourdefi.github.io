@@ -1,12 +1,11 @@
 import React from 'react'
+import LearnLiquity from '../liquity/LearnLiquity'
 
 class Rabbit extends React.Component {
 
   render() {
     return (
-      <div>
-        Rabbit
-      </div>
+      <LearnLiquity />
     )
   }
 }
