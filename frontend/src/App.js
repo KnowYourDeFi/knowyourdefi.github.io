@@ -1,6 +1,7 @@
 import React from 'react'
 import './App.scss'
-import './resources/bootstrap.css'
+// import 'react-bootstrap'
+// import './resources/bootstrap.css'
 import { ReactComponent as RabbitLogo } from './resources/rabbithole.svg'
 import { ReactComponent as LiquityLogo } from './resources/liquity.svg'
 import { ReactComponent as GitHubLogo } from './resources/github.svg'
