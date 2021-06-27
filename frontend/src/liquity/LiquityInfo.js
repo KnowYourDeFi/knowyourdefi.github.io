@@ -7,6 +7,7 @@ import CollateralRatio from './charts/CollateralRatio';
 import { LQTYPriceV2, LQTYPriceV3 } from './charts/LqtyPrices'
 import { LUSDPriceV2, LUSDPriceV3DAI, LUSDPriceV3USDT } from './charts/LusdPrices'
 import { CurrentTroveNumber, RecentTroveNumbers } from './charts/TroveNumbers'
+import {StakingLUSD} from './charts/StakingLUSD'
 
 class LiquityInfo extends React.Component {
 
@@ -25,6 +26,7 @@ class LiquityInfo extends React.Component {
         <LUSDPriceV3DAI />
         <LUSDPriceV3USDT />
         <LusdTotalSupply />
+        <StakingLUSD />
 
         <div className="defi-title-bar">
           <span className="title">LQTY</span>

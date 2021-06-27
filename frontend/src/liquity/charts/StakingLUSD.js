@@ -1,56 +1,21 @@
 import React from 'react'
 import ReactECharts from 'echarts-for-react'
 import {formatDate} from '../Timestamps'
-import {query, liquityClient, last7DayBlocks, splitQuery} from '../LiquityData'
+import {liquityClient, last7DayBlocks, splitQuery} from '../LiquityData'
 import dayjs from 'dayjs'
 
-class CurrentTroveNumber extends React.Component {
-    state = {
-        loading: true,
-        number: 0
-    }
-
-    componentDidMount() {
-        const gql = `{
-            global(id:"only")
-            {
-                numberOfOpenTroves
-            }
-        }`
-        
-        query(gql).then(data => {
-          this.setState({
-            loading: false,
-            number: data.global.numberOfOpenTroves,
-          })
-        }).catch(e => {
-          console.error(e)
-        })
-      }
-    
-      render() {
-        return (
-          <div className="current-trove-number">
-            <p>
-              Number of troves: {this.state.loading ? 'Loading...' : this.state.number}
-            </p>
-          </div>
-        )
-      }
-}
-
-class RecentTroveNumbers extends React.Component {
+class StakingLUSD extends React.Component {
     state = {
         loading: true,
         data: []
     }
 
-    troveNumbersQuery(blocks) {
+    stakingQuery(blocks) {
         let queryString = 'query blocks {'
         queryString += blocks.map(
           (block) => `
-            t${block.timestamp}: global(id:"only", block: { number: ${block.number} }) { 
-                numberOfOpenTroves
+            t${block.timestamp}: systemStates(block: { number: ${block.number} }, first:1, orderBy: sequenceNumber, orderDirection:desc) { 
+                tokensInStabilityPool
             }
           `
         )
@@ -59,7 +24,7 @@ class RecentTroveNumbers extends React.Component {
         return queryString
     }
 
-    async getRecentNumbers() {
+    async getRecentStaking() {
         let blocks
         try {
             blocks = await last7DayBlocks()
@@ -68,17 +33,19 @@ class RecentTroveNumbers extends React.Component {
                 return []
             }
 
-            let result = await splitQuery(this.troveNumbersQuery, liquityClient, [], blocks, 500)
+            let result = await splitQuery(this.stakingQuery, liquityClient, [], blocks, 500)
 
             // format result
             let values = []
             for (var row in result) {
               let timestamp = row.split('t')[1]
-              let number = result[row]?.numberOfOpenTroves
+              let arr = result[row]
+              if (!arr) continue
+              let stake = parseFloat(arr[0].tokensInStabilityPool)
               if (timestamp) {
                 values.push({
                   timestamp,
-                  number,
+                  stake,
                 })
               }
             }
@@ -94,7 +61,7 @@ class RecentTroveNumbers extends React.Component {
     }
 
     componentDidMount() {
-        this.getRecentNumbers().then(data => {
+        this.getRecentStaking().then(data => {
             this.setState({
                 loading: false,
                 data: data
@@ -104,10 +71,10 @@ class RecentTroveNumbers extends React.Component {
         })
     }
 
-    numberChart() {
+    stakingChart() {
         const options = {
             title: {
-                text: 'Trove numbers (7d)'
+                text: 'Staking LUSD (7d)'
             },
             xAxis: {
                 type: 'category',
@@ -131,8 +98,8 @@ class RecentTroveNumbers extends React.Component {
                 }
             },
             series: [{
-                name: 'Trove number',
-                data: this.state.data.map(item => item.number),
+                name: 'Staking',
+                data: this.state.data.map(item => item.stake),
                 type: 'line'
             }]
         }
@@ -143,18 +110,17 @@ class RecentTroveNumbers extends React.Component {
         if (this.state.loading) {
             return <p>Loading...</p>
           } else {
-            return this.numberChart()
+            return this.stakingChart()
           }
     }
 
     render() {
         return (
-          <div className="recent-trove-numbers">
+          <div className="recent-staking-lusd">
             {this.chart()}
           </div>
         )
     }
 }
 
-export {CurrentTroveNumber}
-export {RecentTroveNumbers}
+export {StakingLUSD}
