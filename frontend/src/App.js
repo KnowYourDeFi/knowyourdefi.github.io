@@ -58,17 +58,17 @@ class App extends React.Component {
 
   onGithubClick(e) {
     e.preventDefault()
-    window.open('https://www.github.com', '_blank').focus()
+    window.open('https://github.com/KnowYourDeFi/knowyourdefi.github.io', '_blank').focus()
   }
 
   onMediumClick(e) {
     e.preventDefault()
-    window.open('https://www.medium.com', '_blank').focus()
+    window.open('https://medium.com/@KnowYourDeFi', '_blank').focus()
   }
 
   onTwitterClick(e) {
     e.preventDefault()
-    window.open('https://www.twitter.com', '_blank').focus()
+    window.open('https://twitter.com/rhizomedao', '_blank').focus()
   }
 
   onProfileClick(e) {
