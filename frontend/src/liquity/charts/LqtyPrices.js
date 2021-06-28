@@ -1,14 +1,8 @@
 import React from 'react'
 import {query, uniV2Client, uniV3Client} from '../LiquityData'
 
-class LQTYPriceV2 extends React.Component {
-    state = {
-        loading: true,
-        price: 0
-    }
-
-    componentDidMount() {
-        const gql = `
+export async function queryLQTYPriceV2() {
+    const gql = `
         {
             pair(id:"0xb13201b48b1e61593df055576964d0b3aab66ea3")
             {
@@ -21,12 +15,23 @@ class LQTYPriceV2 extends React.Component {
         }
         `
         //Get Uniswap V2 price
-        query(gql, uniV2Client).then(data => {
-            const ethPrice = data.bundle.ethPrice
-            const tokenPriceInEth = data.pair.token1Price
+        let data = await query(gql, uniV2Client)
+        const ethPrice = data.bundle.ethPrice
+        const tokenPriceInEth = data.pair.token1Price
+        return ethPrice * tokenPriceInEth
+}
+
+class LQTYPriceV2 extends React.Component {
+    state = {
+        loading: true,
+        price: 0
+    }
+
+    componentDidMount() {
+        queryLQTYPriceV2().then(price => {
             this.setState({
               loading: false,
-              price: ethPrice * tokenPriceInEth
+              price: price
             })
         }).catch(e => {
             console.error(e)

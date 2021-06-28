@@ -1,10 +1,11 @@
 import React from 'react'
 import LqtyTotalSupply from './charts/LqtyTotalSupply';
-import {LusdCurrentTotalSupply} from './charts/LusdTotalSupply';
+import {LusdCurrentTotalSupply, LusdTotalSupply, Lusd7DayMintBurn} from './charts/LusdTotalSupply';
 import TroveSize from './charts/TroveSize'
 import CollateralRatio from './charts/CollateralRatio';
 import { LQTYPriceV2, LQTYPriceV3 } from './charts/LqtyPrices'
 import { LUSDPriceV2, LUSDPriceV3DAI, LUSDPriceV3USDT } from './charts/LusdPrices'
+import LusdAPR  from './charts/LusdAPR'
 import { RecentTroveNumbers } from './charts/TroveNumbers'
 import { StakingLUSD } from './charts/StakingLUSD'
 import {TVL, TVL7DayChange} from'./charts/TVL'
@@ -63,7 +64,7 @@ class LiquityInfo extends React.Component {
           </div>
           <div className="defi-card">
             <div className="defi-card-title">LUSD Staking APR(7d average)</div>
-            <div className="defi-card-large-text">13.41%</div>
+            <div className="defi-card-large-text"><LusdAPR /></div>
           </div>
           <div className="defi-card">
             <div className="defi-card-title">LUSD Total Supply</div>
@@ -72,7 +73,7 @@ class LiquityInfo extends React.Component {
         </div>
         <div className="defi-card">
           <div className="defi-card-title">LUSD Total Supply</div>
-          Chart
+          <LusdTotalSupply />
         </div>
         <div className="defi-card-group-2">
           <div className="defi-card">
@@ -81,7 +82,7 @@ class LiquityInfo extends React.Component {
           </div>
           <div className="defi-card">
             <div className="defi-card-title">LUSD Mint/Burn (7d)</div>
-            Chart
+            <Lusd7DayMintBurn />
           </div>
         </div>
 
