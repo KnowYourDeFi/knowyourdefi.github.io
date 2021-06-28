@@ -1,5 +1,5 @@
 import { ApolloClient, InMemoryCache, gql } from '@apollo/client'
-import {hourlyTimestamps} from './utility/Timestamps'
+import {hourlyTimestamps, timestampsSinceLiquityEpoch} from './utility/Timestamps'
 
 export const liquityClient = new ApolloClient({
   uri: 'https://api.thegraph.com/subgraphs/name/liquity/liquity',
@@ -73,6 +73,10 @@ export async function getBlocksFromTimestamps(timestamps, skipCount = 500) {
 
 export const last7DayBlocks = () => {
   return getBlocksFromTimestamps(hourlyTimestamps())
+}
+
+export const blocksSinceLiquityEpoch = (hourInterval = 3) => {
+  return getBlocksFromTimestamps(timestampsSinceLiquityEpoch(hourInterval))
 }
 
 export async function query(ql, client = liquityClient) {
