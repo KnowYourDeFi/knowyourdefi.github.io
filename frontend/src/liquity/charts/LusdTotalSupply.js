@@ -1,8 +1,12 @@
 import React from 'react'
-import { numberWithCommas } from '../../utils/NumberUtils'
-import { query } from '../LiquityData'
+import ReactECharts from 'echarts-for-react'
+import {formatDate} from '../../utils/Timestamps'
+import {query, liquityClient, last7DayBlocks, blocksSinceLiquityEpoch, splitQuery} from '../LiquityData'
+import dayjs from 'dayjs'
+import {chartRed, chartGreen, chartBlue} from '../../utils/ChartColors'
+import { numberWithCommas, abbreviateNumber } from '../../utils/NumberUtils'
 
-class LusdTotalSupply extends React.Component {
+class LusdCurrentTotalSupply extends React.Component {
   state = {
     loading: true,
     LUSD: 0,
@@ -17,15 +21,7 @@ class LusdTotalSupply extends React.Component {
         totalSupply
       }
     }`
-    // {
-    //   "data": {
-    //     "LUSD": {
-    //       "name": "LUSD Stablecoin",
-    //       "symbol": "LUSD",
-    //       "totalSupply": "782143060978094386401558948"
-    //     }
-    //   }
-    // }
+    
     query(gql).then(data => {
       this.setState({
         loading: false,
@@ -41,4 +37,4 @@ class LusdTotalSupply extends React.Component {
   }
 }
 
-export default LusdTotalSupply
+export {LusdCurrentTotalSupply}

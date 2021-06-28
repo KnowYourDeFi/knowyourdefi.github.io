@@ -1,5 +1,5 @@
 import React from 'react'
-import {nowTimestamp} from '../utility/Timestamps'
+import {nowTimestamp} from '../../utils/Timestamps'
 import {query, uniV2Client, getBlocksFromTimestamps} from '../LiquityData'
 
 class LqtyAPR extends React.Component {

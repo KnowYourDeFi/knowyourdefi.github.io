@@ -1,9 +1,9 @@
 import React from 'react'
 import ReactECharts from 'echarts-for-react'
-import {formatDate} from '../utility/Timestamps'
+import {formatDate} from '../../utils/Timestamps'
 import {query, liquityClient, last7DayBlocks, splitQuery} from '../LiquityData'
 import dayjs from 'dayjs'
-import {abbreviateNumber} from '../utility/StringFormatter'
+import { abbreviateNumber } from '../../utils/NumberUtils'
 
 class CurrentTroveNumber extends React.Component {
     state = {

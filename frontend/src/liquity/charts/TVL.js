@@ -1,10 +1,10 @@
 import React from 'react'
 import ReactECharts from 'echarts-for-react'
-import {formatDate} from '../utility/Timestamps'
+import {formatDate} from '../../utils/Timestamps'
 import {liquityClient, last7DayBlocks, blocksSinceLiquityEpoch, splitQuery} from '../LiquityData'
 import dayjs from 'dayjs'
-import {chartRed, chartGreen, chartBlue} from '../utility/ChartColors'
-import {abbreviateNumber} from '../utility/StringFormatter'
+import {chartRed, chartGreen, chartBlue} from '../../utils/ChartColors'
+import { abbreviateNumber } from '../../utils/NumberUtils'
 
 class TVL extends React.Component {
     state = {

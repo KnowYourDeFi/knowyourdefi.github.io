@@ -1,6 +1,6 @@
 import React from 'react'
 import LqtyTotalSupply from './charts/LqtyTotalSupply';
-import LusdTotalSupply from './charts/LusdTotalSupply';
+import {LusdCurrentTotalSupply} from './charts/LusdTotalSupply';
 import TroveSize from './charts/TroveSize'
 import CollateralRatio from './charts/CollateralRatio';
 import { LQTYPriceV2, LQTYPriceV3 } from './charts/LqtyPrices'
@@ -67,7 +67,7 @@ class LiquityInfo extends React.Component {
           </div>
           <div className="defi-card">
             <div className="defi-card-title">LUSD Total Supply</div>
-            <div className="defi-card-large-text"><LusdTotalSupply /></div>
+            <div className="defi-card-large-text"><LusdCurrentTotalSupply /></div>
           </div>
         </div>
         <div className="defi-card">
