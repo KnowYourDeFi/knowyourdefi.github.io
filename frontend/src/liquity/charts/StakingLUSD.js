@@ -3,6 +3,7 @@ import ReactECharts from 'echarts-for-react'
 import {formatDate} from '../utility/Timestamps'
 import {liquityClient, last7DayBlocks, splitQuery} from '../LiquityData'
 import dayjs from 'dayjs'
+import {abbreviateNumber} from '../utility/StringFormatter'
 
 class StakingLUSD extends React.Component {
     state = {
@@ -86,7 +87,12 @@ class StakingLUSD extends React.Component {
                 }
             },
             yAxis: {
-                type: 'value'
+                type: 'value',
+                axisLabel: {
+                    formatter: function (value, _idx) {
+                      return abbreviateNumber(value)
+                    }
+                }
             },
             tooltip: {
                 trigger: 'axis',
@@ -99,7 +105,7 @@ class StakingLUSD extends React.Component {
             },
             series: [{
                 name: 'Staking',
-                data: this.state.data.map(item => item.stake),
+                data: this.state.data.map(item => item.stake.toFixed(2)),
                 type: 'line'
             }]
         }
