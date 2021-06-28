@@ -30,7 +30,7 @@ class TVL extends React.Component {
     async getRecentTVLs() {
       let blocks
       try {
-        blocks = await blocksSinceLiquityEpoch()
+        blocks = await blocksSinceLiquityEpoch(24)
         // catch failing case
         if (!blocks || blocks.length === 0) {
             return []
