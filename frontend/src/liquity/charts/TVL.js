@@ -4,6 +4,7 @@ import {formatDate} from '../utility/Timestamps'
 import {liquityClient, last7DayBlocks, blocksSinceLiquityEpoch, splitQuery} from '../LiquityData'
 import dayjs from 'dayjs'
 import {chartRed, chartGreen, chartBlue} from '../utility/ChartColors'
+import {abbreviateNumber} from '../utility/StringFormatter'
 
 class TVL extends React.Component {
     state = {
@@ -93,6 +94,11 @@ class TVL extends React.Component {
           {
             name: 'ETH',
             type: 'value',
+            axisLabel: {
+                formatter: function (value, _idx) {
+                  return abbreviateNumber(value)
+                }
+            },
             position: 'left',
             axisLine: {
                 show: true,
@@ -104,6 +110,11 @@ class TVL extends React.Component {
           {
             name: 'USD',
             type: 'value',
+            axisLabel: {
+                formatter: function (value, _idx) {
+                  return abbreviateNumber(value)
+                }
+            },
             position: 'right',
             axisLine: {
                 show: true,
@@ -253,7 +264,12 @@ class TVL7DayChange extends React.Component {
           }
       },
       yAxis: {
-          type: 'value'
+          type: 'value',
+          axisLabel: {
+            formatter: function (value, _idx) {
+              return abbreviateNumber(value)
+            }
+          }
       },
       tooltip: {
           trigger: 'axis',

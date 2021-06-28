@@ -69,15 +69,18 @@ class TroveSize extends React.Component {
   }
 
   chart() {
+    if (this.state.loading) {
+      return <p>Loading...</p>
+    }
     const options = {
       tooltip: {
           trigger: 'item',
           formatter: '{a} <br/>{b} : {c} ({d}%)'
       },
-      legend: {
-        top: '5%',
-        left: 'center'
-      },
+      // legend: {
+      //   top: '5%',
+      //   left: 'center'
+      // },
       series: [
         {
           name: 'Trove size',
@@ -90,25 +93,22 @@ class TroveSize extends React.Component {
               shadowColor: 'rgba(0, 0, 0, 0.5)'
             }
           },
-          data: this.state.troveData
+          data: this.state.troveData.map((item) => {
+            return {
+              ...item,
+              value: parseFloat(item.value.toFixed(2))
+            }
+          }),
         }
       ]
     }
     return <ReactECharts option={options} />;
   }
 
-  trove() {
-    if (this.state.loading) {
-      return <p>Loading...</p>
-    } else {
-      return this.chart()
-    }
-  }
-
   render() {
     return (
       <div>
-        {this.trove()}
+        {this.chart()}
       </div>
     )
   }

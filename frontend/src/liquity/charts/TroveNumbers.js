@@ -3,6 +3,7 @@ import ReactECharts from 'echarts-for-react'
 import {formatDate} from '../utility/Timestamps'
 import {query, liquityClient, last7DayBlocks, splitQuery} from '../LiquityData'
 import dayjs from 'dayjs'
+import {abbreviateNumber} from '../utility/StringFormatter'
 
 class CurrentTroveNumber extends React.Component {
     state = {
@@ -105,52 +106,52 @@ class RecentTroveNumbers extends React.Component {
     }
 
     numberChart() {
-        const options = {
-            title: {
-                text: 'Trove numbers (7d)'
-            },
-            xAxis: {
-                type: 'category',
-                data: this.state.data.map(item => formatDate(item.timestamp, 'YYYY-MM-DD HH:mm')),
-                axisLabel: {
-                    formatter: function (value, _idx) {
-                        return formatDate(dayjs(value).unix(), 'MMMM D')
-                    }
-                }
-            },
-            yAxis: {
-                type: 'value'
-            },
-            tooltip: {
-                trigger: 'axis',
-                axisPointer: {
-                    type: 'cross',
-                    label: {
-                        backgroundColor: '#6a7985'
-                    }
-                }
-            },
-            series: [{
-                name: 'Trove number',
-                data: this.state.data.map(item => item.number),
-                type: 'line'
-            }]
-        }
-        return <ReactECharts option={options} />
-    }
-
-    chart() {
-        if (this.state.loading) {
-            return <p>Loading...</p>
-          } else {
-            return this.numberChart()
-          }
+      if (this.state.loading) {
+        return <p>Loading...</p>
+      }
+      const options = {
+          title: {
+              text: 'Trove numbers (7d)'
+          },
+          xAxis: {
+              type: 'category',
+              data: this.state.data.map(item => formatDate(item.timestamp, 'YYYY-MM-DD HH:mm')),
+              axisLabel: {
+                  formatter: function (value, _idx) {
+                      return formatDate(dayjs(value).unix(), 'MMMM D')
+                  }
+              }
+          },
+          yAxis: {
+              type: 'value',
+              axisLabel: {
+                  formatter: function (value, _idx) {
+                    return abbreviateNumber(value)
+                  }
+              }
+          },
+          tooltip: {
+              trigger: 'axis',
+              axisPointer: {
+                  type: 'cross',
+                  label: {
+                      backgroundColor: '#6a7985'
+                  }
+              }
+          },
+          series: [{
+              name: 'Trove number',
+              data: this.state.data.map(item => item.number),
+              type: 'line'
+          }]
+      }
+      return <ReactECharts option={options} />
     }
 
     render() {
         return (
           <div className="recent-trove-numbers">
-            {this.chart()}
+            {this.numberChart()}
           </div>
         )
     }
