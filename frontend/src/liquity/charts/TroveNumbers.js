@@ -18,7 +18,7 @@ class CurrentTroveNumber extends React.Component {
                 numberOfOpenTroves
             }
         }`
-        
+
         query(gql).then(data => {
           this.setState({
             loading: false,
@@ -28,7 +28,7 @@ class CurrentTroveNumber extends React.Component {
           console.error(e)
         })
       }
-    
+
       render() {
         return (
           <div className="current-trove-number">
@@ -50,12 +50,12 @@ class RecentTroveNumbers extends React.Component {
         let queryString = 'query blocks {'
         queryString += blocks.map(
           (block) => `
-            t${block.timestamp}: global(id:"only", block: { number: ${block.number} }) { 
+            t${block.timestamp}: global(id:"only", block: { number: ${block.number} }) {
                 numberOfOpenTroves
             }
           `
         )
-      
+
         queryString += '}'
         return queryString
     }
@@ -110,9 +110,6 @@ class RecentTroveNumbers extends React.Component {
         return <p>Loading...</p>
       }
       const options = {
-          title: {
-              text: 'Trove numbers (7d)'
-          },
           xAxis: {
               type: 'category',
               data: this.state.data.map(item => formatDate(item.timestamp, 'YYYY-MM-DD HH:mm')),

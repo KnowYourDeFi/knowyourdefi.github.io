@@ -23,7 +23,7 @@ class LqtyAPR extends React.Component {
         let gql = 'query blocks {'
         gql += blocks.map(
           (block) => `
-            t${block.timestamp}: global(id:"only", block: { number: ${block.number} }) { 
+            t${block.timestamp}: global(id:"only", block: { number: ${block.number} }) {
                 totalRedemptionFeesPaid
                 totalBorrowingFeesPaid
                 totalLQTYTokensStaked
@@ -115,13 +115,7 @@ class LqtyAPR extends React.Component {
                 apr = parseFloat(numeral * 100).toFixed(2)+"%"
             }
         }
-        return (
-            <div className="lqty-apr">
-              <p>
-                  {loaded ? apr: 'Loading...'}
-              </p>
-            </div>
-        )
+        return loaded ? apr: 'Loading...'
     }
 }
 

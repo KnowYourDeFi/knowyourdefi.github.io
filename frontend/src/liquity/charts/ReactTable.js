@@ -31,7 +31,7 @@ export default function Table({ columns, data }) {
       },
       usePagination
     );
-  
+
     // Render the UI for your table
     return (
       <>

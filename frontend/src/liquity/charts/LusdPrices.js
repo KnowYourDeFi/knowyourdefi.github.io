@@ -34,13 +34,7 @@ class LUSDPriceV2 extends React.Component {
     }
 
     render() {
-        return (
-            <div className="lusd-price-v2">
-              <p>
-                  {this.state.loading ? 'Loading...' : 'US $' + parseFloat(this.state.price).toFixed(2)}
-              </p>
-            </div>
-        )
+        return this.state.loading ? 'Loading...' : 'US $' + parseFloat(this.state.price).toFixed(2)
     }
 }
 
@@ -72,13 +66,7 @@ class LUSDPriceV3DAI extends React.Component {
     }
 
     render() {
-        return (
-            <div className="lusd-price-v3-dai">
-              <p>
-                  {this.state.loading ? 'Loading...' : 'US $' + parseFloat(this.state.price).toFixed(2)}
-              </p>
-            </div>
-        )
+      return this.state.loading ? 'Loading...' : 'US $' + parseFloat(this.state.price).toFixed(2)
     }
 }
 
@@ -110,13 +98,7 @@ class LUSDPriceV3USDT extends React.Component {
     }
 
     render() {
-        return (
-            <div className="lusd-price-v3-usdt">
-              <p>
-                  {this.state.loading ? 'Loading...' : 'US $' + parseFloat(this.state.price).toFixed(2)}
-              </p>
-            </div>
-        )
+        return this.state.loading ? 'Loading...' : 'US $' + parseFloat(this.state.price).toFixed(2)
     }
 }
 
