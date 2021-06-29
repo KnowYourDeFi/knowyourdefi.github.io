@@ -41,7 +41,7 @@ class StakingLUSD extends React.Component {
             for (var row in result) {
               let timestamp = row.split('t')[1]
               let arr = result[row]
-              if (!arr) continue
+              if (!arr || arr.length === 0) continue
               let stake = parseFloat(arr[0].tokensInStabilityPool)
               if (timestamp) {
                 values.push({

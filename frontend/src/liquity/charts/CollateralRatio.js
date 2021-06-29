@@ -36,7 +36,6 @@ class CollateralRatio extends React.Component {
     if (this.state.loading) {
       return <p>Loading...</p>
     }
-    console.log('this.state.ratio...........', this.state)
     return <ColorProgressBar
       progress={this.state.ratio}
       descriptions={['Killed', 'High Risk', 'Master', 'Healthy']}
