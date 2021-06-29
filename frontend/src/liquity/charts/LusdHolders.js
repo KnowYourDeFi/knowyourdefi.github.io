@@ -55,13 +55,7 @@ class LusdHolders extends React.Component {
     }
 
     render() {
-        return (
-            <div className="lusd-holders">
-              <p>
-                  {this.state.loading ? 'Loading...' : this.state.holders.length}
-              </p>
-            </div>
-        )
+        return this.state.loading ? 'Loading...' : this.state.holders.length
     }
 }
 
