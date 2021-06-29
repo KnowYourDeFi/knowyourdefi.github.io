@@ -46,7 +46,7 @@ class LusdAPR extends React.Component {
         const issuanceFactor = 0.999998681227695000
         const deploymenttime = 1617611537
         const lqtysupplycap = 32000000
-        
+
         const minutesPassed = (nowTimestamp() - deploymenttime) / 60
         const factor = Math.pow(issuanceFactor, minutesPassed)
         const lqtyRewards = lqtysupplycap * factor
@@ -59,13 +59,7 @@ class LusdAPR extends React.Component {
 
     render() {
         const loaded = this.state.depositedLUSD && this.state.lqtyPrice
-        return (
-            <div className="lqty-price-v2">
-              <p>
-                  {loaded ? this.calculateAPR(this.state.depositedLUSD, this.state.lqtyPrice) : 'Loading...'}
-              </p>
-            </div>
-        )
+        return loaded ? this.calculateAPR(this.state.depositedLUSD, this.state.lqtyPrice) : 'Loading...'
     }
 }
 

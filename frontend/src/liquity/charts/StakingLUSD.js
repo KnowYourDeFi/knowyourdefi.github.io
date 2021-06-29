@@ -15,12 +15,12 @@ class StakingLUSD extends React.Component {
         let queryString = 'query blocks {'
         queryString += blocks.map(
           (block) => `
-            t${block.timestamp}: systemStates(block: { number: ${block.number} }, first:1, orderBy: sequenceNumber, orderDirection:desc) { 
+            t${block.timestamp}: systemStates(block: { number: ${block.number} }, first:1, orderBy: sequenceNumber, orderDirection:desc) {
                 tokensInStabilityPool
             }
           `
         )
-      
+
         queryString += '}'
         return queryString
     }
@@ -74,9 +74,6 @@ class StakingLUSD extends React.Component {
 
     stakingChart() {
         const options = {
-            title: {
-                text: 'Staking LUSD (7d)'
-            },
             xAxis: {
                 type: 'category',
                 data: this.state.data.map(item => formatDate(item.timestamp, 'YYYY-MM-DD HH:mm')),

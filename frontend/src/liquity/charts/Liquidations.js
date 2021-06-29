@@ -53,7 +53,7 @@ function Liquidations() {
         ],
         []
     )
-    
+
     return (
         <div className="liquidations">
           <Table columns={columns} data={data} />
@@ -82,7 +82,7 @@ async function getRecentLiquidations() {
           collateralRatioBefore
           systemStateBefore
           {
-               price 
+               price
           }
         }
       }

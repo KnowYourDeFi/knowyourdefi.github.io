@@ -39,13 +39,7 @@ class LQTYPriceV2 extends React.Component {
     }
 
     render() {
-        return (
-            <div className="lqty-price-v2">
-              <p>
-                  {this.state.loading ? 'Loading...' : 'USD $' + parseFloat(this.state.price).toFixed(2)}
-              </p>
-            </div>
-        )
+        return this.state.loading ? 'Loading...' : 'USD $' + parseFloat(this.state.price).toFixed(2)
     }
 }
 
@@ -83,13 +77,7 @@ class LQTYPriceV3 extends React.Component {
     }
 
     render() {
-        return (
-            <div className="lqty-price-v3">
-              <p>
-                  {this.state.loading ? 'Loading...' : 'USD $' + parseFloat(this.state.price).toFixed(2)}
-              </p>
-            </div>
-        )
+        return this.state.loading ? 'Loading...' : 'USD $' + parseFloat(this.state.price).toFixed(2)
     }
 }
 
