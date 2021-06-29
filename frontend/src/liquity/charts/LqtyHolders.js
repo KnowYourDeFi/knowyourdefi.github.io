@@ -55,13 +55,7 @@ class LqtyHolders extends React.Component {
     }
 
     render() {
-        return (
-            <div className="lqty-holders">
-              <p>
-                  {this.state.loading ? 'Loading...' : this.state.holders.length}
-              </p>
-            </div>
-        )
+        return this.state.loading ? 'Loading...' : this.state.holders.length
     }
 }
 

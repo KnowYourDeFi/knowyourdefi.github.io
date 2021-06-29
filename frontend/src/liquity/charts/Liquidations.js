@@ -3,6 +3,15 @@ import {query} from '../LiquityData'
 import Table from "./ReactTable"
 import {formatDate} from '../../utils/Timestamps'
 
+
+
+const ellipsesStr = (str) => {return str.substr(0, 6) + '...' + str.substr(str.length-4, str.length)}
+const toLink = (value) => {
+    return (
+        <a href={'https://etherscan.io/tx/' + value}> {ellipsesStr(value)} </a>
+    )
+}
+
 function Liquidations() {
     const [data, setData] = useState([])
 
@@ -18,37 +27,39 @@ function Liquidations() {
             {
                 Header: "Timestamp",
                 accessor: "timeString",
-                width: 200
+                width: 150
             },
             {
                 Header: "Owner",
                 accessor: "owner",
-                width: 400
+                width: 150,
+                Cell: ({ cell: { value } }) => toLink(value)
             },
             {
                 Header: "Collateral (ETH)",
                 accessor: "collateralInETH",
-                width: 200
+                width: 150
             },
             {
                 Header: "Debt (LUSD)",
                 accessor: "debtInUSD",
-                width: 200
+                width: 150
             },
             {
                 Header: "ETH Price (USD)",
                 accessor: "ethPrice",
-                width: 200
+                width: 150
             },
             {
                 Header: "Collateral Ratio",
                 accessor: "collateralRatio",
-                width: 200
+                width: 150
             },
             {
                 Header: "Transaction",
                 accessor: "transaction",
-                width: 800
+                width: 150,
+                Cell: ({ cell: { value } }) => toLink(value)
             }
         ],
         []
@@ -101,7 +112,7 @@ async function getRecentLiquidations() {
             debtInUSD: parseFloat(item.liquidatedDebt).toFixed(2),
             ethPrice: parseFloat(item.troveChanges[0].systemStateBefore.price).toFixed(2),
             collateralRatio: parseFloat(item.troveChanges[0].collateralRatioBefore * 100).toFixed(2)+"%",
-            transaction: 'https://etherscan.io/tx/' + item.transaction.id
+            transaction: item.transaction.id
         }
     })
     return result
