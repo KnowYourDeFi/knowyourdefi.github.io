@@ -25,10 +25,10 @@ class ColorProgressBar extends React.Component {
             {this.props.descriptions && this.props.descriptions[3]}
           </div>
         </div>
-        <div className="indicator-text" style={{marginLeft: `calc(${this.props.progress}% - ${this.indicatorTextWidth/2}px)`}}>
+        <div className="indicator-text" style={{marginLeft: `calc(${this.props.progress / 3}% - ${this.indicatorTextWidth/2}px)`}}>
           {this.props.progress}%
         </div>
-        <div className="indicator" style={{marginLeft: `calc(${this.props.progress}% - ${this.indicatorWidth/2}px)`}}>
+        <div className="indicator" style={{marginLeft: `calc(${this.props.progress / 3}% - ${this.indicatorWidth/2}px)`}}>
         </div>
       </div>
     )

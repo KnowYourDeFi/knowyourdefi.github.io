@@ -58,9 +58,7 @@ class LusdAPR extends React.Component {
     }
 
     render() {
-        console.log('rendering', this.state)
         const loaded = this.state.depositedLUSD && this.state.lqtyPrice
-        console.log('loaded', loaded)
         return (
             <div className="lqty-price-v2">
               <p>
