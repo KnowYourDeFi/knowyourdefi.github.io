@@ -10,6 +10,7 @@ import { RecentTroveNumbers } from './charts/TroveNumbers'
 import { StakingLUSD } from './charts/StakingLUSD'
 import {TVL, TVL7DayChange} from'./charts/TVL'
 import {LqtyAPR} from'./charts/LqtyAPR'
+import Liquidations from './charts/Liquidations'
 import LiquityHeader from './LiquityHeader';
 import { ReactComponent as LUSDLogo } from '../resources/lusd.svg'
 import { ReactComponent as LQTYLogo } from '../resources/liquity.svg'
@@ -145,7 +146,7 @@ class LiquityInfo extends React.Component {
         </div>
         <div className="defi-card">
           <div className="defi-card-title">Recent Liquidations</div>
-          Chart
+          <Liquidations />
         </div>
 
         <div className="defi-title">
