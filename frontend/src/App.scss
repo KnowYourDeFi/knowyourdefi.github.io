@@ -73,7 +73,8 @@ table {
 thead {
   background-color: #f0f0f0;
 }
-th,td {
+th,
+td {
   padding: 5px 0;
   text-align: center;
 }
@@ -212,14 +213,23 @@ $defi-title-info-size: 15px;
     display: block;
   }
   position: absolute;
+  z-index: 500;
   left: $defi-title-info-size + 20px;
   top: 0;
   display: none;
-  background-color: rgb(179 236 250 / 80%);
+  width: 50vw;
+  background-color: rgb(179 236 250 / 90%);
   border-radius: 10px;
   padding: 15px;
   border: 1px solid #8fb6bf;
-  box-shadow: 3px 2px 6px 1px #e2e2e2;
+  box-shadow: 3px 2px 6px 1px rgba(128, 128, 128, 0.3);
+  p {
+    margin: 0;
+    font-size: 0.9em;
+  }
+  p + p {
+    margin-top: 15px;
+  }
 }
 
 // a card group which display cards using flex

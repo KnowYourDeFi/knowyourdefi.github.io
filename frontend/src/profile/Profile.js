@@ -151,8 +151,7 @@ class Profile extends React.Component {
             Risk Alert
           </div>
           <ColorProgressBar
-            progress={80}
-            descriptions={['Killed', 'High Risk', 'Master', 'Healthy']}
+            progress={280}
           />
           <div style={{ textAlign: 'center' }}>
             TextTextTextTextTextTextTextTextTextTextTextTextText<br />
