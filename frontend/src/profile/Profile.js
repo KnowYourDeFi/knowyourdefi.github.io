@@ -128,8 +128,8 @@ class Profile extends React.Component {
             href={`https://etherscan.io/address/${this.state.address}`}
             target="_blank" rel="noreferrer">All</a>
         </div>
-        <div class="defi-card">
-          <div class="defi-card-large-title">
+        <div className="defi-card">
+          <div className="defi-card-large-title">
             Ethereum
           </div>
           {this.walletEthTable()}

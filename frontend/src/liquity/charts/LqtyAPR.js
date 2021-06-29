@@ -11,7 +11,8 @@ class LqtyAPR extends React.Component {
 
     //Get blocks for now and 7 days ago
     async getBlocks() {
-        let now = nowTimestamp() - 600
+        //While testing, we found the latest block may not yet be indexed by Liquity, so getting earlier block
+        let now = nowTimestamp() - 1200
         let weekAgo = now - 7 * 24 * 3600
         let blocks = await getBlocksFromTimestamps([weekAgo, now])
         return blocks

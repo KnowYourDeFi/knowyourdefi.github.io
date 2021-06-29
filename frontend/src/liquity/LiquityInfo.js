@@ -58,7 +58,7 @@ class LiquityInfo extends React.Component {
             <div className="defi-card-large-text"><LUSDPriceV3USDT /></div>
           </div>
           <div className="defi-card">
-            <div className="defi-card-title">LUSD/ETH on Uniswap V3</div>
+            <div className="defi-card-title">LUSD/ETH on Uniswap V2</div>
             <div className="defi-card-large-text"><LUSDPriceV2 /></div>
           </div>
           <div className="defi-card">
