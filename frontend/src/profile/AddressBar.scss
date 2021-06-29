@@ -1,3 +1,7 @@
+.address-bar {
+  margin-top: 20px;
+}
+
 .address-line {
   display: flex;
   flex-direction: row;
@@ -71,12 +75,5 @@
   input {
     flex-grow: 1;
     margin-right: 15px;
-  }
-  button {
-    cursor: pointer;
-    &:disabled,
-    &[disabled] {
-      cursor: not-allowed;
-    }
   }
 }

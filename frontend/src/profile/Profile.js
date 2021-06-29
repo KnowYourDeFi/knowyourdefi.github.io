@@ -42,15 +42,15 @@ class Profile extends React.Component {
       <tbody>
         <tr>
           <th>LQTY</th>
-          <th>292.76</th>
-          <th>20%</th>
-          <th>$39,436</th>
+          <td>292.76</td>
+          <td>20%</td>
+          <td>$39,436</td>
         </tr>
         <tr>
           <th>LUSD</th>
-          <th>292.76</th>
-          <th>20%</th>
-          <th>$39,436</th>
+          <td>292.76</td>
+          <td>20%</td>
+          <td>$39,436</td>
         </tr>
       </tbody>
     </table>
@@ -68,8 +68,8 @@ class Profile extends React.Component {
       <tbody>
         <tr>
           <th>LUSD</th>
-          <th>292.76 LUSD</th>
-          <th>$39,436</th>
+          <td>292.76 LUSD</td>
+          <td>$39,436</td>
         </tr>
       </tbody>
     </table>
@@ -87,8 +87,8 @@ class Profile extends React.Component {
       <tbody>
         <tr>
           <th>ETH</th>
-          <th>29.00 ETH</th>
-          <th>$39,436</th>
+          <td>29.00 ETH</td>
+          <td>$39,436</td>
         </tr>
       </tbody>
     </table>
@@ -106,13 +106,13 @@ class Profile extends React.Component {
       <tbody>
         <tr>
           <th>ETH</th>
-          <th>292.76 ETH</th>
-          <th>$39,436</th>
+          <td>292.76 ETH</td>
+          <td>$39,436</td>
         </tr>
         <tr>
           <th>LQTY</th>
-          <th>29,892 LQTY</th>
-          <th>$39,436</th>
+          <td>29,892 LQTY</td>
+          <td>$39,436</td>
         </tr>
       </tbody>
     </table>
@@ -124,12 +124,12 @@ class Profile extends React.Component {
         <div className="defi-title">
           <WalletLogo className="defi-title-logo" />
           <span className="defi-title-text">Wallet</span>
-          <a className="defi-title-more"
+          <a className="defi-title-tag"
             href={`https://etherscan.io/address/${this.state.address}`}
             target="_blank" rel="noreferrer">All</a>
         </div>
         <div class="defi-card">
-          <div class="defi-card-title">
+          <div class="defi-card-large-title">
             Ethereum
           </div>
           {this.walletEthTable()}
@@ -140,14 +140,14 @@ class Profile extends React.Component {
           <span className="defi-title-text">Liquity</span>
         </div>
         <div className="defi-card">
-          <div className="defi-card-title">
+          <div className="defi-card-large-title">
             Trove
           </div>
           {this.liquityTroveSuppliedTable()}
           {this.liquityTroveBorrowTable()}
         </div>
         <div className="defi-card">
-          <div className="defi-card-title">
+          <div className="defi-card-large-title">
             Risk Alert
           </div>
           <ColorProgressBar
@@ -162,7 +162,7 @@ class Profile extends React.Component {
           </div>
         </div>
         <div className="defi-card">
-          <div className="defi-card-title">
+          <div className="defi-card-large-title">
             Staking
           </div>
           {this.liquityStakingTable()}
