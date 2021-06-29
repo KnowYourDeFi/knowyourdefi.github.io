@@ -45,14 +45,23 @@ class DropDownWithDelete extends React.Component {
     }
   }
 
-  addOption(option) {
-    const options = [option, ...this.state.options]
-    this.setState({
-      options: options,
-      value: option,
-    })
-    this.props.onOptionsChange(options)
-    this.props.onValueChange(option)
+  addAndSelectOption(option) {
+    if (this.state.options.indexOf(option) !== -1) {
+      // select option if already exists
+      this.setState({
+        value: option,
+      })
+      this.props.onValueChange(option)
+    } else {
+      // add and select option if not exists
+      const options = [option, ...this.state.options]
+      this.setState({
+        options: options,
+        value: option,
+      })
+      this.props.onOptionsChange(options)
+      this.props.onValueChange(option)
+    }
   }
 
   onExpandClick() {
@@ -140,7 +149,7 @@ DropDownWithDelete.propTypes = {
 DropDownWithDelete.defaultProps = {
   options: [],
   value: null,
-  onOptionsChange: function(options) { console.log('on options change', options)},
+  onOptionsChange: function (options) { console.log('on options change', options) },
   onValueChange: function (value) { console.log('on value change', value) },
 };
 

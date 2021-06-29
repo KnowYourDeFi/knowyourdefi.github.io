@@ -1,18 +1,14 @@
-@use 'sass:math';
-
 $indicator-text-height: 40px;
-$indicator-text-width: 80px;
 
-$indicator-text-overlap: math.div($indicator-text-height, 2);
+$indicator-text-overlap: $indicator-text-height * 0.3;
 
-$bar-height: 50px;
+$bar-height: 60px;
 $bar-top: $indicator-text-height - $indicator-text-overlap;
 
-$indicator-width: 2px;
 $indicator-height: $bar-height - $indicator-text-overlap;
 $indicator-top: $indicator-text-height;
 
-$total-height: $indicator-text-height + $bar-height - $indicator-text-overlap;;
+$total-height: $indicator-text-height + $bar-height - $indicator-text-overlap;
 
 .color-progress-bar {
   display: block;
@@ -23,6 +19,7 @@ $total-height: $indicator-text-height + $bar-height - $indicator-text-overlap;;
 
   .bar {
     position: absolute;
+    z-index: 100;
     top: $bar-top;
     height: $bar-height;
     width: 100%;
@@ -33,22 +30,22 @@ $total-height: $indicator-text-height + $bar-height - $indicator-text-overlap;;
   }
   .indicator-text {
     position: absolute;
+    z-index: 101;
     top: 0;
     height: $indicator-text-height;
-    width: $indicator-text-width;
     line-height: $indicator-text-height;
     background-color: #888888;
     color: white;
     font-size: 1em;
     font-weight: bold;
-    border-radius: math.div($indicator-text-height, 2);
+    border-radius: 100px;
     text-align: center;
   }
   .indicator {
     position: absolute;
+    z-index: 101;
     top: $indicator-top;
     height: $indicator-height;
-    width: $indicator-width;
     background-color: #888888;
   }
   .range {

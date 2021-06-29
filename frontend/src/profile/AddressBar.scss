@@ -45,8 +45,7 @@
   width: 55%;
   max-width: 800px;
   min-width: 500px;
-  min-height: 300px;
-  padding: 20px 30px;
+  padding: 30px;
   border-radius: 10px;
   margin: 0 auto;
   background-color: white;
@@ -63,11 +62,18 @@
     cursor: pointer;
   }
 }
+.add-address-text,
+.add-address-input,
+.add-address-metamask {
+  margin-top: 15px;
+}
 .add-address-title {
   font-size: 1.5em;
 }
+.add-address-text {
+  font-size: 1.1em;
+}
 .add-address-input {
-  margin-top: 20px;
   width: 100%;
   float: left;
   display: flex;
@@ -75,5 +81,15 @@
   input {
     flex-grow: 1;
     margin-right: 15px;
+  }
+}
+.add-address-metamask {
+  max-width: 200px;
+  align-self: center;
+  cursor: pointer;
+  border: 1px solid #e8e8e8;
+  border-radius: 10px;
+  &:hover {
+    background-color: #f8f8f8;
   }
 }

@@ -38,7 +38,6 @@ class CollateralRatio extends React.Component {
     }
     return <ColorProgressBar
       progress={this.state.ratio}
-      descriptions={['Killed', 'High Risk', 'Master', 'Healthy']}
     />
   }
 }
