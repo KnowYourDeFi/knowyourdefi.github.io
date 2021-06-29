@@ -5,11 +5,13 @@ import TroveSize from './charts/TroveSize'
 import CollateralRatio from './charts/CollateralRatio';
 import { LQTYPriceV2, LQTYPriceV3 } from './charts/LqtyPrices'
 import { LUSDPriceV2, LUSDPriceV3DAI, LUSDPriceV3USDT } from './charts/LusdPrices'
+import LusdHolders from './charts/LusdHolders'
 import LusdAPR  from './charts/LusdAPR'
 import { RecentTroveNumbers } from './charts/TroveNumbers'
 import { StakingLUSD } from './charts/StakingLUSD'
 import {TVL, TVL7DayChange} from'./charts/TVL'
 import {LqtyAPR} from'./charts/LqtyAPR'
+import LqtyHolders from './charts/LqtyHolders'
 import Liquidations from './charts/Liquidations'
 import LiquityHeader from './LiquityHeader';
 import { ReactComponent as LUSDLogo } from '../resources/lusd.svg'
@@ -61,7 +63,7 @@ class LiquityInfo extends React.Component {
           </div>
           <div className="defi-card">
             <div className="defi-card-title">LUSD Holders</div>
-            <div className="defi-card-large-text">2,346</div>
+            <div className="defi-card-large-text"><LusdHolders /></div>
           </div>
           <div className="defi-card">
             <div className="defi-card-title">LUSD Staking APR(7d average)</div>
@@ -114,7 +116,7 @@ class LiquityInfo extends React.Component {
           </div>
           <div className="defi-card">
             <div className="defi-card-title">LQTY Holders</div>
-            <div className="defi-card-large-text">2,346</div>
+            <div className="defi-card-large-text"><LqtyHolders /></div>
           </div>
           <div className="defi-card">
             <div className="defi-card-title">LQTY Staking APR(7d average)</div>
