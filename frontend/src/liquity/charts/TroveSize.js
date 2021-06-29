@@ -1,6 +1,7 @@
 import React from 'react'
-import {query} from '../LiquityData'
 import ReactECharts from 'echarts-for-react'
+import { gql } from '@apollo/client'
+import {liquityClient} from '../LiquityData'
 
 class TroveSize extends React.Component {
   state = {
@@ -8,15 +9,43 @@ class TroveSize extends React.Component {
     troveData: []
   }
 
-  componentDidMount() {
-    const gql = `{
-      troves(where:{status: open},first:1000, orderBy: collateral, orderDirection: desc)
-      {
-        collateral
+  async fetchData() {
+    const troveQuery = `
+    query tokenBalances($skip: Int!) {
+        troves(where:{status: open},first:1000, skip:$skip, orderBy: collateral, orderDirection: desc)
+        {
+          collateral
+        }
       }
-    }`
+    `
 
-    query(gql).then(data => {
+    try {
+      let skip = 0
+      let allResults = []
+      let found = false
+      while (!found) {
+        let result = await liquityClient.query({
+          query: gql(troveQuery),
+          variables: {
+            skip: skip
+          },
+          fetchPolicy: 'cache-first',
+        })
+        allResults = allResults.concat(result.data.troves)
+        if (result.data.troves.length < 1000) {
+          found = true
+        } else {
+          skip += 1000
+        }
+      }
+      return allResults
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  componentDidMount() {
+    this.fetchData().then(data => {
       this.processTroveData(data)
     }).catch(e => {
       console.error(e)
@@ -25,7 +54,7 @@ class TroveSize extends React.Component {
 
   processTroveData(data) {
     //Sizes are sorted in descending order
-    const sizes = data.troves.map(item => (parseFloat(item.collateral)))
+    const sizes = data.map(item => (parseFloat(item.collateral)))
     const spliters = [10, 100, 1000, 10000, 100000]
     //Find indexes spliting the sizes by given spliters
     let spliterIndex = spliters.length - 1

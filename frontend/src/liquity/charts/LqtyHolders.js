@@ -41,7 +41,7 @@ class LqtyHolders extends React.Component {
         } catch (e) {
           console.log(e)
         }
-      }
+    }
 
     componentDidMount() {
         this.fetchData().then(data => {
