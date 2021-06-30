@@ -10,7 +10,8 @@ import LusdAPR  from './charts/LusdAPR'
 import { RecentTroveNumbers } from './charts/TroveNumbers'
 import { StakingLUSD } from './charts/StakingLUSD'
 import {TVL, TVL7DayChange} from'./charts/TVL'
-import {LqtyAPR} from'./charts/LqtyAPR'
+import {LqtyAPR} from './charts/LqtyAPR'
+import LqtyCirculatingSupply from './charts/LqtyCirculatingSupply'
 import LqtyHolders from './charts/LqtyHolders'
 import Liquidations from './charts/Liquidations'
 import LiquityHeader from './LiquityHeader';
@@ -114,7 +115,7 @@ class LiquityInfo extends React.Component {
           </div>
           <div className="defi-card">
             <div className="defi-card-title">LQTY Circulating Supply</div>
-            <div className="defi-card-large-text">5,954,252</div>
+            <div className="defi-card-large-text"><LqtyCirculatingSupply /></div>
           </div>
           <div className="defi-card">
             <div className="defi-card-title">LQTY Holders</div>
