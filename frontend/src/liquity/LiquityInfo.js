@@ -6,11 +6,11 @@ import CollateralRatio from './charts/CollateralRatio';
 import { LQTYPriceV2, LQTYPriceV3 } from './charts/LqtyPrices'
 import { LUSDPriceV2, LUSDPriceV3DAI, LUSDPriceV3USDT } from './charts/LusdPrices'
 import LusdHolders from './charts/LusdHolders'
-import LusdAPR  from './charts/LusdAPR'
+import LusdAPR from './charts/LusdAPR'
 import { RecentTroveNumbers } from './charts/TroveNumbers'
 import { StakingLUSD } from './charts/StakingLUSD'
-import {TVL, TVL7DayChange} from'./charts/TVL'
-import {LqtyAPR} from './charts/LqtyAPR'
+import { TVL, TVL7DayChange } from './charts/TVL'
+import { LqtyAPR } from './charts/LqtyAPR'
 import LqtyCirculatingSupply from './charts/LqtyCirculatingSupply'
 import LqtyHolders from './charts/LqtyHolders'
 import Liquidations from './charts/Liquidations'
@@ -188,7 +188,9 @@ class LiquityInfo extends React.Component {
             </div>
           </div>
         </div>
-        <FrontendLeaderboard />
+        <div className="defi-card">
+          <FrontendLeaderboard />
+        </div>
       </div>
     )
   }
