@@ -8,7 +8,7 @@ import {formatDate} from '../../utils/Timestamps'
 const ellipsesStr = (str) => {return str.substr(0, 6) + '...' + str.substr(str.length-4, str.length)}
 const toLink = (prefix, value) => {
     return (
-        <a href={prefix + value}> {ellipsesStr(value)} </a>
+        <a href={prefix + value} target="_blank" rel="noreferrer"> {ellipsesStr(value)} </a>
     )
 }
 
