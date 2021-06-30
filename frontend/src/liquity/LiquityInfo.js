@@ -14,6 +14,7 @@ import {LqtyAPR} from'./charts/LqtyAPR'
 import LqtyHolders from './charts/LqtyHolders'
 import Liquidations from './charts/Liquidations'
 import LiquityHeader from './LiquityHeader';
+import FrontendLeaderboard from './charts/FrontendLeaderboard'
 import { ReactComponent as LUSDLogo } from '../resources/lusd.svg'
 import { ReactComponent as LQTYLogo } from '../resources/liquity.svg'
 import { ReactComponent as LiquidationLogo } from '../resources/liquidation.svg'
@@ -186,8 +187,7 @@ class LiquityInfo extends React.Component {
             </div>
           </div>
         </div>
-        Chart
-        {/* <Holders /> */}
+        <FrontendLeaderboard />
       </div>
     )
   }
