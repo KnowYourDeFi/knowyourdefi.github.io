@@ -152,13 +152,28 @@ class Profile extends React.Component {
           </div>
           <ColorProgressBar
             progress={280}
+            range={[{
+              size: 110,
+              color: 'rgb(250, 127, 102)',
+              name: 'Killed',
+              desc: 'If the collateral ratio of your trove is below this value, your ETHs will be liquidated.'
+            }, {
+              size: 40,
+              color: 'rgb(247, 230, 80)',
+              name: 'High Risk',
+              desc: 'Your trove is still at greater risk of being liquidated.'
+            }, {
+              size: 50,
+              color: 'rgb(175, 226, 76)',
+              name: 'Master',
+              desc: 'If you are not a DeFi master, you may not play with effortless in this range.'
+            }, {
+              size: 300,
+              color: 'rgb(134, 223, 79)',
+              name: 'Healthy',
+              desc: 'A much safer zone for most users.'
+            }]}
           />
-          <div style={{ textAlign: 'center' }}>
-            TextTextTextTextTextTextTextTextTextTextTextTextText<br />
-            TextTextTextTextTextTextTextTextTextTextTextTextText<br />
-            TextTextTextTextTextTextTextTextTextTextTextTextText<br />
-            TextTextTextTextTextTextTextTextTextTextTextTextText
-          </div>
         </div>
         <div className="defi-card">
           <div className="defi-card-large-title">

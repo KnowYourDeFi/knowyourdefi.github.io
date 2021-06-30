@@ -38,6 +38,19 @@ class CollateralRatio extends React.Component {
     }
     return <ColorProgressBar
       progress={this.state.ratio}
+      range={[{
+        size: 150,
+        color: 'rgb(250, 127, 102)',
+        name: null,
+      }, {
+        size: 50,
+        color: 'rgb(247, 230, 80)',
+        name: null,
+      }, {
+        size: 300,
+        color: 'rgb(175, 226, 76)',
+        name: null,
+      }]}
     />
   }
 }
