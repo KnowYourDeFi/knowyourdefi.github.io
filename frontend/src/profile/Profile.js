@@ -47,7 +47,7 @@ class Profile extends React.Component {
 
   renderContent() {
     console.log('profile render address', this.state.address)
-    if (!this.state.address) {
+    if (!this.state.address || !this.state.address.address) {
       return <EmptyPage />
     } else if (!this.state.address.address.match(ETH_ADDR_REGEX)) {
       return <ErrorPage />
