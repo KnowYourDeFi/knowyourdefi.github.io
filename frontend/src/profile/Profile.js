@@ -4,7 +4,8 @@ import './Profile.scss'
 import AddressBar, { ETH_ADDR_REGEX } from './AddressBar'
 import { EmptyPage, ErrorPage } from './Placeholder'
 import { ReactComponent as WalletLogo } from '../resources/wallet.svg'
-import UserLiquityInfo from './UserLiquityInfo'
+import {UserLiquityInfo} from './UserLiquityInfo'
+import UserAssetsInfo from './UserAssetsInfo'
 
 class Profile extends React.Component {
 
@@ -28,30 +29,6 @@ class Profile extends React.Component {
     this.props.onCurrentAddressChange(address)
   }
 
-  walletEthTable() {
-    return <table className="table">
-      <thead>
-        <tr>
-          <th>Asset</th>
-          <th>Balance</th>
-          <th>Value(USD)</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <th>ETH</th>
-          <td>292.76 ETH</td>
-          <td>$39,436</td>
-        </tr>
-        <tr>
-          <th>LQTY</th>
-          <td>29,892 LQTY</td>
-          <td>$39,436</td>
-        </tr>
-      </tbody>
-    </table>
-  }
-
   renderProfile() {
     return (
       <div className="defi-info">
@@ -62,12 +39,7 @@ class Profile extends React.Component {
             href={`https://etherscan.io/address/${this.state.address}`}
             target="_blank" rel="noreferrer">All</a>
         </div>
-        <div className="defi-card">
-          <div className="defi-card-large-title">
-            Ethereum
-          </div>
-          {this.walletEthTable()}
-        </div>
+        <UserAssetsInfo address={this.state.address} />
         <UserLiquityInfo address={this.state.address} />
       </div>
     )
