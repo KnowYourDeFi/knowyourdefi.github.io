@@ -10,7 +10,7 @@ import UserAssetsInfo from './UserAssetsInfo'
 class Profile extends React.Component {
 
   state = {
-    address: null,
+    address: null, // {address, ens}
   }
 
   constructor(props) {
@@ -36,19 +36,20 @@ class Profile extends React.Component {
           <WalletLogo className="defi-title-logo" />
           <span className="defi-title-text">Wallet</span>
           <a className="defi-title-tag"
-            href={`https://etherscan.io/address/${this.state.address}`}
+            href={`https://etherscan.io/address/${this.state.address.address}`}
             target="_blank" rel="noreferrer">All</a>
         </div>
-        <UserAssetsInfo address={this.state.address} />
-        <UserLiquityInfo address={this.state.address} />
+        <UserAssetsInfo address={this.state.address.address} />
+        <UserLiquityInfo address={this.state.address.address} />
       </div>
     )
   }
 
   renderContent() {
+    console.log('profile render address', this.state.address)
     if (!this.state.address) {
       return <EmptyPage />
-    } else if (!this.state.address.match(ETH_ADDR_REGEX)) {
+    } else if (!this.state.address.address.match(ETH_ADDR_REGEX)) {
       return <ErrorPage />
     } else {
       return this.renderProfile()

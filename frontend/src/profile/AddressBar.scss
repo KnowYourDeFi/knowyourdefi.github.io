@@ -63,7 +63,7 @@
   }
 }
 .add-address-text,
-.add-address-input,
+.add-address-form,
 .add-address-metamask {
   margin-top: 15px;
 }
@@ -73,15 +73,19 @@
 .add-address-text {
   font-size: 1.1em;
 }
-.add-address-input {
+.add-address-form {
   width: 100%;
   float: left;
   display: flex;
   flex-direction: row;
-  input {
-    flex-grow: 1;
-    margin-right: 15px;
-  }
+}
+.add-address-input {
+  flex-grow: 1;
+  margin-right: 15px;
+}
+.add-address-button {
+  min-width: 100px;
+  padding: 0;
 }
 .add-address-metamask {
   max-width: 200px;
