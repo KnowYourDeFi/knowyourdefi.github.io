@@ -6,6 +6,7 @@ import { EmptyPage, ErrorPage } from './Placeholder'
 import { ReactComponent as WalletLogo } from '../resources/wallet.svg'
 import {UserLiquityInfo} from './UserLiquityInfo'
 import UserAssetsInfo from './UserAssetsInfo'
+import { log } from '../utils/DebugUtils';
 
 class Profile extends React.Component {
 
@@ -25,6 +26,7 @@ class Profile extends React.Component {
   }
 
   onCurrentAddressChange(address) {
+    log('profile current address change', address)
     this.setState({ address })
     this.props.onCurrentAddressChange(address)
   }
@@ -46,7 +48,7 @@ class Profile extends React.Component {
   }
 
   renderContent() {
-    console.log('profile render address', this.state.address)
+    log('profile render address', this.state.address)
     if (!this.state.address || !this.state.address.address) {
       return <EmptyPage />
     } else if (!this.state.address.address.match(ETH_ADDR_REGEX)) {
@@ -71,7 +73,7 @@ Profile.propTypes = {
 }
 
 Profile.defaultProps = {
-  onCurrentAddressChange: function (address) { console.log('current address change', address) },
+  onCurrentAddressChange: function (address) { log('profile current address change', address) },
 }
 
 export default Profile

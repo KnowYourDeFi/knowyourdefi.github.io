@@ -1,4 +1,5 @@
 import { ApolloClient, InMemoryCache, gql } from '@apollo/client'
+import { trace } from '../utils/DebugUtils'
 import {hourlyTimestamps, timestampsSinceLiquityEpoch} from '../utils/Timestamps'
 
 export const liquityClient = new ApolloClient({
@@ -90,7 +91,7 @@ export async function query(ql, client = liquityClient) {
     fetchPolicy: 'cache-first'
   });
   data = data && data.data
-  console.log('query:', ql, 'result:', data)
+  trace('query:', ql, 'result:', data)
   return data
 }
 

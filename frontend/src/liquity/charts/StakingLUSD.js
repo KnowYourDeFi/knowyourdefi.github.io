@@ -55,8 +55,7 @@ class StakingLUSD extends React.Component {
             values.sort((a, b) => a.timestamp > b.timestamp ? 1 : -1)
             return values
         } catch (e) {
-            console.log(e)
-            console.log('error fetching blocks')
+            console.error('error fetching blocks', e)
             return []
         }
     }

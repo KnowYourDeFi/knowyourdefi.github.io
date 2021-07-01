@@ -21,7 +21,7 @@ class LusdCurrentTotalSupply extends React.Component {
         totalSupply
       }
     }`
-    
+
     query(gql).then(data => {
       this.setState({
         loading: false,
@@ -47,16 +47,16 @@ class LusdTotalSupply extends React.Component {
     let queryString = 'query blocks {'
     queryString += blocks.map(
       (block) => `
-        t${block.timestamp}: token(id: "0x5f98805a4e8be255a32880fdec7f6728c6568ba0", block: { number: ${block.number} }) { 
+        t${block.timestamp}: token(id: "0x5f98805a4e8be255a32880fdec7f6728c6568ba0", block: { number: ${block.number} }) {
           totalSupply
         }
       `
     )
-  
+
     queryString += '}'
     return queryString
   }
-  
+
   async getTotalSupplies() {
     let blocks
     try {
@@ -85,8 +85,7 @@ class LusdTotalSupply extends React.Component {
       values.sort((a, b) => a.timestamp > b.timestamp ? 1 : -1)
       return values
     } catch (e) {
-      console.log(e)
-      console.log('error fetching blocks')
+      console.error('error fetching blocks', e)
       return []
     }
   }
@@ -181,12 +180,12 @@ class Lusd7DayMintBurn extends React.Component {
     let queryString = 'query blocks {'
     queryString += blocks.map(
       (block) => `
-        t${block.timestamp}: token(id: "0x5f98805a4e8be255a32880fdec7f6728c6568ba0", block: { number: ${block.number} }) { 
+        t${block.timestamp}: token(id: "0x5f98805a4e8be255a32880fdec7f6728c6568ba0", block: { number: ${block.number} }) {
           totalSupply
         }
       `
     )
-  
+
     queryString += '}'
     return queryString
   }
@@ -199,9 +198,9 @@ class Lusd7DayMintBurn extends React.Component {
       if (!blocks || blocks.length === 0) {
           return []
       }
-  
+
       let result = await splitQuery(this.totalSupplyQuery, liquityClient, [], blocks, 500)
-  
+
       // format result
       let values = []
       for (var row in result) {
@@ -214,13 +213,12 @@ class Lusd7DayMintBurn extends React.Component {
           })
         }
       }
-  
+
       //Sort values
       values.sort((a, b) => a.timestamp > b.timestamp ? 1 : -1)
       return values
     } catch (e) {
-      console.log(e)
-      console.log('error fetching blocks')
+      console.error('error fetching blocks', e)
       return []
     }
   }
@@ -280,7 +278,7 @@ class Lusd7DayMintBurn extends React.Component {
           name: 'Mint/Burn',
           data: this.state.totalSupplyChanges.map((item) => {
             return {
-              value: item.change.toFixed(2), 
+              value: item.change.toFixed(2),
               itemStyle: {color: item.change >= 0 ? chartGreen : chartRed}
             }
           }),

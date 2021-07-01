@@ -16,17 +16,17 @@ class TVL extends React.Component {
       let queryString = 'query blocks {'
       queryString += blocks.map(
         (block) => `
-          t${block.timestamp}: systemStates(block: { number: ${block.number} }, first:1, orderBy: sequenceNumber, orderDirection:desc) { 
+          t${block.timestamp}: systemStates(block: { number: ${block.number} }, first:1, orderBy: sequenceNumber, orderDirection:desc) {
             totalCollateral
             price
           }
         `
       )
-    
+
       queryString += '}'
       return queryString
     }
-    
+
     async getRecentTVLs() {
       let blocks
       try {
@@ -59,8 +59,7 @@ class TVL extends React.Component {
         values.sort((a, b) => a.timestamp > b.timestamp ? 1 : -1)
         return values
       } catch (e) {
-        console.log(e)
-        console.log('error fetching blocks')
+        console.error('error fetching blocks', e)
         return []
       }
     }
@@ -137,7 +136,7 @@ class TVL extends React.Component {
             name: 'TVL(ETH)',
             data: this.state.tvl.map((item) => {
               return {
-                value: item.totalCollateral.toFixed(2), 
+                value: item.totalCollateral.toFixed(2),
                 itemStyle: {color: chartBlue}
               }
             }),
@@ -148,7 +147,7 @@ class TVL extends React.Component {
             name: 'TVL(USD)',
             data: this.state.tvl.map((item) => {
               return {
-                value: (item.totalCollateral * item.price).toFixed(2), 
+                value: (item.totalCollateral * item.price).toFixed(2),
                 itemStyle: {color: chartRed}
               }
             }),
@@ -180,13 +179,13 @@ class TVL7DayChange extends React.Component {
     let queryString = 'query blocks {'
     queryString += blocks.map(
       (block) => `
-        t${block.timestamp}: systemStates(block: { number: ${block.number} }, first:1, orderBy: sequenceNumber, orderDirection:desc) { 
+        t${block.timestamp}: systemStates(block: { number: ${block.number} }, first:1, orderBy: sequenceNumber, orderDirection:desc) {
           totalCollateral
           price
         }
       `
     )
-  
+
     queryString += '}'
     return queryString
   }
@@ -223,8 +222,7 @@ class TVL7DayChange extends React.Component {
       values.sort((a, b) => a.timestamp > b.timestamp ? 1 : -1)
       return values
     } catch (e) {
-      console.log(e)
-      console.log('error fetching blocks')
+      console.error('error fetching blocks', e)
       return []
     }
   }
@@ -284,7 +282,7 @@ class TVL7DayChange extends React.Component {
           name: 'ETH change',
           data: this.state.tvlChanges.map((item) => {
             return {
-              value: item.change.toFixed(2), 
+              value: item.change.toFixed(2),
               itemStyle: {color: item.change >= 0 ? chartGreen : chartRed}
             }
           }),
