@@ -6,6 +6,37 @@ import { ReactComponent as LiquityLogo } from '../resources/liquity.svg'
 import { LqtyAPR } from '../liquity/charts/LqtyAPR'
 import LusdAPR from '../liquity/charts/LusdAPR'
 
+async function getPrices() {
+  const gql = `
+  {
+      lusd:pair(id:"0xf20ef17b889b437c151eb5ba15a47bfc62bff469")
+      {
+        token1Price
+      }
+
+      lqty:pair(id:"0xb13201b48b1e61593df055576964d0b3aab66ea3")
+      {
+        token1Price
+      }
+
+      bundle(id: "1" ) {
+          ethPrice
+      }
+  }
+  `
+  //Get Uniswap V2 prices
+  let data = await query(gql, uniV2Client)
+
+  const ethPrice = parseFloat(data.bundle.ethPrice)
+  const lqtyInEth = parseFloat(data.lqty.token1Price)
+  const lusdInEth = parseFloat(data.lusd.token1Price)
+  return {
+      ethPrice,
+      lqtyPrice: lqtyInEth * ethPrice,
+      lusdPrice: lusdInEth * ethPrice
+  }
+}
+
 class UserLiquityInfo extends React.Component {
     constructor(props) {
         super(props)
@@ -13,37 +44,6 @@ class UserLiquityInfo extends React.Component {
           address: props.address.toLowerCase(),
           loading: true,
           data: {}
-        }
-    }
-    
-    async getPrices() {
-        const gql = `
-        {
-            lusd:pair(id:"0xf20ef17b889b437c151eb5ba15a47bfc62bff469")
-            {
-              token1Price
-            }
-
-            lqty:pair(id:"0xb13201b48b1e61593df055576964d0b3aab66ea3")
-            {
-              token1Price
-            }
-
-            bundle(id: "1" ) {
-                ethPrice
-            }
-        }
-        `
-        //Get Uniswap V2 prices
-        let data = await query(gql, uniV2Client)
-
-        const ethPrice = parseFloat(data.bundle.ethPrice)
-        const lqtyInEth = parseFloat(data.lqty.token1Price)
-        const lusdInEth = parseFloat(data.lusd.token1Price)
-        return {
-            ethPrice,
-            lqtyPrice: lqtyInEth * ethPrice,
-            lusdPrice: lusdInEth * ethPrice
         }
     }
 
@@ -83,7 +83,7 @@ class UserLiquityInfo extends React.Component {
 
     componentDidMount() {
         if (this.props.address) {
-            Promise.all([this.getPrices(), this.getLiquityInfo()]).then(responses => {
+            Promise.all([getPrices(), this.getLiquityInfo()]).then(responses => {
                 this.process(responses[0], responses[1])
             }).catch(e => {
                 console.error(e)
@@ -280,4 +280,5 @@ class UserLiquityInfo extends React.Component {
     }
 }
 
-export default UserLiquityInfo
+export {UserLiquityInfo}
+export {getPrices}
