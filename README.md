@@ -13,11 +13,13 @@
 	🌱 <a href="https://twitter.com/rhizomedaot">@RhizomeDAO</a>
 </p>
 
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://raw.githubusercontent.com/KnowYourDeFi/knowyourdefi.github.io/master/LICENSE)
+
 ## About
 We believe that every DeFi project has its core features that set it apart from other projects. Only by understanding these core characteristics can users know the risks and make the right decisions. To truly help users adjust their DeFi strategies, it is best to provide customized data query services based on professional research and accurate, fast data sources.
 
 ## Example: Liquity
-Know Your DeFi was built for the [ETHGlobal](https://ethglobal.co/) HackMoney 2021 hackathon. 
+Know Your DeFi was built for the [ETHGlobal](https://ethglobal.co/) HackMoney 2021 hackathon.
 In this hackathon, we focused on Liquity, a decentralized lending protocol that allows users to borrow LUSD against ETH at 0% interest.
 Liquity has many innovative features, such as a minimum collateral ratio of 110%, efficient liquidations, decentralized front-ends and governance free. Users who understand the core mechanics of Liquity will be able to participate more safely and arbitrage during extreme market conditions.
 
