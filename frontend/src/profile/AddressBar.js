@@ -8,7 +8,7 @@ import './AddressBar.scss'
 import { ensNameToAddress, addressToEnsName } from '../utils/EnsResolver';
 
 const ETH_ADDR_REGEX = /^0x[a-fA-F0-9]{40}$/
-const ENS_ADDR_REGEX = /^.{3,}\..{3,}$/i // xxx.xxx
+const ENS_NAME_REGEX = /^.{3,}\..{3,}$/i // xxx.xxx
 
 class AddressBar extends React.Component {
 
@@ -76,7 +76,7 @@ class AddressBar extends React.Component {
   }
 
   isAddressValid(address) {
-    return address && (address.match(ETH_ADDR_REGEX) || address.match(ENS_ADDR_REGEX))
+    return address && (address.match(ETH_ADDR_REGEX) || address.match(ENS_NAME_REGEX))
   }
 
   onInputChange(event) {
@@ -155,7 +155,7 @@ class AddressBar extends React.Component {
         ens = await addressToEnsName(address)
         option = { address: value, ens }
 
-      } else if (value.match(ENS_ADDR_REGEX)) {
+      } else if (value.match(ENS_NAME_REGEX)) {
 
         // address must exists
         ens = value
@@ -236,7 +236,7 @@ class AddressBar extends React.Component {
             <div className="add-address-title">Add Address</div>
             <div className="add-address-text">Input</div>
             <div className="add-address-form">
-              <input type="text" className="add-address-input" value={this.state.inputContent} onChange={this.onInputChange} placeholder="Enter Ethereum Address"></input>
+              <input type="text" className="add-address-input" value={this.state.inputContent} onChange={this.onInputChange} placeholder="Enter ENS name or Ethereum address"></input>
               <button type="submit" className="add-address-button" onClick={this.onAddressSubmit} disabled={!this.state.inputValid || this.state.loading}>{this.state.loading ? 'Loading' : 'Go'}</button>
             </div>
             <div className="add-address-text">Or connect with</div>
@@ -283,4 +283,4 @@ AddressBar.defaultProps = {
 }
 
 export default withCookies(AddressBar)
-export { ETH_ADDR_REGEX }
+export { ETH_ADDR_REGEX, ENS_NAME_REGEX as ENS_ADDR_REGEX }
