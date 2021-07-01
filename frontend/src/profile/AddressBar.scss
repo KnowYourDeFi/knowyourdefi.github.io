@@ -42,9 +42,9 @@
 .add-address-panel {
   position: absolute;
   z-index: 1001;
-  width: 55%;
-  max-width: 800px;
-  min-width: 500px;
+  width: 60%;
+  max-width: 900px;
+  min-width: 600px;
   padding: 30px;
   border-radius: 10px;
   margin: 0 auto;
@@ -72,6 +72,7 @@
 }
 .add-address-text {
   font-size: 1.1em;
+  color: #666;
 }
 .add-address-form {
   width: 100%;
