@@ -16,7 +16,7 @@ class ColorProgressBar extends React.Component {
       ranges.push(sum)
     })
     const percent = Math.round(this.props.progress * 100 / sum);
-    console.log('current, percent, max', this.props.progress, percent, sum)
+    // console.log('current, percent, max', this.props.progress, percent, sum)
     const barHtml = this.props.range.map((item, i) => {
       const descHtml = item.desc ? <div className="range-desc">{item.desc}</div> : null
       return (

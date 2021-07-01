@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types';
 import './ConnectButton.scss'
+import { log } from '../utils/DebugUtils';
 
 class ConnectButton extends React.Component {
 
@@ -16,11 +17,11 @@ class ConnectButton extends React.Component {
 ConnectButton.propTypes = {
   text: PropTypes.string,
   onClick: PropTypes.func,
-};
+}
 
 ConnectButton.defaultProps = {
   text: 'Button',
-  onClick: function () { console.log('onClick') }
-};
+  onClick: function () { log('on click') }
+}
 
 export default ConnectButton

@@ -152,10 +152,10 @@ async function fetchDeposits(frontends) {
                 deposits: deposits
             })
         } catch (e) {
-            console.log(e)
+            console.error(e)
         }
     }))
-    
+
     return result.concat(noNeedToQuery)
 }
 
@@ -195,6 +195,6 @@ async function queryDeposits(frontendId) {
       }
       return allResults
     } catch (e) {
-      console.log(e)
+      console.error(e)
     }
   }

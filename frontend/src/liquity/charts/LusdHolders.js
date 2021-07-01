@@ -39,7 +39,7 @@ class LusdHolders extends React.Component {
           }
           return allResults
         } catch (e) {
-          console.log(e)
+          console.error(e)
         }
     }
 

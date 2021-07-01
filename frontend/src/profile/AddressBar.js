@@ -6,6 +6,7 @@ import DropDownWithDelete from '../widget/DropDownWithDelete'
 import { ReactComponent as MetaMaskLogo } from '../resources/metamask.svg'
 import './AddressBar.scss'
 import { ensNameToAddress, addressToEnsName } from '../utils/EnsResolver';
+import { log } from '../utils/DebugUtils';
 
 const ETH_ADDR_REGEX = /^0x[a-fA-F0-9]{40}$/
 const ENS_NAME_REGEX = /^.{3,}\..{3,}$/i // xxx.xxx
@@ -50,6 +51,7 @@ class AddressBar extends React.Component {
   componentDidMount() {
     // trigger the listener to handle the initial data from cookie
     if (this.dropdown.current) {
+      log('addressbar initial trigger change')
       this.props.onAddressListChange(this.dropdown.current.getOptions())
       this.props.onCurrentAddressChange(this.dropdown.current.getCurrent())
     }
@@ -95,7 +97,7 @@ class AddressBar extends React.Component {
 
   async onMetaMaskClick(event) {
     event.preventDefault();
-    console.log('onMetaMaskClick', window.ethereum)
+    log('onMetaMaskClick', window.ethereum)
     if (window.ethereum) {
       window.ethereum.removeListener('accountsChanged', this.handleMetaMaskAccounts)
       window.ethereum.on('accountsChanged', this.handleMetaMaskAccounts);
@@ -140,7 +142,7 @@ class AddressBar extends React.Component {
   async addAndSelectAddress(value) {
     if (!value) return
     value = value.toLowerCase()
-    console.log('add and select address', value)
+    log('add and select address', value)
 
     try {
       this.setState({
@@ -197,6 +199,7 @@ class AddressBar extends React.Component {
   }
 
   onCurrentAddressChange(currentAddress) {
+    log('addressbar current address change', currentAddress)
     this.current = currentAddress
     if (currentAddress) {
       this.props.cookies.set('currentAddress', currentAddress)
@@ -278,8 +281,8 @@ AddressBar.propTypes = {
 }
 
 AddressBar.defaultProps = {
-  onAddressListChange: function (addressList) { console.log('address list change', addressList) },
-  onCurrentAddressChange: function (address) { console.log('current address change', address) },
+  onAddressListChange: function (addressList) { log('address list change', addressList) },
+  onCurrentAddressChange: function (address) { log('current address change', address) },
 }
 
 export default withCookies(AddressBar)

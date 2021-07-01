@@ -7,7 +7,7 @@ class LqtyCirculatingSupply extends React.Component {
         loading: true,
         supply: 0
     }
-    
+
     async getSupply() {
         axios.get('https://knowyourdefifunc.azurewebsites.net/api/RespondLqtyCirculatingSupplyFunc?module=lqtycirculatingsupply')
         .then((response) => {
@@ -17,7 +17,7 @@ class LqtyCirculatingSupply extends React.Component {
             })
         })
         .catch(e => {
-          console.log(e)
+          console.error(e)
         })
     }
 

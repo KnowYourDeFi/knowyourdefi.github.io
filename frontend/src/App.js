@@ -1,7 +1,5 @@
 import React from 'react'
 import './App.scss'
-// import 'react-bootstrap'
-// import './resources/bootstrap.css'
 import { ReactComponent as RabbitLogo } from './resources/rabbithole.svg'
 import { ReactComponent as DaoLogo } from './resources/rhizome-dao.svg'
 import { ReactComponent as GitHubLogo } from './resources/github.svg'
@@ -11,6 +9,7 @@ import LiquityInfo from './liquity/LiquityInfo'
 import Profile from './profile/Profile'
 import Rabbit from './rabbit/Rabbit'
 import ConnectButton from './widget/ConnectButton'
+import { log } from './utils/DebugUtils';
 
 const PAGE = Object.freeze({ 'LIQUITY': 1, 'PROFILE': 2, 'RABBIT': 3 })
 
@@ -36,7 +35,7 @@ class App extends React.Component {
   }
 
   onCurrentAddressChange(address) {
-    console.log('app current address change', address)
+    log('app current address change', address)
     this.setState({
       address: address
     })
@@ -79,6 +78,7 @@ class App extends React.Component {
   }
 
   render() {
+    log('app render')
     return (
       <div className="app">
         <header className="app-header">
