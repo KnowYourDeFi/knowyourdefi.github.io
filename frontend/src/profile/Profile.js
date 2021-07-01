@@ -4,8 +4,7 @@ import './Profile.scss'
 import AddressBar, { ETH_ADDR_REGEX } from './AddressBar'
 import { EmptyPage, ErrorPage } from './Placeholder'
 import { ReactComponent as WalletLogo } from '../resources/wallet.svg'
-import { ReactComponent as LiquityLogo } from '../resources/liquity.svg'
-import ColorProgressBar from '../widget/ColorProgressBar'
+import UserLiquityInfo from './UserLiquityInfo'
 
 class Profile extends React.Component {
 
@@ -27,71 +26,6 @@ class Profile extends React.Component {
   onCurrentAddressChange(address) {
     this.setState({ address })
     this.props.onCurrentAddressChange(address)
-  }
-
-  liquityStakingTable() {
-    return <table className="table">
-      <thead>
-        <tr>
-          <th>Staked</th>
-          <th>Balance</th>
-          <th>APR</th>
-          <th>Value(USD)</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <th>LQTY</th>
-          <td>292.76</td>
-          <td>20%</td>
-          <td>$39,436</td>
-        </tr>
-        <tr>
-          <th>LUSD</th>
-          <td>292.76</td>
-          <td>20%</td>
-          <td>$39,436</td>
-        </tr>
-      </tbody>
-    </table>
-  }
-
-  liquityTroveBorrowTable() {
-    return <table className="table">
-      <thead>
-        <tr>
-          <th>Borrow</th>
-          <th>Balance</th>
-          <th>Value(USD)</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <th>LUSD</th>
-          <td>292.76 LUSD</td>
-          <td>$39,436</td>
-        </tr>
-      </tbody>
-    </table>
-  }
-
-  liquityTroveSuppliedTable() {
-    return <table className="table">
-      <thead>
-        <tr>
-          <th>Supplied</th>
-          <th>Balance</th>
-          <th>Value(USD)</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <th>ETH</th>
-          <td>29.00 ETH</td>
-          <td>$39,436</td>
-        </tr>
-      </tbody>
-    </table>
   }
 
   walletEthTable() {
@@ -134,53 +68,7 @@ class Profile extends React.Component {
           </div>
           {this.walletEthTable()}
         </div>
-
-        <div className="defi-title">
-          <LiquityLogo className="defi-title-logo" />
-          <span className="defi-title-text">Liquity</span>
-        </div>
-        <div className="defi-card">
-          <div className="defi-card-large-title">
-            Trove
-          </div>
-          {this.liquityTroveSuppliedTable()}
-          {this.liquityTroveBorrowTable()}
-        </div>
-        <div className="defi-card">
-          <div className="defi-card-large-title">
-            Risk Alert
-          </div>
-          <ColorProgressBar
-            progress={280}
-            range={[{
-              size: 110,
-              color: 'rgb(250, 127, 102)',
-              name: 'Killed',
-              desc: 'If the collateral ratio of your trove is below this value, your ETHs will be liquidated.'
-            }, {
-              size: 40,
-              color: 'rgb(247, 230, 80)',
-              name: 'High Risk',
-              desc: 'Your trove is still at greater risk of being liquidated.'
-            }, {
-              size: 50,
-              color: 'rgb(175, 226, 76)',
-              name: 'Master',
-              desc: 'If you are not a DeFi master, you may not play with effortless in this range.'
-            }, {
-              size: 300,
-              color: 'rgb(134, 223, 79)',
-              name: 'Healthy',
-              desc: 'A much safer zone for most users.'
-            }]}
-          />
-        </div>
-        <div className="defi-card">
-          <div className="defi-card-large-title">
-            Staking
-          </div>
-          {this.liquityStakingTable()}
-        </div>
+        <UserLiquityInfo address={this.state.address} />
       </div>
     )
   }
