@@ -28,9 +28,6 @@ class App extends React.Component {
     this.onCurrentAddressChange = this.onCurrentAddressChange.bind(this)
     this.onRabbitClick = this.onRabbitClick.bind(this)
     this.onDaoClick = this.onDaoClick.bind(this)
-    this.onGithubClick = this.onGithubClick.bind(this)
-    this.onMediumClick = this.onMediumClick.bind(this)
-    this.onTwitterClick = this.onTwitterClick.bind(this)
     this.onProfileClick = this.onProfileClick.bind(this)
   }
 
@@ -55,21 +52,6 @@ class App extends React.Component {
     })
   }
 
-  onGithubClick(e) {
-    e.preventDefault()
-    window.open('https://github.com/KnowYourDeFi/knowyourdefi.github.io', '_blank').focus()
-  }
-
-  onMediumClick(e) {
-    e.preventDefault()
-    window.open('https://medium.com/@KnowYourDeFi', '_blank').focus()
-  }
-
-  onTwitterClick(e) {
-    e.preventDefault()
-    window.open('https://twitter.com/rhizomedao', '_blank').focus()
-  }
-
   onProfileClick(e) {
     e.preventDefault()
     this.setState({
@@ -87,9 +69,9 @@ class App extends React.Component {
           </span>
           <DaoLogo className="logo" onClick={this.onDaoClick} />
           <span className="app-header-container right">
-            <GitHubLogo className="icon icon-monochrome" onClick={this.onGithubClick} />
-            <MediumLogo className="icon icon-monochrome" onClick={this.onMediumClick} />
-            <TwitterLogo className="icon icon-monochrome" onClick={this.onTwitterClick} />
+            <a className="icon-container" href="https://github.com/KnowYourDeFi/knowyourdefi.github.io" target="_blank" rel="noreferrer"><GitHubLogo className="icon icon-monochrome" /></a>
+            <a className="icon-container" href="https://medium.com/@KnowYourDeFi" target="_blank" rel="noreferrer"><MediumLogo className="icon icon-monochrome" /></a>
+            <a className="icon-container" href="https://twitter.com/rhizomedao" target="_blank" rel="noreferrer"><TwitterLogo className="icon icon-monochrome" /></a>
             <ConnectButton className="profile-button" text={this.state.address ? 'Profile' : 'Connect'} onClick={this.onProfileClick} />
           </span>
         </header>
