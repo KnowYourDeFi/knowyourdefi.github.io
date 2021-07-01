@@ -21,6 +21,11 @@ export const blockClient = new ApolloClient({
   cache: new InMemoryCache(),
 })
 
+export const ensClient = new ApolloClient({
+  uri: 'https://api.thegraph.com/subgraphs/name/ensdomains/ens',
+  cache: new InMemoryCache(),
+})
+
 export async function splitQuery(queryGenarator, client, vars, list, skipCount = 100) {
   let fetchedData = {}
   let allFound = false
