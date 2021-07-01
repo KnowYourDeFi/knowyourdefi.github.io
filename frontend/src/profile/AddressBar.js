@@ -5,8 +5,10 @@ import { withCookies, Cookies } from 'react-cookie';
 import DropDownWithDelete from '../widget/DropDownWithDelete'
 import { ReactComponent as MetaMaskLogo } from '../resources/metamask.svg'
 import './AddressBar.scss'
+import { ensNameToAddress, addressToEnsName } from '../utils/EnsResolver';
 
 const ETH_ADDR_REGEX = /^0x[a-fA-F0-9]{40}$/
+const ENS_ADDR_REGEX = /^.{3,}\..{3,}$/i // xxx.xxx
 
 class AddressBar extends React.Component {
 
@@ -17,10 +19,19 @@ class AddressBar extends React.Component {
   constructor(props) {
     super(props)
 
+    // initial value
+    this.options = this.props.cookies.get('addressList') // [{ address, ens }, ...]
+    this.current = this.props.cookies.get('currentAddress') // { address, ens }
+    // fix invalid data
+    if (!this.options || this.options.length === 0) {
+      this.current = null
+    }
+
     this.state = {
       showAddAddressPopup: false,
-      enableSubmit: false,
-      inputAddress: '',
+      inputValid: false,
+      inputContent: '',
+      loading: false,
     }
 
     this.dropdown = React.createRef()
@@ -40,7 +51,7 @@ class AddressBar extends React.Component {
     // trigger the listener to handle the initial data from cookie
     if (this.dropdown.current) {
       this.props.onAddressListChange(this.dropdown.current.getOptions())
-      this.props.onCurrentAddressChange(this.dropdown.current.getValue())
+      this.props.onCurrentAddressChange(this.dropdown.current.getCurrent())
     }
   }
 
@@ -49,7 +60,7 @@ class AddressBar extends React.Component {
   }
 
   getAddress() {
-    return this.dropdown.current?.getValue()
+    return this.dropdown.current?.getCurrent()
   }
 
   onAddClick() {
@@ -65,13 +76,7 @@ class AddressBar extends React.Component {
   }
 
   isAddressValid(address) {
-    if (!address || !address.match(ETH_ADDR_REGEX)) {
-      return false
-    }
-    if (this.dropdown.current?.state.options?.indexOf(address) !== -1) {
-      return false
-    }
-    return true
+    return address && (address.match(ETH_ADDR_REGEX) || address.match(ENS_ADDR_REGEX))
   }
 
   onInputChange(event) {
@@ -79,9 +84,13 @@ class AddressBar extends React.Component {
     const value = event.target.value || ''
     const valid = this.isAddressValid(value)
     this.setState({
-      inputAddress: value,
-      enableSubmit: valid,
+      inputContent: value,
+      inputValid: valid,
     })
+  }
+
+  showMessage(message) {
+    window.alert(message)
   }
 
   async onMetaMaskClick(event) {
@@ -94,40 +103,101 @@ class AddressBar extends React.Component {
         const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' })
         this.handleMetaMaskAccounts(accounts)
       } catch (e) {
-        console.error(e)
+        console.error('MetaMask read account failed', e)
+        this.showMessage('MetaMask read account failed')
       }
     } else {
-      console.error('Metamask not installed!')
+      console.error('MetaMask not installed')
+      this.showMessage('MetaMask not installed')
     }
   }
 
   onAddressSubmit(event) {
     event.preventDefault()
-    this.addAndSelectAddress(this.state.inputAddress)
+    this.addAndSelectAddress(this.state.inputContent)
   }
 
   handleMetaMaskAccounts(accounts) {
     if (accounts && accounts[0]) {
       this.addAndSelectAddress(accounts[0])
     } else {
-      console.error('accounts[0] is undefined')
+      console.error('MetaMask read account failed, accounts[0] is undefined')
+      this.showMessage('MetaMask read account failed')
     }
   }
 
-  addAndSelectAddress(address) {
-    if (!address) return
-    console.log('select address', address)
-    address = address.toLowerCase()
-    this.dropdown.current?.addAndSelectOption(address)
-    // dismiss and reset add address popup
-    this.setState({
-      showAddAddressPopup: false,
-      enableSubmit: false,
-      inputAddress: '',
+  isDuplicated(option) {
+    const duplicate = option && this.options?.find(o => {
+      return (option.address && (o.address === option.address)) || (option.ens && (o.ens === option.ens))
     })
+    return duplicate ? true : false
+  }
+
+  /**
+   * Add and select address. The value may already exists.
+   * @param {string} value eth address or ens name
+   */
+  async addAndSelectAddress(value) {
+    if (!value) return
+    value = value.toLowerCase()
+    console.log('add and select address', value)
+
+    try {
+      this.setState({
+        loading: true,
+      })
+
+      let option, address, ens, error
+      if (value.match(ETH_ADDR_REGEX)) {
+
+        // ens may be null
+        address = value
+        ens = await addressToEnsName(address)
+        option = { address: value, ens }
+
+      } else if (value.match(ENS_ADDR_REGEX)) {
+
+        // address must exists
+        ens = value
+        address = await ensNameToAddress(ens)
+        if (address) {
+          option = { address, ens: value }
+        } else {
+          error = `resolve ethereum address from '${ens}' failed`
+        }
+
+      } else {
+        error = `input value '${value}' is illegal`
+      }
+
+      if (option) {
+        // load success
+        this.dropdown.current?.addAndSelectOption(option)
+        // dismiss and reset add address popup
+        this.setState({
+          showAddAddressPopup: false,
+          inputValid: false,
+          inputContent: '',
+          loading: false,
+        })
+      } else {
+        console.error(error)
+        this.setState({
+          loading: false,
+        })
+        this.showMessage(error)
+      }
+    } catch (e) {
+      console.error(e)
+      this.setState({
+        loading: false
+      })
+      this.showMessage(`resolve address '${value}' failed`)
+    }
   }
 
   onCurrentAddressChange(currentAddress) {
+    this.current = currentAddress
     if (currentAddress) {
       this.props.cookies.set('currentAddress', currentAddress)
     } else {
@@ -137,11 +207,27 @@ class AddressBar extends React.Component {
   }
 
   onAddressListChange(addressList) {
+    this.options = addressList
     this.props.cookies.set('addressList', addressList)
     this.props.onAddressListChange(addressList)
   }
 
-  addAddressPopup() {
+  formatOption(option) {
+    let s = ''
+    if (option) {
+      s += option.address
+      if (option.ens) {
+        s += ' (' + option.ens + ')'
+      }
+    }
+    return s
+  }
+
+  compareOptions(o1, o2) {
+    return o1 && o2 && o1.address === o2.address
+  }
+
+  renderAddAddressPopup() {
     if (this.state.showAddAddressPopup) {
       return (
         <div className="add-address">
@@ -149,9 +235,9 @@ class AddressBar extends React.Component {
             <div className="add-address-close" onClick={this.onCloseClick}>&nbsp;x&nbsp;</div>
             <div className="add-address-title">Add Address</div>
             <div className="add-address-text">Input</div>
-            <div className="add-address-input">
-              <input type="text" className="form-control" id="inputAddress" value={this.state.inputAddress} onChange={this.onInputChange} placeholder="Enter Ethereum Address"></input>
-              <button type="submit" className="btn btn-primary mb-3" onClick={this.onAddressSubmit} disabled={!this.state.enableSubmit}>Add</button>
+            <div className="add-address-form">
+              <input type="text" className="add-address-input" value={this.state.inputContent} onChange={this.onInputChange} placeholder="Enter Ethereum Address"></input>
+              <button type="submit" className="add-address-button" onClick={this.onAddressSubmit} disabled={!this.state.inputValid || this.state.loading}>{this.state.loading ? 'Loading' : 'Go'}</button>
             </div>
             <div className="add-address-text">Or connect with</div>
             <MetaMaskLogo className="add-address-metamask" onClick={this.onMetaMaskClick} />
@@ -170,15 +256,17 @@ class AddressBar extends React.Component {
           <DropDownWithDelete
             ref={this.dropdown}
             mClassName="address-dropdown"
-            placeholder={'Select Ethereum address...'}
-            options={this.props.cookies.get('addressList') || []}
-            value={this.props.cookies.get('currentAddress')}
+            placeholder={'Add and select Ethereum address...'}
+            options={this.options || []}
+            current={this.current}
+            formatter={this.formatOption}
+            comparator={this.compareOptions}
             onOptionsChange={this.onAddressListChange}
-            onValueChange={this.onCurrentAddressChange}
+            onCurrentChange={this.onCurrentAddressChange}
           />
           <div className="address-add-button" onClick={this.onAddClick}>+</div>
         </div>
-        {this.addAddressPopup()}
+        {this.renderAddAddressPopup()}
       </div>
     )
   }

@@ -10,7 +10,7 @@ class DropDownWithDelete extends React.Component {
     this.state = {
       showDropDown: false,
       options: props.options,
-      value: props.value,
+      current: props.current,
     }
 
     this.dropdown = React.createRef()
@@ -24,8 +24,8 @@ class DropDownWithDelete extends React.Component {
     return this.state.options
   }
 
-  getValue() {
-    return this.state.value
+  getCurrent() {
+    return this.state.current
   }
 
   componentDidMount() {
@@ -45,22 +45,20 @@ class DropDownWithDelete extends React.Component {
     }
   }
 
-  addAndSelectOption(option) {
-    if (this.state.options.indexOf(option) !== -1) {
+  addAndSelectOption(current) {
+    const index = this.state.options.findIndex(o => {
+      return this.props.comparator(o, current)
+    })
+    if (index !== -1) {
       // select option if already exists
-      this.setState({
-        value: option,
-      })
-      this.props.onValueChange(option)
+      this.setState({ current })
+      this.props.onCurrentChange(current)
     } else {
       // add and select option if not exists
-      const options = [option, ...this.state.options]
-      this.setState({
-        options: options,
-        value: option,
-      })
+      const options = [current, ...this.state.options]
+      this.setState({ options, current })
       this.props.onOptionsChange(options)
-      this.props.onValueChange(option)
+      this.props.onCurrentChange(current)
     }
   }
 
@@ -72,50 +70,50 @@ class DropDownWithDelete extends React.Component {
   }
 
   onItemClick(option) {
-    if (option === this.state.value) {
+    if (option === this.state.current) {
       this.setState({
         showDropDown: false,
       })
     } else {
       this.setState({
-        value: option,
+        current: option,
         showDropDown: false,
       })
-      this.props.onValueChange(option)
+      this.props.onCurrentChange(option)
     }
   }
 
-  onDeleteClick(option) {
+  onDeleteClick(deleted) {
     const options = this.state.options
-    const index = options.indexOf(option)
+    const index = options.findIndex(o => {
+      return this.props.comparator(o, deleted)
+    })
     if (index === -1) {
+      console.error('can not delete non-existent option', deleted)
       return
     }
     options.splice(index, 1)
-    if (options.indexOf(this.state.value) === -1) {
-      // value changed
-      const newValue = options[0]
-      this.setState({
-        options: options,
-        value: newValue,
-      })
+    if (this.props.comparator(deleted, this.state.current)) {
+      // current changed
+      const current = options[0]
+      this.setState({ options, current })
       this.props.onOptionsChange(options)
-      this.props.onValueChange(newValue)
+      this.props.onCurrentChange(current)
     } else {
-      // value not change
-      this.setState({
-        options: options,
-      })
+      // current not change
+      this.setState({ options })
       this.props.onOptionsChange(options)
     }
   }
 
-  options() {
+  renderOptions() {
     return (this.state.options || []).map(option => {
       return (
-        <li className={classNames({ 'm-option': true, selected: option === this.state.value })} onClick={(e) => { e.preventDefault(); this.onItemClick(option) }} key={option}>
-          <span className="m-option-text">{option}</span>
-          <button className="m-option-delete" onClick={(e) => { e.preventDefault(); this.onDeleteClick(option) }}>x</button>
+        <li className={classNames({ 'm-option': true, selected: this.props.comparator(option, this.state.current) })}
+          onClick={(e) => { e.preventDefault(); this.onItemClick(option) }}
+          key={this.props.formatter(option)}>
+          <span className="m-option-text">{this.props.formatter(option)}</span>
+          <div className="m-option-delete" onClick={(e) => { e.preventDefault(); this.onDeleteClick(option) }}>x</div>
         </li>
       )
     })
@@ -125,13 +123,13 @@ class DropDownWithDelete extends React.Component {
     return (
       <div ref={this.dropdown} className={classNames("m-dropdown", this.props.mClassName)}>
         <div className="m-box" onClick={this.onExpandClick}>
-          <input className="m-box-value" placeholder={this.props.placeholder} readOnly value={this.state.value || ''}></input>
+          <input className="m-box-value" placeholder={this.props.placeholder} readOnly value={this.props.formatter(this.state.current) || ''}></input>
           <div className="m-box-expand" >
             <i className="m-arrow-down"></i>
           </div>
         </div>
         <ul className={classNames({ 'm-options': true, show: this.state.showDropDown })}>
-          {this.options()}
+          {this.renderOptions()}
         </ul>
       </div>
     )
@@ -139,18 +137,25 @@ class DropDownWithDelete extends React.Component {
 }
 
 DropDownWithDelete.propTypes = {
-  mClassName: PropTypes.string,
-  options: PropTypes.array,
-  value: PropTypes.string,
+  mClassName: PropTypes.string, // extra class name for the root DOM element
+  options: PropTypes.array, // all options
+  current: PropTypes.oneOfType([PropTypes.string, PropTypes.object]), // current selected option, may be null
+  placeholder: PropTypes.string, // placeholder if no option selected
+  comparator: PropTypes.func, // compare if two options are the same one
+  formatter: PropTypes.func, // format option to string to display
   onOptionsChange: PropTypes.func,
-  onValueChange: PropTypes.func,
+  onCurrentChange: PropTypes.func,
 };
 
 DropDownWithDelete.defaultProps = {
+  mClassName: null,
   options: [],
-  value: null,
+  current: null,
+  placeholder: null,
+  comparator: function (o1, o2) { return o1 === o2; },
+  formatter: function (option) { return option; },
   onOptionsChange: function (options) { console.log('on options change', options) },
-  onValueChange: function (value) { console.log('on value change', value) },
+  onCurrentChange: function (current) { console.log('on current change', current) },
 };
 
 export default DropDownWithDelete

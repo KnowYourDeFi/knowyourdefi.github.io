@@ -18,7 +18,7 @@ class App extends React.Component {
 
   state = {
     page: PAGE.LIQUITY,
-    address: null,
+    address: null, // {address, ens}
   }
 
   constructor(props) {
