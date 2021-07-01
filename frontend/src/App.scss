@@ -102,12 +102,15 @@ $icon-size: 26px;
   .icon {
     display: inline-block;
     cursor: pointer;
-    margin: 0 5px;
   }
 
   .logo {
     width: $logo-size;
     height: $logo-size;
+  }
+  .icon-container {
+    height: $icon-size;
+    margin: 0 5px;
   }
   .icon {
     width: $icon-size;
