@@ -9,10 +9,15 @@ class LqtyCirculatingSupply extends React.Component {
     }
     
     async getSupply() {
-        const result = await axios("https://knowyourdefifunc.azurewebsites.net/api/RespondLqtyCirculatingSupplyFunc?module=lqtycirculatingsupply")
-        this.setState({
-            loading: false,
-            supply: result.data
+        axios.get('https://knowyourdefifunc.azurewebsites.net/api/RespondLqtyCirculatingSupplyFunc?module=lqtycirculatingsupply')
+        .then((response) => {
+            this.setState({
+                loading: false,
+                supply: parseFloat(parseFloat(response.data.data).toFixed(2))
+            })
+        })
+        .catch(e => {
+          console.log(e)
         })
     }
 
