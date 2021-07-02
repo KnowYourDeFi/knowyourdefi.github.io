@@ -48,16 +48,18 @@ class DropDownWithDelete extends React.Component {
 
   addAndSelectOption(current) {
     log('dropdown add select option', current)
-    const index = this.state.options.findIndex(o => {
+    const oldOptions = this.state.options;
+    const index = oldOptions.findIndex(o => {
       return this.props.comparator(o, current)
     })
     if (index !== -1) {
       // select option if already exists
+      current = oldOptions[index]
       this.setState({ current })
       this.props.onCurrentChange(current)
     } else {
       // add and select option if not exists
-      const options = [current, ...this.state.options]
+      const options = [current, ...oldOptions]
       this.setState({ options, current })
       this.props.onOptionsChange(options)
       this.props.onCurrentChange(current)
