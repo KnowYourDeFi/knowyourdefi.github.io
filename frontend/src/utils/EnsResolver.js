@@ -29,7 +29,7 @@ export async function ensNameToAddress(name) {
 
     const domains = result?.data?.domains
     if (!domains || domains.length === 0) return null
-    return domains[0].resolver.addr.id ?? null
+    return domains[0].resolver?.addr?.id ?? null
 }
 
 export async function addressToEnsName(address) {
@@ -37,13 +37,10 @@ export async function addressToEnsName(address) {
 
     const nameQuery = `
     query address($address: Bytes!) {
-        account(id: $address)
-        {
-          domains{
-            name
-          }
+        domains(where: {resolvedAddress: $address}) {
+          name
         }
-    }
+      }
     `
 
     let result = await ensClient.query({
@@ -54,18 +51,9 @@ export async function addressToEnsName(address) {
         fetchPolicy: 'cache-first',
     })
 
-    const domains = result?.data?.account?.domains
+    const domains = result?.data?.domains
     if (!domains || domains.length === 0) return null
 
-    //Resolve the found names against given address to find the actual name
-    const names = domains.map(domain => domain.name)
-    let addresses = await Promise.all(names.map(async (name) => {
-        return ensNameToAddress(name)
-    }))
-    const index = addresses.indexOf(address)
-    if (index >= 0) {
-        return names[index]
-    } else {
-        return null
-    }
+    const names = domains.map(domain => domain.name).sort((a, b) => a.length > b.length? 1 : -1)
+    return names[0]
 }
