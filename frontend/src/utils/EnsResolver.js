@@ -9,10 +9,15 @@ const addressToEns = {} // address -> ens
 export async function ensNameToAddress(ens) {
   if (!ens) return null
 
-  let address = ensToAddress(ens)
+  // read from cache
+  let address = ensToAddress[ens]
   if (address) return address
 
+  // fetch data
   address = await _ensNameToAddress(ens)
+  if (!address) return null
+
+  // save to cache: ens != null, address != null
   ensToAddress[ens] = address
   addressToEns[address] = ens
   return address
@@ -21,12 +26,16 @@ export async function ensNameToAddress(ens) {
 export async function addressToEnsName(address) {
   if (!address) return null
 
+  // read from cache
   let ens = addressToEns[address]
   if (ens) return ens === NO_ENS ? null : ens
 
+  // fetch data
   ens = _addressToEnsName(address)
-  ensToAddress[ens] = address
-  addressToEns[address] = ens
+
+  // save to cache, address != null, ens maybe null
+  if (ens) ensToAddress[ens] = address
+  addressToEns[address] = ens || NO_ENS
   return ens
 }
 
