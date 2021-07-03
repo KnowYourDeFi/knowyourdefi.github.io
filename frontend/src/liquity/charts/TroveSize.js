@@ -2,10 +2,10 @@ import React from 'react'
 import ReactECharts from 'echarts-for-react'
 import { gql } from '@apollo/client'
 import {liquityClient} from '../LiquityData'
+import {loadingOption} from '../../utils/ChartUtils'
 
 class TroveSize extends React.Component {
   state = {
-    loading: true,
     troveData: []
   }
 
@@ -92,24 +92,16 @@ class TroveSize extends React.Component {
       })
     })
     this.setState({
-      loading: false,
       troveData: troveData
     })
   }
 
   chart() {
-    if (this.state.loading) {
-      return <p>Loading...</p>
-    }
     const options = {
       tooltip: {
           trigger: 'item',
           formatter: '{a} <br/>{b} : {c} ({d}%)'
       },
-      // legend: {
-      //   top: '5%',
-      //   left: 'center'
-      // },
       series: [
         {
           name: 'Trove size',
@@ -131,7 +123,11 @@ class TroveSize extends React.Component {
         }
       ]
     }
-    return <ReactECharts option={options} />;
+    return <ReactECharts 
+        loadingOption={loadingOption} 
+        showLoading={this.state.troveData.length === 0} 
+        option={options} 
+      />
   }
 
   render() {

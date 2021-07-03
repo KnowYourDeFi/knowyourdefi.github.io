@@ -3,7 +3,7 @@ import ReactECharts from 'echarts-for-react'
 import {formatDate} from '../../utils/Timestamps'
 import {query, liquityClient, last7DayBlocks, blocksSinceLiquityEpoch, splitQuery} from '../LiquityData'
 import dayjs from 'dayjs'
-import {chartRed, chartGreen, chartBlue} from '../../utils/ChartColors'
+import {chartRed, chartGreen, chartBlue, loadingOption} from '../../utils/ChartUtils'
 import { numberWithCommas, abbreviateNumber } from '../../utils/NumberUtils'
 
 class LusdCurrentTotalSupply extends React.Component {
@@ -39,7 +39,6 @@ class LusdCurrentTotalSupply extends React.Component {
 
 class LusdTotalSupply extends React.Component {
   state = {
-      loading: true,
       totalSupply: []
   }
 
@@ -93,7 +92,6 @@ class LusdTotalSupply extends React.Component {
   componentDidMount() {
     this.getTotalSupplies().then(data => {
       this.setState({
-        loading: false,
         totalSupply: data
       })
     }).catch(e => {
@@ -102,9 +100,6 @@ class LusdTotalSupply extends React.Component {
   }
 
   totalSupplyChart() {
-    if (this.state.loading) {
-      return <p>Loading...</p>
-    }
     const options = {
       xAxis: {
           type: 'category',
@@ -158,7 +153,11 @@ class LusdTotalSupply extends React.Component {
         }
       ]
     }
-    return <ReactECharts option={options} />
+    return <ReactECharts 
+        loadingOption={loadingOption} 
+        showLoading={this.state.totalSupply.length === 0} 
+        option={options} 
+      />
   }
 
   render() {
@@ -172,7 +171,6 @@ class LusdTotalSupply extends React.Component {
 
 class Lusd7DayMintBurn extends React.Component {
   state = {
-      loading: true,
       totalSupplyChanges: []
   }
 
@@ -235,7 +233,6 @@ class Lusd7DayMintBurn extends React.Component {
         })
       }
       this.setState({
-        loading: false,
         totalSupplyChanges: totalSupplyChanges
       })
     }).catch(e => {
@@ -244,9 +241,6 @@ class Lusd7DayMintBurn extends React.Component {
   }
 
   totalSupplyChangesChart() {
-    if (this.state.loading) {
-      return <p>Loading...</p>
-    }
     const options = {
       xAxis: {
           type: 'category',
@@ -286,7 +280,11 @@ class Lusd7DayMintBurn extends React.Component {
         }
       ]
     }
-    return <ReactECharts option={options} />
+    return <ReactECharts 
+        loadingOption={loadingOption} 
+        showLoading={this.state.totalSupplyChanges.length === 0} 
+        option={options} 
+      />
   }
 
   render() {
