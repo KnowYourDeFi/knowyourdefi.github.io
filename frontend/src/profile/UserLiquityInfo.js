@@ -5,6 +5,7 @@ import ColorProgressBar from '../widget/ColorProgressBar'
 import { ReactComponent as LiquityLogo } from '../resources/liquity.svg'
 import { LqtyAPR } from '../liquity/charts/LqtyAPR'
 import LusdAPR from '../liquity/charts/LusdAPR'
+import { isNumeric } from '../utils/NumberUtils'
 
 async function getPrices() {
   const gql = `
@@ -112,7 +113,7 @@ class UserLiquityInfo extends React.Component {
                 collateralValue: parseFloat(collateralValue.toFixed(2)),
                 debt: parseFloat(debt.toFixed(2)),
                 debtValue: parseFloat(debtValue.toFixed(2)),
-                risk: parseFloat(risk.toFixed(2))
+                risk: isNumeric(risk) ? parseFloat(risk.toFixed(2)) : null
             }
         }
         if (info.stake) {
@@ -229,24 +230,32 @@ class UserLiquityInfo extends React.Component {
     riskAlert = () => {
         let loading = this.state.loading
         let data = this.state.data
-        if (loading) return 'loading'
-        if (typeof data.risk === 'undefined') return 'No data'
+        if (loading) return 'Loading'
+        if (!isNumeric(data.risk)) return 'No data'
         return <ColorProgressBar
-        progress={data.risk}
-        range={[{
-          size: 150,
-          color: 'rgb(250, 127, 102)',
-          name: null,
-        }, {
-          size: 50,
-          color: 'rgb(247, 230, 80)',
-          name: null,
-        }, {
-          size: 300,
-          color: 'rgb(175, 226, 76)',
-          name: null,
-        }]}
-      />
+          progress={data.risk}
+          range={[{
+            size: 110,
+            color: 'rgb(250, 127, 102)',
+            name: 'Killed',
+            desc: 'If the collateral ratio of your trove is below this value, your ETHs will be liquidated.'
+          }, {
+            size: 40,
+            color: 'rgb(247, 230, 80)',
+            name: 'High Risk',
+            desc: 'Your trove is still at greater risk of being liquidated.'
+          }, {
+            size: 50,
+            color: 'rgb(175, 226, 76)',
+            name: 'Master',
+            desc: 'If you are not a DeFi master, you may not play with effortless in this range.'
+          }, {
+            size: 300,
+            color: 'rgb(134, 223, 79)',
+            name: 'Healthy',
+            desc: 'A much safer zone for most users.'
+          }]}
+        />
     }
 
     render() {

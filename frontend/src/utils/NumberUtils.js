@@ -1,5 +1,5 @@
 
-function numberWithCommas(x) {
+export function numberWithCommas(x) {
   const parts = parseFloat(x).toString().split(".");
   parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",")
   return parts.join(".")
@@ -25,4 +25,6 @@ export const abbreviateNumber = (number, fixed = 1) => {
     return parseFloat(scaled.toFixed(fixed)) + suffix;
 }
 
-export { numberWithCommas }
+export function isNumeric(value) {
+  return !isNaN(value - parseFloat(value));
+}
