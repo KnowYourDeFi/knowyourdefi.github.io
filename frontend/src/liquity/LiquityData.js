@@ -1,5 +1,5 @@
 import { ApolloClient, InMemoryCache, gql } from '@apollo/client'
-import {hourlyTimestamps} from './Timestamps'
+import {hourlyTimestamps} from './utility/Timestamps'
 
 export const liquityClient = new ApolloClient({
   uri: 'https://api.thegraph.com/subgraphs/name/liquity/liquity',

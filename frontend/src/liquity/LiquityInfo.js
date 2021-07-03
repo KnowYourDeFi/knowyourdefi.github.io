@@ -7,7 +7,7 @@ import { LQTYPriceV2, LQTYPriceV3 } from './charts/LqtyPrices'
 import { LUSDPriceV2, LUSDPriceV3DAI, LUSDPriceV3USDT } from './charts/LusdPrices'
 import { RecentTroveNumbers } from './charts/TroveNumbers'
 import { StakingLUSD } from './charts/StakingLUSD'
-import {CurrentTVL} from'./charts/TVL'
+import {TVL} from'./charts/TVL'
 import {LqtyAPR} from'./charts/LqtyAPR'
 import LiquityHeader from './LiquityHeader';
 import { ReactComponent as LUSDLogo } from '../resources/lusd.svg'
@@ -22,16 +22,7 @@ class LiquityInfo extends React.Component {
     return (
       <div className="defi-info">
         <LiquityHeader />
-        <div className="defi-card-group-2">
-          <div className="defi-card">
-            <div className="defi-card-title">Total Value Locked</div>
-            <CurrentTVL />
-          </div>
-          <div className="defi-card">
-            <div className="defi-card-title">Hourly TVL Change (7d)</div>
-            Chart
-          </div>
-        </div>
+        <TVL />
 
         <div className="defi-title">
           <LUSDLogo className="defi-title-logo" />
