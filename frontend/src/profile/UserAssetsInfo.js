@@ -38,12 +38,19 @@ class UserAssetsInfo extends React.Component {
       }
     }
 
-
-
     renderWalletTable() {
         const loading = this.state.loading
-        if (loading) return 'Loading'
-        const data = this.state.data
+        if (loading) {
+            return (
+                <tbody>
+                    <tr key='Loading'>
+                        <th>Loading</th>
+                        <td>Loading</td>
+                        <td>Loading</td>
+                      </tr>
+                </tbody>
+            )
+        }
         return <tbody>
             {this.state.data.map((item) => {
               const symbol = item.contract_ticker_symbol
@@ -51,7 +58,7 @@ class UserAssetsInfo extends React.Component {
               const balance = numberWithCommas((item.balance / Math.pow(10, decimal)).toFixed(2))
               const value = numberWithCommas(item.quote.toFixed(2))
               return (
-              <tr>
+              <tr key={item.contract_address}>
                 <th>{symbol}</th>
                 <td>
                     {balance + ' ' + symbol}
