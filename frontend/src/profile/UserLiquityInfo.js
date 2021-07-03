@@ -42,7 +42,7 @@ class UserLiquityInfo extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-          address: props.address.toLowerCase(),
+          address: props.address,
           loading: true,
           data: {}
         }
@@ -75,21 +75,36 @@ class UserLiquityInfo extends React.Component {
         let data = await liquityClient.query({
             query: gql(liquityInfoQuery),
             variables: {
-                userId: this.state.address
+                userId: this.props.address
             },
             fetchPolicy: 'cache-first',
           })
         return data.data
     }
 
+    fetchData() {
+      if (this.props.address) {
+        Promise.all([getPrices(), this.getLiquityInfo()]).then(responses => {
+            this.process(responses[0], responses[1])
+        }).catch(e => {
+            console.error(e)
+        })
+      }
+    }
+
     componentDidMount() {
-        if (this.props.address) {
-            Promise.all([getPrices(), this.getLiquityInfo()]).then(responses => {
-                this.process(responses[0], responses[1])
-            }).catch(e => {
-                console.error(e)
-            })
-        }
+      this.fetchData()
+    }
+
+    componentDidUpdate(prevProps) {
+      if (this.props.address !== prevProps.address) {
+        this.setState({
+          address: this.props.address,
+          loading: true,
+          data: {}
+        })
+        this.fetchData()
+      }
     }
 
     process(prices, liquityInfo) {

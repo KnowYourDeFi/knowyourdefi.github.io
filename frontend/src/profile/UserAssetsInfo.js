@@ -6,14 +6,13 @@ class UserAssetsInfo extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-          address: props.address.toLowerCase(),
           loading: true,
           data: {}
         }
     }
 
     async getAssets() {
-        let url = 'https://knowyourdefifunc.azurewebsites.net/api/GetAccountProfileFunc?address=' + this.state.address
+        let url = 'https://knowyourdefifunc.azurewebsites.net/api/GetAccountProfileFunc?address=' + this.props.address
         let response = await axios.get(url)
         const data = response.data.data
         const eth = data.eth_balance ?? 0
@@ -26,26 +25,40 @@ class UserAssetsInfo extends React.Component {
         }
     }
 
-    componentDidMount() {
-        if (typeof this.state.address === 'undefined') return
+    fetchData() {
+        if (!this.props.address) return
 
         Promise.all([getPrices(), this.getAssets()]).then(responses => {
-            const prices = responses[0]
-            const assets = responses[1]
-            this.setState({
-                loading: false,
-                data: {
-                    eth: parseFloat(assets.eth.toFixed(2)),
-                    lqty: parseFloat(assets.lqty.toFixed(2)),
-                    lusd: parseFloat(assets.lusd.toFixed(2)),
-                    ethValue: parseFloat((assets.eth * prices.ethPrice).toFixed(2)),
-                    lqtyValue: parseFloat((assets.lqty * prices.lqtyPrice).toFixed(2)),
-                    lusdValue: parseFloat((assets.lusd * prices.lusdPrice).toFixed(2))
-                }
-            })
+          const prices = responses[0]
+          const assets = responses[1]
+          this.setState({
+            loading: false,
+            data: {
+              eth: parseFloat(assets.eth.toFixed(2)),
+              lqty: parseFloat(assets.lqty.toFixed(2)),
+              lusd: parseFloat(assets.lusd.toFixed(2)),
+              ethValue: parseFloat((assets.eth * prices.ethPrice).toFixed(2)),
+              lqtyValue: parseFloat((assets.lqty * prices.lqtyPrice).toFixed(2)),
+              lusdValue: parseFloat((assets.lusd * prices.lusdPrice).toFixed(2))
+            }
+          })
         }).catch(e => {
-            console.error(e)
+          console.error(e)
         })
+    }
+
+    componentDidMount() {
+        this.fetchData()
+    }
+
+    componentDidUpdate(prevProps) {
+      if (this.props.address !== prevProps.address) {
+        this.setState({
+          loading: true,
+          data: {}
+        })
+        this.fetchData()
+      }
     }
 
     walletEthTable() {
