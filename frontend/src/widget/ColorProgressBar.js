@@ -1,34 +1,35 @@
 import React from 'react'
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 import './ColorProgressBar.scss'
 
 class ColorProgressBar extends React.Component {
 
-  indicatorTextHeight = 40
-  indicatorTextWidth = 80
+  indicatorTextWidth = 100
   indicatorWidth = 2
 
   render() {
+    let max = 0
+    this.props.range.forEach(item => {
+      max += item.size
+    })
+    const percent = Math.round(this.props.progress * 100 / max);
+    console.log('current, percent, max', this.props.progress, percent, max)
+    const barHtml = this.props.range.map((item, i) => {
+      return (
+        <div className="range" key={i} style={{ backgroundColor: item.color, flexGrow: item.size }}>
+          {item.text}
+        </div>
+      )
+    })
     return (
       <div className="color-progress-bar">
         <div className="bar">
-          <div className="range" style={{background: 'rgb(250, 127, 102)'}}>
-            {this.props.descriptions && this.props.descriptions[0]}
-          </div>
-          <div className="range" style={{background: 'rgb(247, 230, 80)'}}>
-            {this.props.descriptions && this.props.descriptions[1]}
-          </div>
-          <div className="range" style={{background: 'rgb(175, 226, 76)'}}>
-            {this.props.descriptions && this.props.descriptions[2]}
-          </div>
-          <div className="range" style={{background: 'rgb(134, 223, 79)'}}>
-            {this.props.descriptions && this.props.descriptions[3]}
-          </div>
+          {barHtml}
         </div>
-        <div className="indicator-text" style={{marginLeft: `calc(${this.props.progress / 3}% - ${this.indicatorTextWidth/2}px)`}}>
+        <div className="indicator-text" style={{ width: this.indicatorTextWidth, marginLeft: `calc(${percent}% - ${this.indicatorTextWidth / 2}px)` }}>
           {this.props.progress}%
         </div>
-        <div className="indicator" style={{marginLeft: `calc(${this.props.progress / 3}% - ${this.indicatorWidth/2}px)`}}>
+        <div className="indicator" style={{ width: this.indicatorWidth, marginLeft: `calc(${percent}% - ${this.indicatorWidth / 2}px)` }}>
         </div>
       </div>
     )
@@ -37,12 +38,28 @@ class ColorProgressBar extends React.Component {
 
 ColorProgressBar.propTypes = {
   progress: PropTypes.number,
-  descriptions: PropTypes.array,
-};
+  range: PropTypes.array, // [{size: 50, color: red, text: 'Killed'}]
+}
 
 ColorProgressBar.defaultProps = {
   progress: 66,
-  descriptions: null,
-};
+  range: [{
+    size: 125,
+    color: 'rgb(250, 127, 102)',
+    text: 'Killed',
+  }, {
+    size: 125,
+    color: 'rgb(247, 230, 80)',
+    text: 'High Risk',
+  }, {
+    size: 125,
+    color: 'rgb(175, 226, 76)',
+    text: 'Master',
+  }, {
+    size: 125,
+    color: 'rgb(134, 223, 79)',
+    text: 'Healthy',
+  }]
+}
 
 export default ColorProgressBar
