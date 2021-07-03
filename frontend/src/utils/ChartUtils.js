@@ -9,9 +9,9 @@ export const loadingOption = {
     spinnerRadius: 20,
     lineWidth: 5
   }
-export const ellipsesStr = (str) => {return str.substr(0, 6) + '...' + str.substr(str.length-4, str.length)}
+export const ellipsesStr = (str) => {return str.length > 13 ? str.substr(0, 6) + '...' + str.substr(str.length-4, str.length) : str}
 export const toLink = (url, display) => {
     return (
-        <a href={url} target="_blank" rel="noreferrer"> {display} </a>
+        <a href={url} target="_blank" rel="noreferrer" style={{color: chartBlue}}> {display} </a>
     )
 }
