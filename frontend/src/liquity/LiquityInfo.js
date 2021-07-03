@@ -1,21 +1,27 @@
 import React from 'react'
 import LqtyTotalSupply from './charts/LqtyTotalSupply';
 import LusdTotalSupply from './charts/LusdTotalSupply';
-import Holders from './charts/Holders'
 import TroveSize from './charts/TroveSize'
 import CollateralRatio from './charts/CollateralRatio';
 import { LQTYPriceV2, LQTYPriceV3 } from './charts/LqtyPrices'
 import { LUSDPriceV2, LUSDPriceV3DAI, LUSDPriceV3USDT } from './charts/LusdPrices'
-import { CurrentTroveNumber, RecentTroveNumbers } from './charts/TroveNumbers'
+import { RecentTroveNumbers } from './charts/TroveNumbers'
 import { StakingLUSD } from './charts/StakingLUSD'
 import {CurrentTVL} from'./charts/TVL'
 import {LqtyAPR} from'./charts/LqtyAPR'
+import LiquityHeader from './LiquityHeader';
+import { ReactComponent as LUSDLogo } from '../resources/lusd.svg'
+import { ReactComponent as LQTYLogo } from '../resources/liquity.svg'
+import { ReactComponent as LiquidationLogo } from '../resources/liquidation.svg'
+import { ReactComponent as TroveLogo } from '../resources/trove.svg'
+import { ReactComponent as LeaderboardLogo } from '../resources/leaderboard.svg'
 
 class LiquityInfo extends React.Component {
 
   render() {
     return (
       <div className="defi-info">
+        <LiquityHeader />
         <div className="defi-card-group-2">
           <div className="defi-card">
             <div className="defi-card-title">Total Value Locked</div>
@@ -27,8 +33,16 @@ class LiquityInfo extends React.Component {
           </div>
         </div>
 
-        <div className="defi-title-bar">
-          <span className="title">LUSD</span>
+        <div className="defi-title">
+          <LUSDLogo className="defi-title-logo" />
+          <span className="defi-title-text">LUSD</span>
+          <div className="defi-title-info-container">
+            <span className="defi-title-info-icon" />
+            <div className="defi-title-info-card">
+              InfoInfoInfoInfoInfoInfoInfoInfoInfo<br />
+              InfoInfoInfoInfoInfoInfoInfoInfoInfo
+            </div>
+          </div>
         </div>
         <div className="defi-card-group-6">
           <div className="defi-card">
@@ -53,7 +67,7 @@ class LiquityInfo extends React.Component {
           </div>
           <div className="defi-card">
             <div className="defi-card-title">LUSD Total Supply</div>
-            <div className="defi-card-large-text">X,XXX,XXX</div>
+            <div className="defi-card-large-text"><LusdTotalSupply /></div>
           </div>
         </div>
         <div className="defi-card">
@@ -63,7 +77,6 @@ class LiquityInfo extends React.Component {
         <div className="defi-card-group-2">
           <div className="defi-card">
             <div className="defi-card-title">Staking LUSD (7d)</div>
-
             <StakingLUSD />
           </div>
           <div className="defi-card">
@@ -75,10 +88,18 @@ class LiquityInfo extends React.Component {
         <LUSDPriceV2 />
         <LUSDPriceV3DAI />
         <LUSDPriceV3USDT />
-        <LusdTotalSupply />
 
-        <div className="defi-title-bar">
-          <span className="title">LQTY</span>
+
+        <div className="defi-title">
+          <LQTYLogo className="defi-title-logo" />
+          <span className="defi-title-text">LQTY</span>
+          <div className="defi-title-info-container">
+            <span className="defi-title-info-icon" />
+            <div className="defi-title-info-card">
+              InfoInfoInfoInfoInfoInfoInfoInfoInfo<br />
+              InfoInfoInfoInfoInfoInfoInfoInfoInfo
+            </div>
+          </div>
         </div>
         <div className="defi-card-group-6">
           <div className="defi-card">
@@ -105,16 +126,23 @@ class LiquityInfo extends React.Component {
           </div>
           <div className="defi-card">
             <div className="defi-card-title">LQTY Total Supply</div>
-            <div className="defi-card-large-text">X,XXX,XXX</div>
+            <div className="defi-card-large-text"><LqtyTotalSupply /></div>
           </div>
         </div>
 
         <LQTYPriceV2 />
         <LQTYPriceV3 />
-        <LqtyTotalSupply />
 
-        <div className="defi-title-bar">
-          <span className="title">Liquidation</span>
+        <div className="defi-title">
+          <LiquidationLogo className="defi-title-logo" />
+          <span className="defi-title-text">Liquidation</span>
+          <div className="defi-title-info-container">
+            <span className="defi-title-info-icon" />
+            <div className="defi-title-info-card">
+              InfoInfoInfoInfoInfoInfoInfoInfoInfo<br />
+              InfoInfoInfoInfoInfoInfoInfoInfoInfo
+            </div>
+          </div>
         </div>
         <div className="defi-card">
           <div className="defi-card-title">Total Collateral Ratio</div>
@@ -125,25 +153,38 @@ class LiquityInfo extends React.Component {
           Chart
         </div>
 
-        <div className="defi-title-bar">
-          <span className="title">Trove</span>
+        <div className="defi-title">
+          <TroveLogo className="defi-title-logo" />
+          <span className="defi-title-text">Trove</span>
+          <div className="defi-title-info-container">
+            <span className="defi-title-info-icon" />
+            <div className="defi-title-info-card">
+              InfoInfoInfoInfoInfoInfoInfoInfoInfo<br />
+              InfoInfoInfoInfoInfoInfoInfoInfoInfo
+            </div>
+          </div>
         </div>
         <div className="defi-card-group-2">
           <div className="defi-card">
             <div className="defi-card-title">Number of Troves (7d)</div>
-            Chart
+            <RecentTroveNumbers />
           </div>
           <div className="defi-card">
-            <div className="defi-card-title">Trove Size (7d)</div>
-            <RecentTroveNumbers />
+            <div className="defi-card-title">Trove Size</div>
+            <TroveSize />
           </div>
         </div>
 
-        <TroveSize />
-        <CurrentTroveNumber />
-
-        <div className="defi-title-bar">
-          <span className="title">Frontend Leaderboard</span>
+        <div className="defi-title">
+          <LeaderboardLogo className="defi-title-logo" />
+          <span className="defi-title-text">Frontend Leaderboard</span>
+          <div className="defi-title-info-container">
+            <span className="defi-title-info-icon" />
+            <div className="defi-title-info-card">
+              InfoInfoInfoInfoInfoInfoInfoInfoInfo<br />
+              InfoInfoInfoInfoInfoInfoInfoInfoInfo
+            </div>
+          </div>
         </div>
         Chart
         {/* <Holders /> */}

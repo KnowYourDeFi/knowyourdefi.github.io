@@ -5,6 +5,8 @@ import { withCookies, Cookies } from 'react-cookie';
 import DropDownWithDelete from '../widget/DropDownWithDelete'
 import './AddressBar.scss'
 
+const ETH_ADDR_REGEX = /^0x[a-fA-F0-9]{40}$/
+
 class AddressBar extends React.Component {
 
   static propTypes = {
@@ -55,7 +57,9 @@ class AddressBar extends React.Component {
   }
 
   isAddressValid(address) {
-    if (!address || !address.match(/^0x[a-fA-F0-9]{40}$/)) return false
+    if (!address || !address.match(ETH_ADDR_REGEX)) {
+      return false
+    }
     if (this.dropdown.current?.state.options?.indexOf(address) !== -1) {
       return false
     }
@@ -148,3 +152,4 @@ AddressBar.defaultProps = {
 }
 
 export default withCookies(AddressBar)
+export { ETH_ADDR_REGEX }

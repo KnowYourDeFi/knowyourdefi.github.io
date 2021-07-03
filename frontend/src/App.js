@@ -3,7 +3,7 @@ import './App.scss'
 // import 'react-bootstrap'
 // import './resources/bootstrap.css'
 import { ReactComponent as RabbitLogo } from './resources/rabbithole.svg'
-import { ReactComponent as LiquityLogo } from './resources/liquity.svg'
+import { ReactComponent as DaoLogo } from './resources/rhizome-dao.svg'
 import { ReactComponent as GitHubLogo } from './resources/github.svg'
 import { ReactComponent as MediumLogo } from './resources/medium.svg'
 import { ReactComponent as TwitterLogo } from './resources/twitter.svg'
@@ -28,7 +28,7 @@ class App extends React.Component {
 
     this.onCurrentAddressChange = this.onCurrentAddressChange.bind(this)
     this.onRabbitClick = this.onRabbitClick.bind(this)
-    this.onLiquityClick = this.onLiquityClick.bind(this)
+    this.onDaoClick = this.onDaoClick.bind(this)
     this.onGithubClick = this.onGithubClick.bind(this)
     this.onMediumClick = this.onMediumClick.bind(this)
     this.onTwitterClick = this.onTwitterClick.bind(this)
@@ -49,7 +49,7 @@ class App extends React.Component {
     })
   }
 
-  onLiquityClick(e) {
+  onDaoClick(e) {
     e.preventDefault()
     this.setState({
       page: PAGE.LIQUITY
@@ -85,7 +85,7 @@ class App extends React.Component {
           <span className="app-header-container left">
             <RabbitLogo className="icon icon-monochrome" onClick={this.onRabbitClick} />
           </span>
-          <LiquityLogo className="logo" onClick={this.onLiquityClick} />
+          <DaoLogo className="logo" onClick={this.onDaoClick} />
           <span className="app-header-container right">
             <GitHubLogo className="icon icon-monochrome" onClick={this.onGithubClick} />
             <MediumLogo className="icon icon-monochrome" onClick={this.onMediumClick} />
