@@ -2,13 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react'
 import {query, liquityClient} from '../LiquityData'
 import { gql } from '@apollo/client'
 import Table from "./ReactTable"
-
-const ellipsesStr = (str) => {return str.substr(0, 6) + '...' + str.substr(str.length-4, str.length)}
-const toLink = (prefix, value) => {
-    return (
-        <a href={prefix + value} target="_blank" rel="noreferrer"> {ellipsesStr(value)} </a>
-    )
-}
+import {ellipsesStr, toLink} from '../../utils/ChartUtils'
 
 export default function FrontendLeaderboard() {
     const [data, setData] = useState([])
@@ -31,7 +25,7 @@ export default function FrontendLeaderboard() {
                 Header: "Tag",
                 accessor: "tag",
                 width: 150,
-                Cell: ({ cell: { value } }) => toLink('https://etherscan.io/address/', value)
+                Cell: ({ cell: { value } }) => toLink('https://etherscan.io/address/' + value, ellipsesStr(value))
             },
             {
                 Header: "Stability Pool Size",

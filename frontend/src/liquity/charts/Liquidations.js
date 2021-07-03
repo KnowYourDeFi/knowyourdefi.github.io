@@ -2,15 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react'
 import {query} from '../LiquityData'
 import Table from "./ReactTable"
 import {formatDate} from '../../utils/Timestamps'
-
-
-
-const ellipsesStr = (str) => {return str.substr(0, 6) + '...' + str.substr(str.length-4, str.length)}
-const toLink = (prefix, value) => {
-    return (
-        <a href={prefix + value} target="_blank" rel="noreferrer"> {ellipsesStr(value)} </a>
-    )
-}
+import {ellipsesStr, toLink} from '../../utils/ChartUtils'
 
 function Liquidations() {
     const [data, setData] = useState([])
@@ -33,7 +25,7 @@ function Liquidations() {
                 Header: "Owner",
                 accessor: "owner",
                 width: 150,
-                Cell: ({ cell: { value } }) => toLink('https://etherscan.io/address/', value)
+                Cell: ({ cell: { value } }) => toLink('https://etherscan.io/address/' + value, ellipsesStr(value))
             },
             {
                 Header: "Collateral (ETH)",
@@ -59,7 +51,7 @@ function Liquidations() {
                 Header: "Transaction",
                 accessor: "transaction",
                 width: 150,
-                Cell: ({ cell: { value } }) => toLink('https://etherscan.io/tx/', value)
+                Cell: ({ cell: { value } }) => toLink('https://etherscan.io/tx/' + value, ellipsesStr(value))
             }
         ],
         []
