@@ -42,7 +42,6 @@ class UserLiquityInfo extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-          address: props.address,
           loading: true,
           data: {}
         }
@@ -83,13 +82,12 @@ class UserLiquityInfo extends React.Component {
     }
 
     fetchData() {
-      if (this.props.address) {
-        Promise.all([getPrices(), this.getLiquityInfo()]).then(responses => {
-            this.process(responses[0], responses[1])
-        }).catch(e => {
-            console.error(e)
-        })
-      }
+      if (!this.props.address) return
+      Promise.all([getPrices(), this.getLiquityInfo()]).then(responses => {
+        this.process(responses[0], responses[1])
+      }).catch(e => {
+        console.error(e)
+      })
     }
 
     componentDidMount() {
@@ -99,7 +97,6 @@ class UserLiquityInfo extends React.Component {
     componentDidUpdate(prevProps) {
       if (this.props.address !== prevProps.address) {
         this.setState({
-          address: this.props.address,
           loading: true,
           data: {}
         })
