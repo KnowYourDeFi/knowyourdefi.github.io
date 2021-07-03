@@ -1,50 +1,27 @@
 import React from 'react'
 import axios from 'axios'
-import {getPrices} from './UserLiquityInfo'
+import {numberWithCommas} from '../utils/NumberUtils'
 
 class UserAssetsInfo extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
           loading: true,
-          data: {}
-        }
-    }
-
-    async getAssets() {
-        let url = 'https://knowyourdefifunc.azurewebsites.net/api/GetAccountProfileFunc?address=' + this.props.address
-        let response = await axios.get(url)
-        const data = response.data.data
-        const eth = data.eth_balance ?? 0
-        const lqty = data.eth_balance ?? 0
-        const lusd = data.lusd_balance ?? 0
-        return {
-            eth: eth / 1e18,
-            lqty: lqty / 1e18,
-            lusd: lusd / 1e18
+          data: []
         }
     }
 
     fetchData() {
-        if (!this.props.address) return
-
-        Promise.all([getPrices(), this.getAssets()]).then(responses => {
-          const prices = responses[0]
-          const assets = responses[1]
-          this.setState({
-            loading: false,
-            data: {
-              eth: parseFloat(assets.eth.toFixed(2)),
-              lqty: parseFloat(assets.lqty.toFixed(2)),
-              lusd: parseFloat(assets.lusd.toFixed(2)),
-              ethValue: parseFloat((assets.eth * prices.ethPrice).toFixed(2)),
-              lqtyValue: parseFloat((assets.lqty * prices.lqtyPrice).toFixed(2)),
-              lusdValue: parseFloat((assets.lusd * prices.lusdPrice).toFixed(2))
-            }
-          })
-        }).catch(e => {
-          console.error(e)
+      if (!this.props.address) return
+      let url = `https://stg-api.unmarshal.io/v1/ethereum/address/${this.props.address}/assets?auth_key=VGVtcEtleQ%3D%3D`
+      axios.get(url).then(response => {
+        this.setState({
+          loading: false,
+          data: response.data
         })
+      }).catch(e => {
+        console.error(e)
+      })
     }
 
     componentDidMount() {
@@ -55,53 +32,36 @@ class UserAssetsInfo extends React.Component {
       if (this.props.address !== prevProps.address) {
         this.setState({
           loading: true,
-          data: {}
+          data: []
         })
         this.fetchData()
       }
     }
 
-    walletEthTable() {
+
+
+    renderWalletTable() {
         const loading = this.state.loading
+        if (loading) return 'Loading'
         const data = this.state.data
-        return <table className="table">
-          <thead>
-            <tr>
-              <th>Asset</th>
-              <th>Balance</th>
-              <th>Value(USD)</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th>ETH</th>
-              <td>
-                  {loading ? 'Loading' : data.eth + ' ETH'}
-              </td>
-              <td>
-                  {loading ? 'Loading' : '$' + data.ethValue}
-              </td>
-            </tr>
-            <tr>
-              <th>LQTY</th>
-              <td>
-                  {loading ? 'Loading' : data.lqty + ' LQTY'}
-              </td>
-              <td>
-                  {loading ? 'Loading' : '$' + data.lqtyValue}
-              </td>
-            </tr>
-            <tr>
-              <th>LUSD</th>
-              <td>
-                  {loading ? 'Loading' : data.lusd + ' LUSD'}
-              </td>
-              <td>
-                  {loading ? 'Loading' : '$' + data.lusdValue}
-              </td>
-            </tr>
+        return <tbody>
+            {this.state.data.map((item) => {
+              const symbol = item.contract_ticker_symbol
+              const decimal = item.contract_decimals
+              const balance = numberWithCommas((item.balance / Math.pow(10, decimal)).toFixed(2))
+              const value = numberWithCommas(item.quote.toFixed(2))
+              return (
+              <tr>
+                <th>{symbol}</th>
+                <td>
+                    {balance + ' ' + symbol}
+                </td>
+                <td>
+                    {'$' + value}
+                </td>
+              </tr>)
+            })}
           </tbody>
-        </table>
     }
 
     render() {
@@ -110,7 +70,16 @@ class UserAssetsInfo extends React.Component {
                 <div className="defi-card-large-title">
                     Ethereum
                 </div>
-                {this.walletEthTable()}
+                <table className="table">
+                  <thead>
+                    <tr>
+                      <th>Asset</th>
+                      <th>Balance</th>
+                      <th>Value(USD)</th>
+                    </tr>
+                  </thead>
+                  {this.renderWalletTable()}
+                </table>
             </div>
         )
     }
