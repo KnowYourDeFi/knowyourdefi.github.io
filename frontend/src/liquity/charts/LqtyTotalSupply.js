@@ -17,15 +17,7 @@ class LqtyTotalSupply extends React.Component {
         totalSupply
       }
     }`
-    // {
-    //   "data": {
-    //     "LQTY": {
-    //       "name": "LQTY",
-    //       "symbol": "LQTY",
-    //       "totalSupply": "100000000000000000000000000"
-    //     }
-    //   }
-    // }
+    
     query(gql).then(data => {
       this.setState({
         loading: false,

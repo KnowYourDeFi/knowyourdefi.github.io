@@ -4,10 +4,10 @@ import {formatDate} from '../../utils/Timestamps'
 import {liquityClient, last7DayBlocks, splitQuery} from '../LiquityData'
 import dayjs from 'dayjs'
 import { abbreviateNumber } from '../../utils/NumberUtils'
+import {loadingOption} from '../../utils/ChartUtils'
 
 class StakingLUSD extends React.Component {
     state = {
-        loading: true,
         data: []
     }
 
@@ -63,7 +63,6 @@ class StakingLUSD extends React.Component {
     componentDidMount() {
         this.getRecentStaking().then(data => {
             this.setState({
-                loading: false,
                 data: data
             })
         }).catch(e => {
@@ -105,21 +104,17 @@ class StakingLUSD extends React.Component {
                 type: 'line'
             }]
         }
-        return <ReactECharts option={options} />
-    }
-
-    chart() {
-        if (this.state.loading) {
-            return <p>Loading...</p>
-          } else {
-            return this.stakingChart()
-          }
+      return <ReactECharts 
+        loadingOption={loadingOption} 
+        showLoading={this.state.data.length === 0} 
+        option={options} 
+      />
     }
 
     render() {
         return (
           <div className="recent-staking-lusd">
-            {this.chart()}
+            {this.stakingChart()}
           </div>
         )
     }

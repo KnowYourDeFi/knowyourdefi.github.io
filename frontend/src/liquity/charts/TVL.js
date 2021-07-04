@@ -3,12 +3,11 @@ import ReactECharts from 'echarts-for-react'
 import {formatDate} from '../../utils/Timestamps'
 import {liquityClient, last7DayBlocks, blocksSinceLiquityEpoch, splitQuery} from '../LiquityData'
 import dayjs from 'dayjs'
-import {chartRed, chartGreen, chartBlue} from '../../utils/ChartColors'
+import {chartRed, chartGreen, chartBlue, loadingOption} from '../../utils/ChartUtils'
 import { abbreviateNumber } from '../../utils/NumberUtils'
 
 class TVL extends React.Component {
     state = {
-        loading: true,
         tvl: []
     }
 
@@ -67,7 +66,6 @@ class TVL extends React.Component {
     componentDidMount() {
       this.getRecentTVLs().then(data => {
         this.setState({
-          loading: false,
           tvl: data
         })
       }).catch(e => {
@@ -76,9 +74,6 @@ class TVL extends React.Component {
     }
 
     tvlChart() {
-      if (this.state.loading) {
-        return <p>Loading...</p>
-      }
       const options = {
         xAxis: {
             type: 'category',
@@ -157,7 +152,11 @@ class TVL extends React.Component {
           }
         ]
       }
-      return <ReactECharts option={options} />
+      return <ReactECharts 
+        loadingOption={loadingOption} 
+        showLoading={this.state.tvl.length === 0} 
+        option={options} 
+      />
     }
 
     render() {
@@ -171,7 +170,6 @@ class TVL extends React.Component {
 
 class TVL7DayChange extends React.Component {
   state = {
-      loading: true,
       tvlChanges: []
   }
 
@@ -239,7 +237,6 @@ class TVL7DayChange extends React.Component {
         })
       }
       this.setState({
-        loading: false,
         tvlChanges: tvlChanges
       })
     }).catch(e => {
@@ -248,9 +245,6 @@ class TVL7DayChange extends React.Component {
   }
 
   tvlChangeChart() {
-    if (this.state.loading) {
-      return <p>Loading...</p>
-    }
     const options = {
       xAxis: {
           type: 'category',
@@ -290,7 +284,11 @@ class TVL7DayChange extends React.Component {
         }
       ]
     }
-    return <ReactECharts option={options} />
+    return <ReactECharts 
+        loadingOption={loadingOption} 
+        showLoading={this.state.tvlChanges.length === 0} 
+        option={options} 
+      />
   }
 
   render() {
