@@ -2,11 +2,9 @@ name: Build and deploy site staging
 
 on:
   push:
-    branches:
-      - staging
+    branches: [ staging ]
   pull_request:
-    branches:
-      - staging
+    branches: [ staging ]
 
 jobs:
   build-and-deploy:
