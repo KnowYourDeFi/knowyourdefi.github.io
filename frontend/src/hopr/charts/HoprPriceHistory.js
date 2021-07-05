@@ -2,10 +2,10 @@ import React from 'react'
 import ReactECharts from 'echarts-for-react'
 import {formatDate} from '../../utils/Timestamps'
 import { uniV2Client } from '../../liquity/LiquityData'
-import {query, last7DayBlocks, blocksSinceHoprEpoch, splitQuery, hoprClient} from '../HoprData'
+import { blocksSinceHoprEpoch, splitQuery } from '../HoprData'
 import dayjs from 'dayjs'
-import {chartRed, chartGreen, chartBlue} from '../../utils/ChartColors'
-import { numberWithCommas, abbreviateNumber } from '../../utils/NumberUtils'
+import { chartBlue } from '../../utils/ChartColors'
+import { abbreviateNumber } from '../../utils/NumberUtils'
 
 // Use Uniswap V2 for now.
 class HoprPriceHistory extends React.Component {
