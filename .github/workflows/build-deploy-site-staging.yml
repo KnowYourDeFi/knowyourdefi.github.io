@@ -41,7 +41,7 @@ jobs:
       with:
         azcliversion: 2.0.72
         inlineScript: |
-            az storage blob upload-batch --account-name knowyourdefistg -d '$web' -s ./build
+            az storage blob upload-batch --account-name knowyourdefistg -d '$web' -s ./frontend/build
         
     - name: Azure logout
       run: |
