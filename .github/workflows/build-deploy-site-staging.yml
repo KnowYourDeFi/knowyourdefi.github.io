@@ -30,9 +30,6 @@ jobs:
     
     - name: Build project
       run: npm run build
-    
-    - name: Run unit tests
-      run: npm run test
 
     - name: Azure login
       uses: azure/login@v1
