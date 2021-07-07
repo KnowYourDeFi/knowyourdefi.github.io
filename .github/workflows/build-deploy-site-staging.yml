@@ -23,16 +23,11 @@ jobs:
       with:
         ref: staging
     
-    - name: Install Node.js
-      uses: actions/setup-node@v1
-      with:
-        node-version: 14.x
-    
-    - name: Install NPM packages
-      run: npm ci
+    - name: Install dependencies
+      run: yarn
     
     - name: Build project
-      run: npm run build
+      run: yarn build
 
     - name: Azure login
       uses: azure/login@v1
