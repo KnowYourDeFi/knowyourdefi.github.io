@@ -1,0 +1,47 @@
+name: Build and deploy site staging
+
+on:
+  push:
+    branches: [ staging ]
+  pull_request:
+    branches: [ staging ]
+
+jobs:
+  build-and-deploy:
+    name: Build and deploy
+    environment:
+      name: know-your-defi-staging
+      url: https://knowyourdefistg.z11.web.core.windows.net/
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./frontend
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      with:
+        ref: staging
+    
+    - name: Install dependencies
+      run: yarn
+    
+    - name: Build project
+      run: yarn build
+
+    - name: Azure login
+      uses: azure/login@v1
+      with:
+          creds: ${{ secrets.AZURE_STAGING_CREDENTIALS }}
+
+    - name: Upload to Azure blob storage
+      uses: azure/CLI@v1
+      with:
+        azcliversion: 2.0.72
+        inlineScript: |
+            az storage blob upload-batch --account-name knowyourdefistg -d '$web' -s ./frontend/build
+        
+    - name: Azure logout
+      run: |
+            az logout
+  
