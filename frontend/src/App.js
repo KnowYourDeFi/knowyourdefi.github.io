@@ -95,11 +95,11 @@ class App extends React.Component {
           <div className="app-page" style={{ display: this.state.page === PAGE.LIQUITY ? 'block' : 'none' }}>
             <LiquityInfo />
           </div>
-          <div className="app-page" style={{ display: this.state.page === PAGE.PROFILE ? 'block' : 'none' }}>
-            <Profile ref={this.profile} onCurrentAddressChange={this.onCurrentAddressChange} />
-          </div>
           <div className="app-page" style={{ display: this.state.page === PAGE.HOPR ? 'block' : 'none' }}>
             <HoprInfo />
+          </div>
+          <div className="app-page" style={{ display: this.state.page === PAGE.PROFILE ? 'block' : 'none' }}>
+            <Profile ref={this.profile} onCurrentAddressChange={this.onCurrentAddressChange} />
           </div>
         </div>
       </div>
