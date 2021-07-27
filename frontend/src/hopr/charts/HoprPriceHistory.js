@@ -4,7 +4,7 @@ import {formatDate} from '../../utils/Timestamps'
 import { uniV2Client } from '../../liquity/LiquityData'
 import { blocksSinceHoprEpoch, splitQuery } from '../HoprData'
 import dayjs from 'dayjs'
-import { chartBlue } from '../../utils/ChartColors'
+import { chartBlue } from '../../utils/ChartUtils'
 import { abbreviateNumber } from '../../utils/NumberUtils'
 
 // Use Uniswap V2 for now.
