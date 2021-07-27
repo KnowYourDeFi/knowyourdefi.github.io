@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import profileManager from './ProfileManager'
 import { instanceOf } from 'prop-types';
-import { withCookies, Cookies } from 'react-cookie';
 import DropDownWithDelete from '../widget/DropDownWithDelete'
 import { ReactComponent as MetaMaskLogo } from '../resources/metamask.svg'
 import './AddressBar.scss'
@@ -13,20 +13,11 @@ const ENS_NAME_REGEX = /^.{3,}\..{3,}$/i // xxx.xxx
 
 class AddressBar extends React.Component {
 
-  static propTypes = {
-    cookies: instanceOf(Cookies).isRequired
-  };
-
   constructor(props) {
     super(props)
 
-    // initial value
-    this.options = this.props.cookies.get('addressList') // [{ address, ens }, ...]
-    this.current = this.props.cookies.get('currentAddress') // { address, ens }
-    // fix invalid data
-    if (!this.options || this.options.length === 0) {
-      this.current = null
-    }
+    this.options = profileManager.getAddressList() // [{ address, ens }, ...]
+    this.current = profileManager.getCurrentAddress() // { address, ens }
 
     this.state = {
       showAddAddressPopup: false,
@@ -201,17 +192,13 @@ class AddressBar extends React.Component {
   onCurrentAddressChange(currentAddress) {
     log('addressbar current address change', currentAddress)
     this.current = currentAddress
-    if (currentAddress) {
-      this.props.cookies.set('currentAddress', currentAddress)
-    } else {
-      this.props.cookies.remove('currentAddress')
-    }
+    profileManager.setCurrentAddress(currentAddress)
     this.props.onCurrentAddressChange(currentAddress)
   }
 
   onAddressListChange(addressList) {
     this.options = addressList
-    this.props.cookies.set('addressList', addressList)
+    profileManager.setAddressList(addressList)
     this.props.onAddressListChange(addressList)
   }
 
@@ -285,5 +272,5 @@ AddressBar.defaultProps = {
   onCurrentAddressChange: function (address) { log('current address change', address) },
 }
 
-export default withCookies(AddressBar)
-export { ETH_ADDR_REGEX, ENS_NAME_REGEX as ENS_ADDR_REGEX }
+export default AddressBar
+export { ETH_ADDR_REGEX, ENS_NAME_REGEX }
