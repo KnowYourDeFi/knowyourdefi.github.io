@@ -5,13 +5,15 @@ import { ReactComponent as DaoLogo } from './resources/rhizome-dao.svg'
 import { ReactComponent as GitHubLogo } from './resources/github.svg'
 import { ReactComponent as MediumLogo } from './resources/medium.svg'
 import { ReactComponent as TwitterLogo } from './resources/twitter.svg'
+import { ReactComponent as HoprIcon } from './resources/hopr_icon.svg'
 import LiquityInfo from './liquity/LiquityInfo'
 import Profile from './profile/Profile'
 import Rabbit from './rabbit/Rabbit'
 import ConnectButton from './widget/ConnectButton'
 import { log } from './utils/DebugUtils';
+import HoprInfo from './hopr/HoprInfo'
 
-const PAGE = Object.freeze({ 'LIQUITY': 1, 'PROFILE': 2, 'RABBIT': 3 })
+const PAGE = Object.freeze({ 'LIQUITY': 1, 'PROFILE': 2, 'RABBIT': 3, 'HOPR': 4 })
 
 class App extends React.Component {
 
@@ -29,6 +31,7 @@ class App extends React.Component {
     this.onRabbitClick = this.onRabbitClick.bind(this)
     this.onDaoClick = this.onDaoClick.bind(this)
     this.onProfileClick = this.onProfileClick.bind(this)
+    this.onHoprClick = this.onHoprClick.bind(this)
   }
 
   onCurrentAddressChange(address) {
@@ -59,6 +62,13 @@ class App extends React.Component {
     })
   }
 
+  onHoprClick(e){
+    e.preventDefault()
+    this.setState({
+      page: PAGE.HOPR
+    })
+  }
+
   render() {
     log('app render')
     return (
@@ -66,6 +76,7 @@ class App extends React.Component {
         <header className="app-header">
           <span className="app-header-container left">
             <RabbitLogo className="icon icon-monochrome" onClick={this.onRabbitClick} />
+            <HoprIcon className="logo" onClick={this.onHoprClick} />
           </span>
           <DaoLogo className="logo" onClick={this.onDaoClick} />
           <span className="app-header-container right">
@@ -86,6 +97,9 @@ class App extends React.Component {
           </div>
           <div className="app-page" style={{ display: this.state.page === PAGE.PROFILE ? 'block' : 'none' }}>
             <Profile ref={this.profile} onCurrentAddressChange={this.onCurrentAddressChange} />
+          </div>
+          <div className="app-page" style={{ display: this.state.page === PAGE.HOPR ? 'block' : 'none' }}>
+            <HoprInfo />
           </div>
         </div>
       </div>
