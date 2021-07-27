@@ -6,6 +6,7 @@ import { ReactComponent as GitHubLogo } from './resources/github.svg'
 import { ReactComponent as MediumLogo } from './resources/medium.svg'
 import { ReactComponent as TwitterLogo } from './resources/twitter.svg'
 import { ReactComponent as HoprIcon } from './resources/hopr_icon.svg'
+import { ReactComponent as LiquityIcon } from './resources/liquity.svg'
 import LiquityInfo from './liquity/LiquityInfo'
 import Profile from './profile/Profile'
 import Rabbit from './rabbit/Rabbit'
@@ -31,6 +32,7 @@ class App extends React.Component {
     this.onRabbitClick = this.onRabbitClick.bind(this)
     this.onDaoClick = this.onDaoClick.bind(this)
     this.onProfileClick = this.onProfileClick.bind(this)
+    this.onLiquityClick = this.onLiquityClick.bind(this)
     this.onHoprClick = this.onHoprClick.bind(this)
   }
 
@@ -62,6 +64,13 @@ class App extends React.Component {
     })
   }
 
+  onLiquityClick(e) {
+    e.preventDefault()
+    this.setState({
+      page: PAGE.LIQUITY
+    })
+  }
+
   onHoprClick(e){
     e.preventDefault()
     this.setState({
@@ -76,7 +85,8 @@ class App extends React.Component {
         <header className="app-header">
           <span className="app-header-container left">
             <RabbitLogo className="icon icon-monochrome" onClick={this.onRabbitClick} />
-            <HoprIcon className="logo" onClick={this.onHoprClick} />
+            <HoprIcon className="icon" onClick={this.onHoprClick} />
+            <LiquityIcon className="icon" onClick={this.onLiquityClick} />
           </span>
           <DaoLogo className="logo" onClick={this.onDaoClick} />
           <span className="app-header-container right">
