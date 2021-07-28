@@ -5,13 +5,15 @@ import { ReactComponent as DaoLogo } from './resources/rhizome-dao.svg'
 import { ReactComponent as GitHubLogo } from './resources/github.svg'
 import { ReactComponent as MediumLogo } from './resources/medium.svg'
 import { ReactComponent as TwitterLogo } from './resources/twitter.svg'
+import { ReactComponent as KeanuLogo } from './resources/keep.svg'
 import LiquityInfo from './liquity/LiquityInfo'
 import Profile from './profile/Profile'
 import Rabbit from './rabbit/Rabbit'
 import ConnectButton from './widget/ConnectButton'
 import { log } from './utils/DebugUtils';
+import KeanuInfo from './keanu/KeanuInfo'
 
-const PAGE = Object.freeze({ 'LIQUITY': 1, 'PROFILE': 2, 'RABBIT': 3 })
+const PAGE = Object.freeze({ 'LIQUITY': 1, 'PROFILE': 2, 'RABBIT': 3, 'KEANU': 4 })
 
 class App extends React.Component {
 
@@ -29,6 +31,7 @@ class App extends React.Component {
     this.onRabbitClick = this.onRabbitClick.bind(this)
     this.onDaoClick = this.onDaoClick.bind(this)
     this.onProfileClick = this.onProfileClick.bind(this)
+    this.onKeanuClick = this.onKeanuClick.bind(this)
   }
 
   onCurrentAddressChange(address) {
@@ -59,6 +62,13 @@ class App extends React.Component {
     })
   }
 
+  onKeanuClick(e) {
+    e.preventDefault()
+    this.setState({
+      page: PAGE.KEANU
+    })
+  }
+
   render() {
     log('app render')
     return (
@@ -66,6 +76,7 @@ class App extends React.Component {
         <header className="app-header">
           <span className="app-header-container left">
             <RabbitLogo className="icon icon-monochrome" onClick={this.onRabbitClick} />
+            <KeanuLogo className="logo" onClick={this.onKeanuClick} />
           </span>
           <DaoLogo className="logo" onClick={this.onDaoClick} />
           <span className="app-header-container right">
@@ -83,6 +94,9 @@ class App extends React.Component {
           </div>
           <div className="app-page" style={{ display: this.state.page === PAGE.LIQUITY ? 'block' : 'none' }}>
             <LiquityInfo />
+          </div>
+          <div className="app-page" style={{ display: this.state.page === PAGE.KEANU ? 'block' : 'none' }}>
+            <KeanuInfo />
           </div>
           <div className="app-page" style={{ display: this.state.page === PAGE.PROFILE ? 'block' : 'none' }}>
             <Profile ref={this.profile} onCurrentAddressChange={this.onCurrentAddressChange} />
