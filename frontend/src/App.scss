@@ -15,6 +15,9 @@
 }
 
 body {
+  margin: 0;
+  // font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
+  //   "Droid Sans", "Helvetica Neue", sans-serif;
   background-color: #f8f8f8 !important;
   margin: 0;
   font-family: var(--bs-font-sans-serif);
@@ -23,8 +26,14 @@ body {
   line-height: 1.5;
   color: #212529;
   background-color: #fff;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
 input {
@@ -83,7 +92,7 @@ td {
 
 $header-height: 60px;
 $logo-size: 40px;
-$icon-size: 26px;
+$icon-size: 30px;
 
 .app-header {
   position: fixed;
@@ -112,18 +121,17 @@ $icon-size: 26px;
   }
   .icon-container {
     height: $icon-size;
-    margin: 0 5px;
   }
   .icon {
     width: $icon-size;
     height: $icon-size;
+  }
+  .icon-monochrome {
+    padding: 2px;
     fill: $theme-color4;
     &:hover {
       fill: $theme-color2;
     }
-  }
-  .connect-button {
-    margin-left: 5px;
   }
 }
 .app-header-container {
@@ -134,6 +142,9 @@ $icon-size: 26px;
   align-items: center;
   &.right {
     justify-content: flex-end;
+  }
+  > * {
+    margin: 0 5px;
   }
 }
 
