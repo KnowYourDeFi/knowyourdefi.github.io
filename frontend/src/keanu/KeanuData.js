@@ -1,6 +1,6 @@
 import { ApolloClient, InMemoryCache, gql } from '@apollo/client'
 import { trace } from '../utils/DebugUtils'
-import {hourlyTimestamps, timestampsSinceHoprEpoch} from '../utils/Timestamps'
+import { hourlyTimestamps, timestampsSinceKeepEpoch, timestampsSinceTbtcEpoch, timestampsSinceNuEpoch } from '../utils/Timestamps'
 import {blockClient} from '../liquity/LiquityData'
 
 export const keanuClient = new ApolloClient({
@@ -8,8 +8,13 @@ export const keanuClient = new ApolloClient({
     cache: new InMemoryCache()
 })
 
-export const hoprXdaiClient = new ApolloClient({
-  uri: 'https://api.thegraph.com/subgraphs/name/hoprnet/hopr-on-xdai',
+export const sushiClient = new ApolloClient({
+  uri: 'https://api.thegraph.com/subgraphs/name/sushiswap/exchange',
+  cache: new InMemoryCache()
+})
+
+export const nuClinet = new ApolloClient({
+  uri: 'https://api.thegraph.com/subgraphs/name/nucypher/nucypher',
   cache: new InMemoryCache()
 })
 
@@ -66,11 +71,19 @@ export async function getBlocksFromTimestamps(timestamps, skipCount = 500) {
     return getBlocksFromTimestamps(hourlyTimestamps())
   }
 
-  export const blocksSinceHoprEpoch = (hourInterval = 3) => {
-    return getBlocksFromTimestamps(timestampsSinceHoprEpoch(hourInterval))
+  export const blocksSinceTbtcEpoch = (hourInterval = 3) => {
+    return getBlocksFromTimestamps(timestampsSinceTbtcEpoch(hourInterval))
   }
 
-  export async function query(ql, client = hoprClient) {
+  export const blocksSinceKeepEpoch = (hourInterval = 3) => {
+    return getBlocksFromTimestamps(timestampsSinceKeepEpoch(hourInterval))
+  }
+
+  export const blocksSinceNuEpoch = (hourInterval = 3) => {
+    return getBlocksFromTimestamps(timestampsSinceNuEpoch(hourInterval))
+  }
+
+  export async function query(ql, client = keanuClient) {
     let data = await client.query({
       query: gql(ql),
       fetchPolicy: 'cache-first'
