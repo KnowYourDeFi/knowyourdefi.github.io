@@ -1,5 +1,5 @@
 import React from 'react'
-import {query, uniV2Client, uniV3Client} from '../../liquity/LiquityData'
+import {query, uniV2Client} from '../../liquity/LiquityData'
 import { sushiClient } from '../KeanuData'
 
 export async function queryTBTCPriceV2() {

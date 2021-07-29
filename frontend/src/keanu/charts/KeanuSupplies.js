@@ -3,7 +3,7 @@ import ReactECharts from 'echarts-for-react'
 import {formatDate} from '../../utils/Timestamps'
 import {query, keanuClient, blocksSinceTbtcEpoch, splitQuery} from '../KeanuData'
 import dayjs from 'dayjs'
-import {chartRed, chartGreen, chartBlue, loadingOption} from '../../utils/ChartUtils'
+import {chartBlue, loadingOption} from '../../utils/ChartUtils'
 import { numberWithCommas, abbreviateNumber } from '../../utils/NumberUtils'
 
 class TbtcCurrentTotalSupply extends React.Component {
