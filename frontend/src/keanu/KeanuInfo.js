@@ -7,6 +7,7 @@ import { TbtcHolders, NuHolders, KeepHolders} from './charts/Holders'
 import TbtcTotalMinted from './charts/TbtcTotalMinted'
 import { TbtcCurrentTotalSupply, TbtcTotalSupply, KeepCurrentTotalSupply, NuCurrentTotalSupply } from './charts/KeanuSupplies'
 import { NuNodes } from './charts/KeanuNodes'
+import ColorProgressBar from '../widget/ColorProgressBar'
 
 class HoprInfo extends React.Component {
 
@@ -16,6 +17,43 @@ class HoprInfo extends React.Component {
         <div style={{ textAlign: 'center' }}>
           <KeepHeader  style={{ maxWidth: 180 }} />
           <NuHeader  style={{ maxWidth: 180 }} />
+        </div>
+
+        <div className="defi-title">
+          <span className="defi-title-text">T</span>
+          <div className="defi-title-info-container">
+            <span className="defi-title-info-icon" />
+            <div className="defi-title-info-card">
+              <p>Existing NU and KEEP stakers will be able to stake in the Keanu network via adapters and earn T rewards until such time as their staked tokens become liquid and they can explicitly upgrade to T.</p>
+              <p>Wrapped T can be unwrapped back to the underlying NU or KEEP, but only from the same address.</p>
+            </div>
+          </div>
+        </div>
+        <div className="defi-card-group-6">
+          <div className="defi-card">
+            <div className="defi-card-title">T Total Supply</div>
+            <div className="defi-card-large-text">1,000,000,000</div>
+          </div>
+          <div className="defi-card">
+            <div className="defi-card-title">T Token Allocation</div>
+            <ColorProgressBar progress= '100' range={[{
+        size: 45,
+        color: '#1E65F3',
+        name: null,
+        desc: 'Existing NuCypher holders. 45% of initial total supply.',
+      }, {
+        size: 10,
+        color: 'rgb(147, 180, 280)',
+        name: null,
+        desc: '"KEaNu" DAO. 10% of initial total supply.',
+      }, {
+        size: 45,
+        color: '#48DB44',
+        name: null,
+        desc: 'Existing Keep holders. 45% of initial total supply.',
+      }]}
+    />
+          </div>
         </div>
 
         <div className="defi-title">
