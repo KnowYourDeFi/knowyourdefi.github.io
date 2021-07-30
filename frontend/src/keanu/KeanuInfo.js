@@ -1,24 +1,20 @@
 import React from 'react'
-import { ReactComponent as KeepHeader} from '../resources/keep.svg'
 import { ReactComponent as NuHeader} from '../resources/nucypher.svg'
 import { ReactComponent as TBTCLogo} from '../resources/TBTC.svg'
+import KeepLogo from'../resources/keep-token-main.png'
 import { TBTCPriceV2, NUPriceV2, NUPriceSushi, KEEPPriceV2 } from './charts/KeanuPrices'
 import { TbtcHolders, NuHolders, KeepHolders} from './charts/Holders'
 import TbtcTotalMinted from './charts/TbtcTotalMinted'
-import { TbtcCurrentTotalSupply, TbtcTotalSupply, KeepCurrentTotalSupply, NuCurrentTotalSupply } from './charts/KeanuSupplies'
+import { TbtcCurrentTotalSupply, TbtcTotalSupply, KeepCurrentTotalSupply, NuCurrentTotalSupply, KeepCirculatingSupply, NuCirculatingSupply } from './charts/KeanuSupplies'
 import { NuNodes } from './charts/KeanuNodes'
 import ColorProgressBar from '../widget/ColorProgressBar'
 
-class HoprInfo extends React.Component {
-
+class KeanuInfo extends React.Component {
   render() {
     return (
       <div className="defi-info">
-        <div style={{ textAlign: 'center' }}>
-          <KeepHeader  style={{ maxWidth: 180 }} />
-          <NuHeader  style={{ maxWidth: 180 }} />
-        </div>
-
+        <p style={{ fontSize: 50, textAlign: 'center' }}>KEANU</p>
+        
         <div className="defi-title">
           <span className="defi-title-text">T</span>
           <div className="defi-title-info-container">
@@ -117,13 +113,17 @@ class HoprInfo extends React.Component {
             <div className="defi-card-large-text"><NuCurrentTotalSupply /></div>
           </div>
           <div className="defi-card">
+            <div className="defi-card-title">NU Circulating Supply</div>
+            <div className="defi-card-large-text"><NuCirculatingSupply /></div>
+          </div>
+          <div className="defi-card">
             <div className="defi-card-title">NU Nodes</div>
             <div className="defi-card-large-text"><NuNodes /></div>
           </div>
         </div>
 
         <div className="defi-title">
-          <KeepHeader className="defi-title-logo" />
+          <img  src={KeepLogo} width='30px' />
           <span className="defi-title-text">KEEP</span>
           <div className="defi-title-info-container">
             <span className="defi-title-info-icon" />
@@ -145,6 +145,10 @@ class HoprInfo extends React.Component {
             <div className="defi-card-title">KEEP Total Supply</div>
             <div className="defi-card-large-text"><KeepCurrentTotalSupply /></div>
           </div>
+          <div className="defi-card">
+            <div className="defi-card-title">KEEP Circulating Supply</div>
+            <div className="defi-card-large-text"><KeepCirculatingSupply /></div>
+          </div>
         </div>
 
       </div>
@@ -152,4 +156,4 @@ class HoprInfo extends React.Component {
   }
 }
 
-export default HoprInfo 
+export default KeanuInfo

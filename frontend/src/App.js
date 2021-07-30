@@ -5,7 +5,8 @@ import { ReactComponent as DaoLogo } from './resources/rhizome-dao.svg'
 import { ReactComponent as GitHubLogo } from './resources/github.svg'
 import { ReactComponent as MediumLogo } from './resources/medium.svg'
 import { ReactComponent as TwitterLogo } from './resources/twitter.svg'
-import { ReactComponent as KeanuLogo } from './resources/keep.svg'
+import { ReactComponent as KeepLogo } from './resources/keep.svg'
+import { ReactComponent as NuLogo } from './resources/nucypher.svg'
 import { ReactComponent as HoprIcon } from './resources/hopr_icon.svg'
 import { ReactComponent as LiquityIcon } from './resources/liquity.svg'
 import LiquityInfo from './liquity/LiquityInfo'
@@ -14,9 +15,10 @@ import Rabbit from './rabbit/Rabbit'
 import ConnectButton from './widget/ConnectButton'
 import { log } from './utils/DebugUtils';
 import KeanuInfo from './keanu/KeanuInfo'
+import LearnKeanu from './keanu/LearnKeanu'
 import HoprInfo from './hopr/HoprInfo'
 
-const PAGE = Object.freeze({ 'LIQUITY': 1, 'PROFILE': 2, 'RABBIT': 3, 'HOPR': 4, 'KEANU': 5 })
+const PAGE = Object.freeze({ 'LIQUITY': 1, 'PROFILE': 2, 'RABBIT': 3, 'HOPR': 4, 'KEANU_DATA': 5, 'KEANU_LEARN':6 })
 
 class App extends React.Component {
 
@@ -34,7 +36,8 @@ class App extends React.Component {
     this.onRabbitClick = this.onRabbitClick.bind(this)
     this.onDaoClick = this.onDaoClick.bind(this)
     this.onProfileClick = this.onProfileClick.bind(this)
-    this.onKeanuClick = this.onKeanuClick.bind(this)
+    this.onKeanuDataClick = this.onKeanuDataClick.bind(this)
+    this.onKeanuLearnClick = this.onKeanuLearnClick.bind(this)
     this.onLiquityClick = this.onLiquityClick.bind(this)
     this.onHoprClick = this.onHoprClick.bind(this)
   }
@@ -67,10 +70,17 @@ class App extends React.Component {
     })
   }
 
-  onKeanuClick(e) {
+  onKeanuDataClick(e) {
     e.preventDefault()
     this.setState({
-      page: PAGE.KEANU
+      page: PAGE.KEANU_DATA
+    })
+  }
+
+  onKeanuLearnClick(e) {
+    e.preventDefault()
+    this.setState({
+      page: PAGE.KEANU_LEARN
     })
   }
   
@@ -97,7 +107,8 @@ class App extends React.Component {
             <RabbitLogo className="icon icon-monochrome" onClick={this.onRabbitClick} />
             <HoprIcon className="icon" onClick={this.onHoprClick} />
             <LiquityIcon className="icon" onClick={this.onLiquityClick} />
-            <KeanuLogo className="logo" onClick={this.onKeanuClick} />
+            <KeepLogo className="logo" onClick={this.onKeanuDataClick} />
+            <NuLogo className="logo" onClick={this.onKeanuLearnClick} />            
           </span>
           <DaoLogo className="logo" onClick={this.onDaoClick} />
           <span className="app-header-container right">
@@ -116,8 +127,11 @@ class App extends React.Component {
           <div className="app-page" style={{ display: this.state.page === PAGE.LIQUITY ? 'block' : 'none' }}>
             <LiquityInfo />
           </div>
-          <div className="app-page" style={{ display: this.state.page === PAGE.KEANU ? 'block' : 'none' }}>
+          <div className="app-page" style={{ display: this.state.page === PAGE.KEANU_DATA ? 'block' : 'none' }}>
             <KeanuInfo />
+          </div>
+          <div className="app-page" style={{ display: this.state.page === PAGE.KEANU_LEARN ? 'block' : 'none' }}>
+            <LearnKeanu/>
           </div>
           <div className="app-page" style={{ display: this.state.page === PAGE.HOPR ? 'block' : 'none' }}>
             <HoprInfo />

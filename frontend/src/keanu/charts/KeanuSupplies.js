@@ -1,4 +1,5 @@
 import React from 'react'
+import axios from 'axios'
 import ReactECharts from 'echarts-for-react'
 import {formatDate} from '../../utils/Timestamps'
 import {query, keanuClient, blocksSinceTbtcEpoch, splitQuery} from '../KeanuData'
@@ -225,7 +226,65 @@ class TbtcTotalSupply extends React.Component {
   }
 }
 
+class KeepCirculatingSupply extends React.Component {
+  state = {
+      loading: true,
+      supply: 0
+  }
+
+  async getSupply() {
+      axios.get('https://knowyourdefifunc.azurewebsites.net/api/KeanuMiscFunc?module=keepcirculatingsupply')
+      .then((response) => {
+          this.setState({
+              loading: false,
+              supply: parseFloat(parseFloat(response.data.data.keep_circulating_supply).toFixed(2))
+          })
+      })
+      .catch(e => {
+        console.error(e)
+      })
+  }
+
+  componentDidMount() {
+      this.getSupply()
+  }
+
+  render() {
+      return this.state.loading ? 'Loading...' : numberWithCommas(this.state.supply)
+  }
+}
+
+class NuCirculatingSupply extends React.Component {
+  state = {
+      loading: true,
+      supply: 0
+  }
+
+  async getSupply() {
+      axios.get('https://knowyourdefifunc.azurewebsites.net/api/KeanuMiscFunc?module=nucirculatingsupply')
+      .then((response) => {
+          this.setState({
+              loading: false,
+              supply: parseFloat(parseFloat(response.data.data.nu_circulating_supply).toFixed(2))
+          })
+      })
+      .catch(e => {
+        console.error(e)
+      })
+  }
+
+  componentDidMount() {
+      this.getSupply()
+  }
+
+  render() {
+      return this.state.loading ? 'Loading...' : numberWithCommas(this.state.supply)
+  }
+}
+
 export {TbtcCurrentTotalSupply}
 export {TbtcTotalSupply}
 export {KeepCurrentTotalSupply}
 export {NuCurrentTotalSupply}
+export {KeepCirculatingSupply}
+export {NuCirculatingSupply}

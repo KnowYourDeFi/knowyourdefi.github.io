@@ -9,11 +9,18 @@ export async function queryTBTCPriceV2() {
             {
               token1Price
             }
+
+            bundle(id: "1" ) {
+                ethPrice
+            }
         }
         `
+
         //Get Uniswap V2 price
         let data = await query(gql, uniV2Client)
-        return  data.pair.token1Price
+        const ethPrice = data.bundle.ethPrice
+        const tokenPriceInEth = data.pair.token1Price
+        return ethPrice * tokenPriceInEth
 }
 
 class TBTCPriceV2 extends React.Component {
@@ -34,7 +41,7 @@ class TBTCPriceV2 extends React.Component {
     }
 
     render() {
-        return this.state.loading ? 'Loading...' :  parseFloat(this.state.price).toFixed(2) + ' ETH'
+        return this.state.loading ? 'Loading...' :  'USD $' + parseFloat(this.state.price).toFixed(2)
     }
 }
 
@@ -51,12 +58,18 @@ class NUPriceV2 extends React.Component {
             {
                 token1Price
             }
+
+            bundle(id: "1" ) {
+                ethPrice
+            }
         }
         `
 
         //Get Uniswap V2 price
         query(gql, uniV2Client).then(data => {
-            const tokenPrice = data.pair.token1Price
+            const ethPrice = data.bundle.ethPrice
+            const tokenPriceInEth = data.pair.token1Price
+            const tokenPrice = ethPrice * tokenPriceInEth
             this.setState({
               loading: false,
               price: tokenPrice
@@ -67,7 +80,7 @@ class NUPriceV2 extends React.Component {
     }
 
     render() {
-        return this.state.loading ? 'Loading...' : parseFloat(this.state.price).toFixed(4) + ' ETH'
+        return this.state.loading ? 'Loading...' : 'USD $' + parseFloat(this.state.price).toFixed(2)
     }
 }
 
@@ -84,12 +97,18 @@ class NUPriceSushi extends React.Component {
             {
                 token1Price
             }
+
+            bundle(id: "1" ) {
+                ethPrice
+            }
         }
         `
 
         //Get Sushiswap price
         query(gql, sushiClient).then(data => {
-            const tokenPrice = data.pair.token1Price
+            const ethPrice = data.bundle.ethPrice
+            const tokenPriceInEth = data.pair.token1Price
+            const tokenPrice = ethPrice * tokenPriceInEth
             this.setState({
               loading: false,
               price: tokenPrice
@@ -100,7 +119,7 @@ class NUPriceSushi extends React.Component {
     }
 
     render() {
-        return this.state.loading ? 'Loading...' : parseFloat(this.state.price).toFixed(4) + ' ETH'
+        return this.state.loading ? 'Loading...' : 'USD $' + parseFloat(this.state.price).toFixed(2)
     }
 }
 
@@ -117,12 +136,18 @@ class KEEPPriceV2 extends React.Component {
             {
                 token1Price
             }
+
+            bundle(id: "1" ) {
+                ethPrice
+            }
         }
         `
 
         //Get Uniswap V2 price
         query(gql, uniV2Client).then(data => {
-            const tokenPrice = data.pair.token1Price
+            const ethPrice = data.bundle.ethPrice
+            const tokenPriceInEth = data.pair.token1Price
+            const tokenPrice = ethPrice * tokenPriceInEth
             this.setState({
               loading: false,
               price: tokenPrice
@@ -133,7 +158,7 @@ class KEEPPriceV2 extends React.Component {
     }
 
     render() {
-        return this.state.loading ? 'Loading...' : parseFloat(this.state.price).toFixed(4) + ' ETH'
+        return this.state.loading ? 'Loading...' : 'USD $' + parseFloat(this.state.price).toFixed(2)
     }
 }
 
