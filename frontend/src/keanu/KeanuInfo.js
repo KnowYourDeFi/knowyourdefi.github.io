@@ -123,7 +123,7 @@ class KeanuInfo extends React.Component {
         </div>
 
         <div className="defi-title">
-          <img  src={KeepLogo} width='30px' />
+          <img  src={KeepLogo} width='30px' alt='' />
           <span className="defi-title-text">KEEP</span>
           <div className="defi-title-info-container">
             <span className="defi-title-info-icon" />
