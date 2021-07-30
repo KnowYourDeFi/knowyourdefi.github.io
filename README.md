@@ -10,7 +10,7 @@
 
 <p align="center">
 	💫 <a href="https://www.knowyourdefi.com/">knowyourdefi.com</a>
-	🌱 <a href="https://twitter.com/rhizomedaot">@RhizomeDAO</a>
+	🌱 <a href="https://twitter.com/rhizomedao">@RhizomeDAO</a>
 </p>
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://raw.githubusercontent.com/KnowYourDeFi/knowyourdefi.github.io/master/LICENSE)
