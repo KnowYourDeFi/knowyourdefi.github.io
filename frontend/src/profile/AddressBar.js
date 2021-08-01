@@ -1,32 +1,22 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import { instanceOf } from 'prop-types';
-import { withCookies, Cookies } from 'react-cookie';
+import profileManager from './ProfileManager'
 import DropDownWithDelete from '../widget/DropDownWithDelete'
 import { ReactComponent as MetaMaskLogo } from '../resources/metamask.svg'
 import './AddressBar.scss'
 import { ensNameToAddress, addressToEnsName } from '../utils/EnsResolver';
 import { log } from '../utils/DebugUtils';
+import MetaMaskManager from '../utils/MetaMaskManager'
 
-const ETH_ADDR_REGEX = /^0x[a-fA-F0-9]{40}$/
-const ENS_NAME_REGEX = /^.{3,}\..{3,}$/i // xxx.xxx
+export const ETH_ADDR_REGEX = /^0x[a-fA-F0-9]{40}$/
+export const ENS_NAME_REGEX = /^.{3,}\..{3,}$/i // xxx.xxx
 
 class AddressBar extends React.Component {
-
-  static propTypes = {
-    cookies: instanceOf(Cookies).isRequired
-  };
 
   constructor(props) {
     super(props)
 
-    // initial value
-    this.options = this.props.cookies.get('addressList') // [{ address, ens }, ...]
-    this.current = this.props.cookies.get('currentAddress') // { address, ens }
-    // fix invalid data
-    if (!this.options || this.options.length === 0) {
-      this.current = null
-    }
+    this.options = profileManager.getAddressList() // [{ address, ens }, ...]
+    this.current = profileManager.getCurrentAddress() // { address, ens }
 
     this.state = {
       showAddAddressPopup: false,
@@ -35,6 +25,7 @@ class AddressBar extends React.Component {
       loading: false,
     }
 
+    this.metaMaskManager = new MetaMaskManager()
     this.dropdown = React.createRef()
 
     this.onAddClick = this.onAddClick.bind(this)
@@ -44,25 +35,15 @@ class AddressBar extends React.Component {
     this.onAddressSubmit = this.onAddressSubmit.bind(this)
     this.onCurrentAddressChange = this.onCurrentAddressChange.bind(this)
     this.onAddressListChange = this.onAddressListChange.bind(this)
-
-    this.handleMetaMaskAccounts = this.handleMetaMaskAccounts.bind(this)
+    this.selectAccount = this.selectAccount.bind(this)
   }
 
   componentDidMount() {
-    // trigger the listener to handle the initial data from cookie
-    if (this.dropdown.current) {
-      log('addressbar initial trigger change')
-      this.props.onAddressListChange(this.dropdown.current.getOptions())
-      this.props.onCurrentAddressChange(this.dropdown.current.getCurrent())
-    }
+    this.metaMaskManager.addListener('account', this.selectAccount)
   }
 
   componentWillUnmount() {
-    window.ethereum?.removeListener('accountsChanged', this.handleMetaMaskAccounts)
-  }
-
-  getAddress() {
-    return this.dropdown.current?.getCurrent()
+    this.metaMaskManager.removeListener('account', this.selectAccount)
   }
 
   onAddClick() {
@@ -95,37 +76,19 @@ class AddressBar extends React.Component {
     window.alert(message)
   }
 
-  async onMetaMaskClick(event) {
-    event.preventDefault();
-    log('onMetaMaskClick', window.ethereum)
-    if (window.ethereum) {
-      window.ethereum.removeListener('accountsChanged', this.handleMetaMaskAccounts)
-      window.ethereum.on('accountsChanged', this.handleMetaMaskAccounts);
-      try {
-        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' })
-        this.handleMetaMaskAccounts(accounts)
-      } catch (e) {
-        console.error('MetaMask read account failed', e)
-        this.showMessage('MetaMask read account failed')
-      }
-    } else {
-      console.error('MetaMask not installed')
-      this.showMessage('MetaMask not installed')
+  async onMetaMaskClick(e) {
+    e.preventDefault()
+    try {
+      await this.metaMaskManager.connect()
+    } catch (e) {
+      console.error('MetaMask connect error', e)
+      this.showMessage(e.message)
     }
   }
 
-  onAddressSubmit(event) {
-    event.preventDefault()
-    this.addAndSelectAddress(this.state.inputContent)
-  }
-
-  handleMetaMaskAccounts(accounts) {
-    if (accounts && accounts[0]) {
-      this.addAndSelectAddress(accounts[0])
-    } else {
-      console.error('MetaMask read account failed, accounts[0] is undefined')
-      this.showMessage('MetaMask read account failed')
-    }
+  async onAddressSubmit(e) {
+    e.preventDefault()
+    await this.selectAccount(this.state.inputContent)
   }
 
   isDuplicated(option) {
@@ -139,7 +102,7 @@ class AddressBar extends React.Component {
    * Add and select address. The value may already exists.
    * @param {string} value eth address or ens name
    */
-  async addAndSelectAddress(value) {
+  async selectAccount(value) {
     if (!value) return
     value = value.toLowerCase()
     log('add and select address', value)
@@ -201,18 +164,12 @@ class AddressBar extends React.Component {
   onCurrentAddressChange(currentAddress) {
     log('addressbar current address change', currentAddress)
     this.current = currentAddress
-    if (currentAddress) {
-      this.props.cookies.set('currentAddress', currentAddress)
-    } else {
-      this.props.cookies.remove('currentAddress')
-    }
-    this.props.onCurrentAddressChange(currentAddress)
+    profileManager.setCurrentAddress(currentAddress)
   }
 
   onAddressListChange(addressList) {
     this.options = addressList
-    this.props.cookies.set('addressList', addressList)
-    this.props.onAddressListChange(addressList)
+    profileManager.setAddressList(addressList)
   }
 
   formatOption(option) {
@@ -275,15 +232,4 @@ class AddressBar extends React.Component {
   }
 }
 
-AddressBar.propTypes = {
-  onAddressListChange: PropTypes.func,
-  onCurrentAddressChange: PropTypes.func,
-}
-
-AddressBar.defaultProps = {
-  onAddressListChange: function (addressList) { log('address list change', addressList) },
-  onCurrentAddressChange: function (address) { log('current address change', address) },
-}
-
-export default withCookies(AddressBar)
-export { ETH_ADDR_REGEX, ENS_NAME_REGEX as ENS_ADDR_REGEX }
+export default AddressBar

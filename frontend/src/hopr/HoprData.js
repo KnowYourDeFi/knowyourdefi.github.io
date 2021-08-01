@@ -1,5 +1,5 @@
 import { ApolloClient, InMemoryCache, gql } from '@apollo/client'
-import { trace } from '../utils/DebugUtils'
+// import { trace } from '../utils/DebugUtils'
 import {hourlyTimestamps, timestampsSinceHoprEpoch} from '../utils/Timestamps'
 import {blockClient} from '../liquity/LiquityData'
 
@@ -17,7 +17,7 @@ export async function splitQuery(queryGenarator, client, vars, list, skipCount =
     let fetchedData = {}
     let allFound = false
     let skip = 0
-  
+
     while (!allFound) {
       let end = list.length
       if (skip + skipCount < list.length) {
@@ -38,16 +38,16 @@ export async function splitQuery(queryGenarator, client, vars, list, skipCount =
         skip += skipCount
       }
     }
-  
+
     return fetchedData
   }
-  
+
 export async function getBlocksFromTimestamps(timestamps, skipCount = 500) {
     if (timestamps?.length === 0) {
         return []
     }
     let fetchedData = await splitQuery(getBlocksQuery, blockClient, [], timestamps, skipCount)
-  
+
     let blocks = []
     if (fetchedData) {
       for (var t in fetchedData) {
@@ -61,25 +61,25 @@ export async function getBlocksFromTimestamps(timestamps, skipCount = 500) {
     }
     return blocks
   }
-  
+
   export const last7DayBlocks = () => {
     return getBlocksFromTimestamps(hourlyTimestamps())
   }
-  
+
   export const blocksSinceHoprEpoch = (hourInterval = 3) => {
     return getBlocksFromTimestamps(timestampsSinceHoprEpoch(hourInterval))
   }
-  
+
   export async function query(ql, client = hoprClient) {
     let data = await client.query({
       query: gql(ql),
       fetchPolicy: 'cache-first'
     });
     data = data && data.data
-    trace('query:', ql, 'result:', data)
+    // trace('query:', ql, 'result:', data)
     return data
   }
-  
+
   function getBlocksQuery(timestamps) {
     let queryString = 'query blocks {'
     queryString += timestamps.map((timestamp) => {

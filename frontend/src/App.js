@@ -1,4 +1,5 @@
 import React from 'react'
+import { BrowserRouter, Switch, Route, Link } from 'react-router-dom'
 import './App.scss'
 import { ReactComponent as RabbitLogo } from './resources/rabbithole.svg'
 import { ReactComponent as DaoLogo } from './resources/rhizome-dao.svg'
@@ -13,106 +14,81 @@ import Rabbit from './rabbit/Rabbit'
 import ConnectButton from './widget/ConnectButton'
 import { log } from './utils/DebugUtils';
 import HoprInfo from './hopr/HoprInfo'
-
-const PAGE = Object.freeze({ 'LIQUITY': 1, 'PROFILE': 2, 'RABBIT': 3, 'HOPR': 4 })
+import profileManager from './profile/ProfileManager'
 
 class App extends React.Component {
-
-  state = {
-    page: PAGE.LIQUITY,
-    address: null, // {address, ens}
-  }
 
   constructor(props) {
     super(props)
 
-    this.profile = React.createRef()
+    this.state = {
+      address: profileManager.getCurrentAddress()  // {address, ens}
+    }
 
-    this.onCurrentAddressChange = this.onCurrentAddressChange.bind(this)
-    this.onRabbitClick = this.onRabbitClick.bind(this)
-    this.onDaoClick = this.onDaoClick.bind(this)
-    this.onProfileClick = this.onProfileClick.bind(this)
-    this.onLiquityClick = this.onLiquityClick.bind(this)
-    this.onHoprClick = this.onHoprClick.bind(this)
+    this.onAddressChanged = this.onAddressChanged.bind(this)
   }
 
-  onCurrentAddressChange(address) {
-    log('app current address change', address)
-    this.setState({
-      address: address
-    })
+  componentDidMount() {
+    profileManager.addAddressChangeListener(this.onAddressChanged)
   }
 
-  onRabbitClick(e) {
-    e.preventDefault()
-    this.setState({
-      page: PAGE.RABBIT
-    })
+  componentWillUnmount() {
+    profileManager.removeAddressChangeListener(this.onAddressChanged)
   }
 
-  onDaoClick(e) {
-    e.preventDefault()
-    this.setState({
-      page: PAGE.LIQUITY
-    })
-  }
-
-  onProfileClick(e) {
-    e.preventDefault()
-    this.setState({
-      page: PAGE.PROFILE
-    })
-  }
-
-  onLiquityClick(e) {
-    e.preventDefault()
-    this.setState({
-      page: PAGE.LIQUITY
-    })
-  }
-
-  onHoprClick(e){
-    e.preventDefault()
-    this.setState({
-      page: PAGE.HOPR
-    })
+  onAddressChanged(address) {
+    this.setState({ address })
   }
 
   render() {
     log('app render')
     return (
-      <div className="app">
-        <header className="app-header">
-          <span className="app-header-container left">
-            <RabbitLogo className="icon icon-monochrome" onClick={this.onRabbitClick} />
-            <HoprIcon className="icon" onClick={this.onHoprClick} />
-            <LiquityIcon className="icon" onClick={this.onLiquityClick} />
-          </span>
-          <DaoLogo className="logo" onClick={this.onDaoClick} />
-          <span className="app-header-container right">
-            <a className="icon-container" href="https://github.com/KnowYourDeFi/knowyourdefi.github.io" target="_blank" rel="noreferrer"><GitHubLogo className="icon icon-monochrome" /></a>
-            <a className="icon-container" href="https://medium.com/@KnowYourDeFi" target="_blank" rel="noreferrer"><MediumLogo className="icon icon-monochrome" /></a>
-            <a className="icon-container" href="https://twitter.com/rhizomedao" target="_blank" rel="noreferrer"><TwitterLogo className="icon icon-monochrome" /></a>
-            <ConnectButton className="profile-button" text={this.state.address ? 'Profile' : 'Connect'} onClick={this.onProfileClick} />
-          </span>
-        </header>
+      <BrowserRouter>
+        <div className="app">
+          <header className="app-header">
+            <span className="app-header-container left">
+              <Link to="/rabbit-hole"><RabbitLogo className="icon icon-monochrome" /></Link>
+              <Link to="/liquity"><LiquityIcon className="icon" /></Link>
+              <Link to="/hopr"><HoprIcon className="icon" /></Link>
+            </span>
+            <Link to="/"><DaoLogo className="logo" /></Link>
+            <span className="app-header-container right">
+              <a className="icon-container" href="https://github.com/KnowYourDeFi/knowyourdefi.github.io" target="_blank" rel="noreferrer"><GitHubLogo className="icon icon-monochrome" /></a>
+              <a className="icon-container" href="https://medium.com/@KnowYourDeFi" target="_blank" rel="noreferrer"><MediumLogo className="icon icon-monochrome" /></a>
+              <a className="icon-container" href="https://twitter.com/rhizomedao" target="_blank" rel="noreferrer"><TwitterLogo className="icon icon-monochrome" /></a>
+              <Link to="/profile"><ConnectButton className="profile-button" text={this.state.address ? 'Profile' : 'Connect'} /></Link>
+            </span>
+          </header>
 
-        <div className="app-body">
-          {/* use display instead of remove the invisible page to avoid page internal state loss */}
-          <div className="app-page" style={{ display: this.state.page === PAGE.RABBIT ? 'block' : 'none' }}>
-            <Rabbit />
-          </div>
-          <div className="app-page" style={{ display: this.state.page === PAGE.LIQUITY ? 'block' : 'none' }}>
-            <LiquityInfo />
-          </div>
-          <div className="app-page" style={{ display: this.state.page === PAGE.HOPR ? 'block' : 'none' }}>
-            <HoprInfo />
-          </div>
-          <div className="app-page" style={{ display: this.state.page === PAGE.PROFILE ? 'block' : 'none' }}>
-            <Profile ref={this.profile} onCurrentAddressChange={this.onCurrentAddressChange} />
+          <div className="app-body">
+            <Switch className="switch-app">
+              <Route path="/" children={(a) => {
+                const path = a?.location?.pathname || '/'
+                return (
+                  <>
+                    <div className="app-page" style={{ display: path === '/profile' ? 'block' : 'none' }} >
+                      <Profile />
+                    </div>
+
+                    <div className="app-page" style={{ display: path === '/rabbit-hole' ? 'block' : 'none' }}>
+                      <Rabbit />
+                    </div>
+
+                    <div className="app-page" style={{ display: path === '/hopr' ? 'block' : 'none' }}>
+                      <HoprInfo />
+                    </div>
+
+                    <div className="app-page" style={{ display: (path === '/liquity' || path === '/') ? 'block' : 'none' }}>
+                      <LiquityInfo />
+                    </div>
+                  </>
+                )
+              }}>
+              </Route>
+            </Switch>
           </div>
         </div>
-      </div>
+      </BrowserRouter>
     )
   }
 }

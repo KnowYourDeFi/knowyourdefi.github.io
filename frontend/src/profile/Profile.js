@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import './Profile.scss'
 import AddressBar, { ETH_ADDR_REGEX } from './AddressBar'
 import { EmptyPage, ErrorPage } from './Placeholder'
@@ -7,28 +6,30 @@ import { ReactComponent as WalletLogo } from '../resources/wallet.svg'
 import {UserLiquityInfo} from './UserLiquityInfo'
 import UserAssetsInfo from './UserAssetsInfo'
 import { log } from '../utils/DebugUtils';
+import profileManager from './ProfileManager'
 
 class Profile extends React.Component {
 
-  state = {
-    address: null, // {address, ens}
-  }
-
   constructor(props) {
     super(props)
-    this.addressbar = React.createRef()
 
-    this.onCurrentAddressChange = this.onCurrentAddressChange.bind(this)
+    this.state = {
+      address: profileManager.getCurrentAddress()  // {address, ens}
+    }
+
+    this.onAddressChanged = this.onAddressChanged.bind(this)
   }
 
-  getAddress() {
-    return this.addressbar.current?.getAddress()
+  componentDidMount() {
+    profileManager.addAddressChangeListener(this.onAddressChanged)
   }
 
-  onCurrentAddressChange(address) {
-    log('profile current address change', address)
+  componentWillUnmount() {
+    profileManager.removeAddressChangeListener(this.onAddressChanged)
+  }
+
+  onAddressChanged(address) {
     this.setState({ address })
-    this.props.onCurrentAddressChange(address)
   }
 
   renderProfile() {
@@ -61,19 +62,11 @@ class Profile extends React.Component {
   render() {
     return (
       <div className="profile">
-        <AddressBar ref={this.addressbar} onCurrentAddressChange={this.onCurrentAddressChange} />
+        <AddressBar />
         {this.renderContent()}
       </div>
     )
   }
-}
-
-Profile.propTypes = {
-  onCurrentAddressChange: PropTypes.func,
-}
-
-Profile.defaultProps = {
-  onCurrentAddressChange: function (address) { log('profile current address change', address) },
 }
 
 export default Profile
