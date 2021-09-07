@@ -1,0 +1,34 @@
+name: Build and deploy site to Skynet
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build-and-deploy:
+    name: Build and deploy
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./frontend
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@
+      uses: actions/setup-node@v2
+      with:
+        node-version: 16.x
+    
+    - name: Install dependencies
+      run: yarn
+    
+    - name: Build project
+      run: yarn build
+
+    - name: Deploy to Skynet
+      uses: SkynetLabs/deploy-to-skynet-action@v2
+      with:
+        upload-dir: ./frontend/build
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        registry-seed: ${{ secrets.SKYNET_REGISTRY_SEED || '' }}
+  
