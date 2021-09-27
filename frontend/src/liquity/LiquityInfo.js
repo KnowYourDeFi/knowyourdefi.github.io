@@ -12,7 +12,7 @@ import { StakingLUSD } from './charts/StakingLUSD'
 import { TVL, TVL7DayChange } from './charts/TVL'
 import { LqtyAPR } from './charts/LqtyAPR'
 import LqtyCirculatingSupply from './charts/LqtyCirculatingSupply'
-import LqtyHolders from './charts/LqtyHolders'
+//import LqtyHolders from './charts/LqtyHolders'
 import Liquidations from './charts/Liquidations'
 import LiquityHeader from './LiquityHeader';
 import FrontendLeaderboard from './charts/FrontendLeaderboard'
