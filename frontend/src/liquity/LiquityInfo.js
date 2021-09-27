@@ -118,10 +118,6 @@ class LiquityInfo extends React.Component {
             <div className="defi-card-large-text"><LqtyCirculatingSupply /></div>
           </div>
           <div className="defi-card">
-            <div className="defi-card-title">LQTY Holders</div>
-            <div className="defi-card-large-text"><LqtyHolders /></div>
-          </div>
-          <div className="defi-card">
             <div className="defi-card-title">LQTY Staking APR(7d average)</div>
             <div className="defi-card-large-text">
               <LqtyAPR />
