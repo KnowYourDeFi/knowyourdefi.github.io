@@ -9,7 +9,7 @@
 </p>
 
 <p align="center">
-	💫 <a href="https://www.knowyourdefi.com/">knowyourdefi.com</a>
+	💫 <a href="https://knowyourdefi.pages.dev/">knowyourdefi.pages.dev</a>
 	🌱 <a href="https://twitter.com/rhizomedao">@RhizomeDAO</a>
 </p>
 

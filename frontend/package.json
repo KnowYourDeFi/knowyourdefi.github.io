@@ -36,7 +36,7 @@
     "build": "NODE_OPTIONS=--openssl-legacy-provider react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy:github": "echo 'www.knowyourdefi.com' > ./build/CNAME && gh-pages -d build",
+    "deploy:github": "echo 'knowyourdefi.pages.dev' > ./build/CNAME && gh-pages -d build",
     "deploy": "npm run build && node ../deploy/cloudflare/deploy-pages.mjs",
     "predeploy:github": "npm run build"
   },
