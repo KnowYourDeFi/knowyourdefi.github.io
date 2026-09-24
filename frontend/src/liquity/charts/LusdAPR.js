@@ -1,3 +1,6 @@
+/*
+ * 文件说明: 展示协议数据，请求失败时仅显示当前组件的无数据状态。
+ */
 import React from 'react'
 import {query} from '../LiquityData'
 import {nowTimestamp} from '../../utils/Timestamps'
@@ -30,6 +33,7 @@ class LusdAPR extends React.Component {
             })
         }).catch(e => {
             console.error(e)
+            this.setState({ failed: true })
         })
 
         queryLQTYPriceV2().then(price => {
@@ -39,6 +43,7 @@ class LusdAPR extends React.Component {
             })
         }).catch(e => {
             console.error(e)
+            this.setState({ failed: true })
         })
     }
 
@@ -58,6 +63,7 @@ class LusdAPR extends React.Component {
     }
 
     render() {
+      if (this.state.failed) return 'No data'
         const loaded = this.state.depositedLUSD && this.state.lqtyPrice
         return loaded ? this.calculateAPR(this.state.depositedLUSD, this.state.lqtyPrice) : 'Loading...'
     }

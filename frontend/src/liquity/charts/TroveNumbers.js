@@ -1,3 +1,6 @@
+/*
+ * 文件说明: 展示协议数据，请求失败时仅显示当前组件的无数据状态。
+ */
 import React from 'react'
 import ReactECharts from 'echarts-for-react'
 import {formatDate} from '../../utils/Timestamps'
@@ -27,10 +30,12 @@ class CurrentTroveNumber extends React.Component {
           })
         }).catch(e => {
           console.error(e)
+          this.setState({ failed: true })
         })
       }
 
       render() {
+        if (this.state.failed) return 'No data'
         return (
           <div className="current-trove-number">
             <p>
@@ -88,8 +93,8 @@ class RecentTroveNumbers extends React.Component {
             values.sort((a, b) => a.timestamp > b.timestamp ? 1 : -1)
             return values
         } catch (e) {
-            console.error('error fetching blocks', e)
-            return []
+          console.error('error fetching blocks', e)
+          throw e
         }
     }
 
@@ -100,6 +105,7 @@ class RecentTroveNumbers extends React.Component {
             })
         }).catch(e => {
             console.error(e)
+            this.setState({ failed: true })
         })
     }
 
@@ -145,6 +151,7 @@ class RecentTroveNumbers extends React.Component {
     }
 
     render() {
+      if (this.state.failed) return 'No data'
         return (
           <div className="recent-trove-numbers">
             {this.numberChart()}

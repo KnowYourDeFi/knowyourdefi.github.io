@@ -1,3 +1,6 @@
+/*
+ * 文件说明: 展示链上数据表格，查询失败或无结果时保留页面并显示无数据状态。
+ */
 import React, { useState, useEffect, useMemo } from 'react'
 import {query, hoprXdaiClient} from '../HoprData'
 import Table from "../../liquity/charts/ReactTable"
@@ -17,7 +20,10 @@ export function Transactions() {
         (async () => {
           const result = await getRecentTransactions()
           setData(result);
-        })()
+        })().catch(error => {
+          console.error(error)
+          setData(null)
+        })
     }, [])
 
     const columns = useMemo(
@@ -54,6 +60,7 @@ export function Transactions() {
         []
     )
 
+    if (!data || data.length === 0) return 'No data'
     return (
         <div className="transactions">
           <Table columns={columns} data={data} />
@@ -101,7 +108,10 @@ export function XdaiTransactions() {
         (async () => {
           const result = await getRecentXdaiTransactions()
           setData(result);
-        })()
+        })().catch(error => {
+          console.error(error)
+          setData(null)
+        })
     }, [])
 
     const columns = useMemo(
@@ -138,6 +148,7 @@ export function XdaiTransactions() {
         []
     )
 
+    if (!data || data.length === 0) return 'No data'
     return (
         <div className="xdaiTransactions">
           <Table columns={columns} data={data} />

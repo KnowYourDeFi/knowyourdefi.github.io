@@ -1,3 +1,6 @@
+/*
+ * 文件说明: 展示协议数据，请求失败时仅显示当前组件的无数据状态。
+ */
 import React from 'react'
 import axios from 'axios'
 import { numberWithCommas } from '../../utils/NumberUtils'
@@ -18,6 +21,7 @@ class LqtyCirculatingSupply extends React.Component {
         })
         .catch(e => {
           console.error(e)
+          this.setState({ failed: true })
         })
     }
 
@@ -26,6 +30,7 @@ class LqtyCirculatingSupply extends React.Component {
     }
 
     render() {
+      if (this.state.failed) return 'No data'
         return this.state.loading ? 'Loading...' : numberWithCommas(this.state.supply)
     }
 }

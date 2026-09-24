@@ -1,3 +1,6 @@
+/*
+ * 文件说明: 展示链上数据表格，查询失败或无结果时保留页面并显示无数据状态。
+ */
 import React, { useState, useEffect, useMemo } from 'react'
 import {query, liquityClient} from '../LiquityData'
 import { gql } from '@apollo/client'
@@ -11,7 +14,10 @@ export default function FrontendLeaderboard() {
         (async () => {
           const result = await getLeaderboard()
           setData(result);
-        })()
+        })().catch(error => {
+          console.error(error)
+          setData(null)
+        })
     }, [])
 
     const columns = useMemo(
@@ -51,6 +57,7 @@ export default function FrontendLeaderboard() {
         []
     )
 
+    if (!data || data.length === 0) return 'No data'
     return <Table columns={columns} data={data} />
 }
 

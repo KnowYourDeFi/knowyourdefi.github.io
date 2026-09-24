@@ -1,3 +1,6 @@
+/*
+ * 文件说明: 展示协议数据，请求失败时仅显示当前组件的无数据状态。
+ */
 import React from 'react'
 import {nowTimestamp} from '../../utils/Timestamps'
 import {query, uniV2Client, getBlocksFromTimestamps} from '../LiquityData'
@@ -61,6 +64,7 @@ class LqtyAPR extends React.Component {
             })
         }).catch(e => {
             console.error(e)
+            this.setState({ failed: true })
         })
     }
 
@@ -91,6 +95,7 @@ class LqtyAPR extends React.Component {
             })
         }).catch(e => {
             console.error(e)
+            this.setState({ failed: true })
         })
     }
 
@@ -100,10 +105,12 @@ class LqtyAPR extends React.Component {
             this.getLiquityInfo(data)
         }).catch(e => {
             console.error(e)
+            this.setState({ failed: true })
         })
     }
 
     render() {
+      if (this.state.failed) return 'No data'
         let loaded = this.state.hasLiquityInfo && this.state.hasPriceInfo
         let apr = 'Error'
         if (loaded) {

@@ -1,3 +1,6 @@
+/*
+ * 文件说明: 展示协议数据，请求失败时仅显示当前组件的无数据状态。
+ */
 import React from 'react'
 import {query, uniV2Client, uniV3Client} from '../LiquityData'
 
@@ -30,10 +33,12 @@ class LUSDPriceV2 extends React.Component {
             })
         }).catch(e => {
             console.error(e)
+            this.setState({ failed: true })
         })
     }
 
     render() {
+      if (this.state.failed) return 'No data'
         return this.state.loading ? 'Loading...' : 'US $' + parseFloat(this.state.price).toFixed(2)
     }
 }
@@ -62,10 +67,12 @@ class LUSDPriceV3DAI extends React.Component {
             })
         }).catch(e => {
             console.error(e)
+            this.setState({ failed: true })
         })
     }
 
     render() {
+      if (this.state.failed) return 'No data'
       return this.state.loading ? 'Loading...' : 'US $' + parseFloat(this.state.price).toFixed(2)
     }
 }
@@ -94,10 +101,12 @@ class LUSDPriceV3USDT extends React.Component {
             })
         }).catch(e => {
             console.error(e)
+            this.setState({ failed: true })
         })
     }
 
     render() {
+      if (this.state.failed) return 'No data'
         return this.state.loading ? 'Loading...' : 'US $' + parseFloat(this.state.price).toFixed(2)
     }
 }

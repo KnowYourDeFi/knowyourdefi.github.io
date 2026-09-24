@@ -1,3 +1,6 @@
+/*
+ * 文件说明: 展示链上数据表格，查询失败或无结果时保留页面并显示无数据状态。
+ */
 import React, { useState, useEffect, useMemo } from 'react'
 import {query} from '../LiquityData'
 import Table from "./ReactTable"
@@ -11,7 +14,10 @@ function Liquidations() {
         (async () => {
           const result = await getRecentLiquidations()
           setData(result);
-        })()
+        })().catch(error => {
+          console.error(error)
+          setData(null)
+        })
     }, [])
 
     const columns = useMemo(
@@ -57,6 +63,7 @@ function Liquidations() {
         []
     )
 
+    if (!data || data.length === 0) return 'No data'
     return (
         <div className="liquidations">
           <Table columns={columns} data={data} />

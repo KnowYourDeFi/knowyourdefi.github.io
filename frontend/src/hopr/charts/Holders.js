@@ -1,3 +1,6 @@
+/*
+ * 文件说明: 展示协议数据，请求失败时仅显示当前组件的无数据状态。
+ */
 import React from 'react'
 import { gql } from '@apollo/client'
 import {hoprClient, hoprXdaiClient} from '../HoprData'
@@ -40,6 +43,7 @@ class HoprHolders extends React.Component {
           return allResults
         } catch (e) {
           console.error(e)
+          throw e
         }
     }
 
@@ -51,10 +55,12 @@ class HoprHolders extends React.Component {
             })
         }).catch(e => {
             console.error(e)
+            this.setState({ failed: true })
         })
     }
 
     render() {
+      if (this.state.failed) return 'No data'
         return this.state.loading ? 'Loading...' : this.state.holders.length
     }
 }
@@ -97,6 +103,7 @@ class HoprXdaiHolders extends React.Component {
           return allResults
         } catch (e) {
           console.error(e)
+          throw e
         }
     }
 
@@ -108,10 +115,12 @@ class HoprXdaiHolders extends React.Component {
             })
         }).catch(e => {
             console.error(e)
+            this.setState({ failed: true })
         })
     }
 
     render() {
+      if (this.state.failed) return 'No data'
         return this.state.loading ? 'Loading...' : this.state.holders.length
     }
 }

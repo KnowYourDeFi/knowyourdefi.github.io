@@ -1,3 +1,7 @@
+/*
+ * 文件说明: 保留原版数据卡片布局，将单个组件异常隔离在卡片内。
+ */
+import DataBoundary from '../widget/DataBoundary'
 import React from 'react'
 import LqtyTotalSupply from './charts/LqtyTotalSupply';
 import { LusdCurrentTotalSupply, LusdTotalSupply, Lusd7DayMintBurn } from './charts/LusdTotalSupply';
@@ -31,11 +35,11 @@ class LiquityInfo extends React.Component {
         <div className="defi-card-group-2">
           <div className="defi-card">
             <div className="defi-card-title">Total Value Locked</div>
-            <TVL />
+            <DataBoundary><TVL /></DataBoundary>
           </div>
           <div className="defi-card">
             <div className="defi-card-title">Hourly TVL Change (7d)</div>
-            <TVL7DayChange />
+            <DataBoundary><TVL7DayChange /></DataBoundary>
           </div>
         </div>
 
@@ -53,41 +57,41 @@ class LiquityInfo extends React.Component {
         <div className="defi-card-group-6">
           <div className="defi-card">
             <div className="defi-card-title">LUSD/DAI on Uniswap V3</div>
-            <div className="defi-card-large-text"><LUSDPriceV3DAI /></div>
+            <div className="defi-card-large-text"><DataBoundary><LUSDPriceV3DAI /></DataBoundary></div>
           </div>
           <div className="defi-card">
             <div className="defi-card-title">LUSD/USDT on Uniswap V3</div>
-            <div className="defi-card-large-text"><LUSDPriceV3USDT /></div>
+            <div className="defi-card-large-text"><DataBoundary><LUSDPriceV3USDT /></DataBoundary></div>
           </div>
           <div className="defi-card">
             <div className="defi-card-title">LUSD/ETH on Uniswap V2</div>
-            <div className="defi-card-large-text"><LUSDPriceV2 /></div>
+            <div className="defi-card-large-text"><DataBoundary><LUSDPriceV2 /></DataBoundary></div>
           </div>
           <div className="defi-card">
             <div className="defi-card-title">LUSD Holders</div>
-            <div className="defi-card-large-text"><LusdHolders /></div>
+            <div className="defi-card-large-text"><DataBoundary><LusdHolders /></DataBoundary></div>
           </div>
           <div className="defi-card">
             <div className="defi-card-title">LUSD Staking APR(7d average)</div>
-            <div className="defi-card-large-text"><LusdAPR /></div>
+            <div className="defi-card-large-text"><DataBoundary><LusdAPR /></DataBoundary></div>
           </div>
           <div className="defi-card">
             <div className="defi-card-title">LUSD Total Supply</div>
-            <div className="defi-card-large-text"><LusdCurrentTotalSupply /></div>
+            <div className="defi-card-large-text"><DataBoundary><LusdCurrentTotalSupply /></DataBoundary></div>
           </div>
         </div>
         <div className="defi-card">
           <div className="defi-card-title">LUSD Total Supply</div>
-          <LusdTotalSupply />
+          <DataBoundary><LusdTotalSupply /></DataBoundary>
         </div>
         <div className="defi-card-group-2">
           <div className="defi-card">
             <div className="defi-card-title">Staking LUSD (7d)</div>
-            <StakingLUSD />
+            <DataBoundary><StakingLUSD /></DataBoundary>
           </div>
           <div className="defi-card">
             <div className="defi-card-title">LUSD Mint/Burn (7d)</div>
-            <Lusd7DayMintBurn />
+            <DataBoundary><Lusd7DayMintBurn /></DataBoundary>
           </div>
         </div>
 
@@ -107,25 +111,25 @@ class LiquityInfo extends React.Component {
         <div className="defi-card-group-6">
           <div className="defi-card">
             <div className="defi-card-title">LQTY/ETH on Uniswap V3</div>
-            <div className="defi-card-large-text"><LQTYPriceV3 /></div>
+            <div className="defi-card-large-text"><DataBoundary><LQTYPriceV3 /></DataBoundary></div>
           </div>
           <div className="defi-card">
             <div className="defi-card-title">LQTY/ETH on Uniswap V2</div>
-            <div className="defi-card-large-text"><LQTYPriceV2 /></div>
+            <div className="defi-card-large-text"><DataBoundary><LQTYPriceV2 /></DataBoundary></div>
           </div>
           <div className="defi-card">
             <div className="defi-card-title">LQTY Circulating Supply</div>
-            <div className="defi-card-large-text"><LqtyCirculatingSupply /></div>
+            <div className="defi-card-large-text"><DataBoundary><LqtyCirculatingSupply /></DataBoundary></div>
           </div>
           <div className="defi-card">
             <div className="defi-card-title">LQTY Staking APR(7d average)</div>
             <div className="defi-card-large-text">
-              <LqtyAPR />
+              <DataBoundary><LqtyAPR /></DataBoundary>
             </div>
           </div>
           <div className="defi-card">
             <div className="defi-card-title">LQTY Total Supply</div>
-            <div className="defi-card-large-text"><LqtyTotalSupply /></div>
+            <div className="defi-card-large-text"><DataBoundary><LqtyTotalSupply /></DataBoundary></div>
           </div>
         </div>
 
@@ -142,11 +146,11 @@ class LiquityInfo extends React.Component {
         </div>
         <div className="defi-card">
           <div className="defi-card-title">Total Collateral Ratio</div>
-          <CollateralRatio />
+          <DataBoundary><CollateralRatio /></DataBoundary>
         </div>
         <div className="defi-card">
           <div className="defi-card-title">Recent Liquidations</div>
-          <Liquidations />
+          <DataBoundary><Liquidations /></DataBoundary>
         </div>
 
         <div className="defi-title">
@@ -164,11 +168,11 @@ class LiquityInfo extends React.Component {
         <div className="defi-card-group-2">
           <div className="defi-card">
             <div className="defi-card-title">Number of Troves (7d)</div>
-            <RecentTroveNumbers />
+            <DataBoundary><RecentTroveNumbers /></DataBoundary>
           </div>
           <div className="defi-card">
             <div className="defi-card-title">Trove Size</div>
-            <TroveSize />
+            <DataBoundary><TroveSize /></DataBoundary>
           </div>
         </div>
 
@@ -185,7 +189,7 @@ class LiquityInfo extends React.Component {
           </div>
         </div>
         <div className="defi-card">
-          <FrontendLeaderboard />
+          <DataBoundary><FrontendLeaderboard /></DataBoundary>
         </div>
       </div>
     )

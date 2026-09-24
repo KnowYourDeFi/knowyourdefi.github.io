@@ -1,3 +1,6 @@
+/*
+ * 文件说明: 展示协议数据，请求失败时仅显示当前组件的无数据状态。
+ */
 import React from 'react'
 import ReactECharts from 'echarts-for-react'
 import {formatDate} from '../../utils/Timestamps'
@@ -29,10 +32,12 @@ class LusdCurrentTotalSupply extends React.Component {
       })
     }).catch(e => {
       console.error(e)
+      this.setState({ failed: true })
     })
   }
 
   render() {
+    if (this.state.failed) return 'No data'
     return this.state.loading ? 'Loading...' : this.state.LUSD
   }
 }
@@ -85,7 +90,7 @@ class LusdTotalSupply extends React.Component {
       return values
     } catch (e) {
       console.error('error fetching blocks', e)
-      return []
+      throw e
     }
   }
 
@@ -96,6 +101,7 @@ class LusdTotalSupply extends React.Component {
       })
     }).catch(e => {
       console.error(e)
+      this.setState({ failed: true })
     })
   }
 
@@ -161,6 +167,7 @@ class LusdTotalSupply extends React.Component {
   }
 
   render() {
+    if (this.state.failed) return 'No data'
     return (
       <div className="lusd-total-supply">
         {this.totalSupplyChart()}
@@ -217,7 +224,7 @@ class Lusd7DayMintBurn extends React.Component {
       return values
     } catch (e) {
       console.error('error fetching blocks', e)
-      return []
+      throw e
     }
   }
 
@@ -237,6 +244,7 @@ class Lusd7DayMintBurn extends React.Component {
       })
     }).catch(e => {
       console.error(e)
+      this.setState({ failed: true })
     })
   }
 
@@ -288,6 +296,7 @@ class Lusd7DayMintBurn extends React.Component {
   }
 
   render() {
+    if (this.state.failed) return 'No data'
     return (
       <div className="lusd-total-supply">
         {this.totalSupplyChangesChart()}

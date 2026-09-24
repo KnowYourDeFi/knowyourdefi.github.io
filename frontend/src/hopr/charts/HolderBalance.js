@@ -1,3 +1,6 @@
+/*
+ * 文件说明: 展示协议数据，请求失败时仅显示当前组件的无数据状态。
+ */
 import React from 'react'
 import ReactECharts from 'echarts-for-react'
 import { gql } from '@apollo/client'
@@ -68,6 +71,7 @@ class HolderBalance extends React.Component {
       return allResults
     } catch (e) {
       console.error(e)
+      throw e
     }
   }
 
@@ -76,6 +80,7 @@ class HolderBalance extends React.Component {
       this.processHolderBalanceData(data)
     }).catch(e => {
       console.error(e)
+      this.setState({ failed: true })
     })
   }
 
@@ -162,6 +167,7 @@ class HolderBalance extends React.Component {
   }
 
   render() {
+    if (this.state.failed) return 'No data'
     return (
       <div>
         {this.chart()}
