@@ -1,0 +1,8 @@
+{
+  "name": "knowyourdefi-pages-deploy",
+  "private": true,
+  "type": "module",
+  "devDependencies": {
+    "wrangler": "4.98.0"
+  }
+}

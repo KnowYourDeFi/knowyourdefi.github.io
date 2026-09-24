@@ -2,7 +2,7 @@
   "name": "knowyourdefi",
   "version": "0.1.0",
   "repository": "https://github.com/KnowYourDeFi/knowyourdefi.github.io.git",
-  "homepage": "https://knowyourdefi.github.io",
+  "homepage": "https://knowyourdefi.pages.dev",
   "license": "Apache-2.0",
   "dependencies": {
     "@apollo/client": "^3.3.20",
@@ -20,7 +20,6 @@
     "gh-pages": "^3.2.2",
     "graphql": "^15.5.0",
     "js-cookie": "^3.0.0",
-    "node-sass": "^6.0.1",
     "react": "^17.0.2",
     "react-bootstrap": "^1.6.1",
     "react-cookie": "^4.0.3",
@@ -34,11 +33,12 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "NODE_OPTIONS=--openssl-legacy-provider react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "predeploy": "npm run build",
-    "deploy": "echo 'www.knowyourdefi.com' > ./build/CNAME && gh-pages -d build"
+    "deploy:github": "echo 'www.knowyourdefi.com' > ./build/CNAME && gh-pages -d build",
+    "deploy": "npm run build && node ../deploy/cloudflare/deploy-pages.mjs",
+    "predeploy:github": "npm run build"
   },
   "eslintConfig": {
     "extends": [
@@ -57,5 +57,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "resolutions": {
+    "**/postcss-safe-parser/postcss": "8.4.49"
   }
 }
